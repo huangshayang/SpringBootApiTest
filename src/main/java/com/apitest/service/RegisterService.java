@@ -29,9 +29,9 @@ public class RegisterService {
 
     public Callable<Object> registerService(HttpSession httpSession, Map<String, Object> models) {
         Map<String, Object> map = new HashMap<>(8);
-        String username = String.valueOf(models.get("username"));
-        String password = String.valueOf(models.get("password"));
-        String captcha = String.valueOf(models.get("captcha"));
+        Object username = models.get("username");
+        Object password = models.get("password");
+        Object captcha = models.get("captcha");
         String code = String.valueOf(httpSession.getAttribute("number"));
         User user = new User();
         try {
@@ -44,12 +44,12 @@ public class RegisterService {
             }else if (userRepository.existsByUsername(username)) {
                 map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
                 map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (code == null || !code.equalsIgnoreCase(captcha)) {
+            }else if (code == null || !code.equalsIgnoreCase(String.valueOf(captcha))) {
                 map.put("status", ErrorEnum.CAPTCHA_ERROR.getStatus());
                 map.put("message", ErrorEnum.CAPTCHA_ERROR.getMessage());
             }else {
-                user.setUsername(username);
-                user.setPassword(new BCryptPasswordEncoder().encode(password));
+                user.setUsername(String.valueOf(username));
+                user.setPassword(new BCryptPasswordEncoder().encode((CharSequence) password));
                 userRepository.save(user);
                 map.put("status", ErrorEnum.REGISTER_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.REGISTER_SUCCESS.getMessage());

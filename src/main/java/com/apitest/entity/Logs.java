@@ -38,6 +38,6 @@ public class Logs {
     @Column(nullable = false)
     private Integer apiId;
 
-    @Column(length = 50)
+    @Column(nullable = false)
     private String note;
 }

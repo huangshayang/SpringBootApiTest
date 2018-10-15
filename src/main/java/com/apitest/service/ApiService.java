@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpSession;
@@ -22,12 +23,14 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.Callable;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class ApiService implements ApiServiceInf {
     private final ApiRepository apiRepository;
     private final CaseRepository caseRepository;
     private final LogRepository logRepository;
+    private static ReentrantLock lock = new ReentrantLock();
 
     @Autowired
     private ApiService(ApiRepository apiRepository, CaseRepository caseRepository, LogRepository logRepository) {
@@ -203,17 +206,19 @@ public class ApiService implements ApiServiceInf {
 
     private void apicase(Apis apis, Cases aCasesList) {
         //向外部发送http请求
-        WebClient.RequestHeadersSpec<?> response = restHttp(apis, aCasesList);
-        //把请求的结果保存到日志里
+        lock.lock();
+        ClientResponse response = restHttp(apis, aCasesList).exchange().block();
+        //把请求的结果保存到响应日志里
         Logs logs = new Logs();
         logs.setRequest_data(aCasesList.getRequest_data());
         logs.setRequest_time(new Timestamp(System.currentTimeMillis()));
-        logs.setCode((Integer) Objects.requireNonNull(response.retrieve().bodyToMono(Map.class).block()).get("status"));
-        logs.setResponse_header(String.valueOf(Objects.requireNonNull(response.exchange().block()).headers().asHttpHeaders()));
-        logs.setResponse_data(response.retrieve().bodyToMono(String.class).block());
+        logs.setCode(Objects.requireNonNull(response).rawStatusCode());
+        logs.setResponse_header(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
+        logs.setResponse_data(response.bodyToMono(String.class).block());
         logs.setApiId(apis.getId());
         logs.setNote(aCasesList.getNote());
         logRepository.save(logs);
+        lock.unlock();
     }
 
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {

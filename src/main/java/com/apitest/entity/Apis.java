@@ -30,7 +30,7 @@ public class Apis {
     @Column(nullable = false)
     private Boolean is_cookie;
 
-    @Column(length = 10)
+    @Column(nullable = false)
     private String note;
 
     @OneToMany(cascade = CascadeType.ALL)

@@ -9,5 +9,5 @@ public interface ForgetServiceInf {
 
     Callable<Object> forgetPasswordService(HttpSession httpSession, Map<String, Object> models);
 
-    Callable<Object> getTokenService(HttpSession httpSession, Map<String, Object> username);
+    Callable<Object> getTokenService(HttpSession httpSession);
 }

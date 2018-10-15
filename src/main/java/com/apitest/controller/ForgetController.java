@@ -28,7 +28,7 @@ public class ForgetController {
     }
 
     @PostMapping(value = "/forget/token")
-    public Callable<Object> getTokenController(HttpSession httpSession, @RequestBody Map<String, Object> username) {
-        return () -> forgetService.getTokenService(httpSession, username);
+    public Callable<Object> getTokenController(HttpSession httpSession) {
+        return () -> forgetService.getTokenService(httpSession);
     }
 }

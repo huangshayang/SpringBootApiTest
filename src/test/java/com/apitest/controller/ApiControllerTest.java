@@ -1,5 +1,6 @@
 package com.apitest.controller;
 
+import com.apitest.rest.RestRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -50,9 +51,10 @@ class ApiControllerTest {
     }
 
     public static void main(String[] args) {
-        String user1 = "{\"username\":\"shayang888\",\"password\":\"123456\"}";
-        String user2 = "{\"username\":\"shayang999\",\"password\":\"123456\"}";
-        ApiControllerTest apiControllerTest = new ApiControllerTest();
-        apiControllerTest.addApiController(user1);
+//        String user1 = "{\"username\":\"shayang888\",\"password\":\"123456\"}";
+//        String user2 = "{\"username\":\"shayang999\",\"password\":\"123456\"}";
+//        ApiControllerTest apiControllerTest = new ApiControllerTest();
+//        apiControllerTest.addApiController(user1);
+
     }
 }

@@ -3,6 +3,7 @@ package com.apitest.service;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,6 +31,7 @@ public class CaptchaService {
         g.drawString(code, 5, 18);
         //设置消息头
         response.setContentType("image/jpeg");
+        httpSession.setMaxInactiveInterval(60);
         OutputStream os = response.getOutputStream();
         ImageIO.write(image, "jpeg", os);
     }

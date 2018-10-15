@@ -16,14 +16,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RestRequest {
 
-    private static final String COOKIES = getCookie();
+    private static final String COOKIE = getCookie();
     private static WebClient client = WebClient.create(ConfigConsts.URL);
     private static WebClient.RequestHeadersSpec<?> requestHeadersSpec;
 
     public static WebClient.RequestHeadersSpec<?> doGet(String url, @Nullable String data, boolean isCookie) {
         requestHeadersSpec = client.get().uri(url, data).accept(MediaType.APPLICATION_JSON_UTF8);
         if (isCookie) {
-            requestHeadersSpec.cookie(ConfigConsts.SESSIONKEY, COOKIES);
+            requestHeadersSpec.cookie(ConfigConsts.SESSIONKEY, COOKIE);
         }
         return requestHeadersSpec;
     }
@@ -31,17 +31,17 @@ public class RestRequest {
     public static WebClient.RequestHeadersSpec<?> doPost(String url, @Nullable String data, boolean isCookie) {
         requestHeadersSpec = client.post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(data);
         if (isCookie) {
-            requestHeadersSpec.cookie(ConfigConsts.SESSIONKEY, COOKIES);
+            requestHeadersSpec.cookie(ConfigConsts.SESSIONKEY, COOKIE);
         }
         return requestHeadersSpec;
     }
 
     public static WebClient.RequestHeadersSpec<?> doPut(String url, String data) {
-        return client.put().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSIONKEY, COOKIES).syncBody(data);
+        return client.put().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSIONKEY, COOKIE).syncBody(data);
     }
 
     public static WebClient.RequestHeadersSpec<?> doDelete(String url, String data) {
-        return client.delete().uri(url, data).accept(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSIONKEY, COOKIES);
+        return client.delete().uri(url, data).accept(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSIONKEY, COOKIE);
     }
 
     private static String getCookie() {
