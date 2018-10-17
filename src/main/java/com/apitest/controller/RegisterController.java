@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * @author HSY
@@ -27,7 +26,7 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public Callable<Object> registerController(HttpSession httpSession, @RequestBody Map<String, Object> models){
-        return () -> registerService.registerService(httpSession, models);
+    public Object registerController(HttpSession httpSession, @RequestBody Map<String, String> models){
+        return registerService.registerService(httpSession, models);
     }
 }

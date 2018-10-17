@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.Callable;
 
 @Service
 public class ForgetService implements ForgetServiceInf {
@@ -26,13 +25,16 @@ public class ForgetService implements ForgetServiceInf {
     }
 
     @Override
-    public Callable<Object> forgetPasswordService(HttpSession httpSession, Map<String, Object> models) {
+    public Object forgetPasswordService(HttpSession httpSession, Map<String, String> models) {
         Map<String, Object> map = new HashMap<>(8);
-        String username = String.valueOf(models.get("username"));
-        String newPassword = String.valueOf(models.get("newPwd"));
-        String token = String.valueOf(models.get("token"));
+        String username = models.get("username");
+        String newPassword = models.get("newPwd");
+        String token = models.get("token");
         User user = userRepository.findByUsername(username);
-        if (username == null || newPassword == null || token == null) {
+        if (username == null || newPassword == null || token == null ||
+                username.getClass() != String.class ||
+                newPassword.getClass() != String.class ||
+                token.getClass() != String.class) {
             map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
             map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
         }else if (Objects.equals("", username) || Objects.equals("", newPassword)) {
@@ -44,7 +46,7 @@ public class ForgetService implements ForgetServiceInf {
         }else if (Objects.equals("", token)) {
             map.put("status", ErrorEnum.TOKEN_IS_EMPTY.getStatus());
             map.put("message", ErrorEnum.TOKEN_IS_EMPTY.getMessage());
-        }else if (!Objects.equals(token, httpSession.getAttribute("token").toString())) {
+        }else if (!Objects.equals(token, httpSession.getAttribute("token"))) {
             map.put("status", ErrorEnum.TOKEN_IS_ERROR.getStatus());
             map.put("message", ErrorEnum.TOKEN_IS_ERROR.getMessage());
         }else {
@@ -52,17 +54,20 @@ public class ForgetService implements ForgetServiceInf {
             userRepository.saveAndFlush(user);
             map.put("status", ErrorEnum.RESET_PASSWORD_SUCCESS.getStatus());
             map.put("message", ErrorEnum.RESET_PASSWORD_SUCCESS.getMessage());
+            httpSession.removeAttribute("token");
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> getTokenService(HttpSession httpSession) {
+    public Object getTokenService(HttpSession httpSession) {
         Map<String, Object> map = new HashMap<>(8);
-        httpSession.setAttribute("token", UUID.randomUUID().toString());
+        String token = UUID.randomUUID().toString();
+        //创建一个session key为token
+        httpSession.setAttribute("token", token);
         map.put("status", ErrorEnum.TOKEN_SUSSCESS.getStatus());
         map.put("message", ErrorEnum.TOKEN_SUSSCESS.getMessage());
-        map.put("data", httpSession.getAttribute("token").toString());
-        return () -> map;
+        map.put("data", httpSession.getAttribute("token"));
+        return map;
     }
 }

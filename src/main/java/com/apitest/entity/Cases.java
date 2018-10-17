@@ -8,6 +8,7 @@ import java.sql.Date;
 
 @Entity
 @Data
+@Table(indexes = @Index(name = "index_api_id", columnList = "apiId"))
 public class Cases {
 
     @Id
@@ -16,16 +17,16 @@ public class Cases {
 
     @Column(nullable = false)
     @Lob
-    private String request_data;
+    private String requestData;
 
     @Lob
-    private String expect_result;
+    private String expectResult;
 
     @Column(nullable = false)
-    private Date create_time;
+    private Date createTime;
 
     @Column(nullable = false)
-    private Date update_time;
+    private Date updateTime;
 
     @Column(nullable = false)
     private Integer apiId;

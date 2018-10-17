@@ -14,12 +14,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * @param username
      * @return
      */
-    User findByUsername(Object username);
+    User findByUsername(String username);
 
     /**
      * 通过
      * @param username
      * @return
      */
-    boolean existsByUsername(Object username);
+    boolean existsByUsername(String username);
 }

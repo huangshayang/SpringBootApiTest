@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.concurrent.Callable;
 
 /**
  * @author HSY
@@ -25,8 +24,8 @@ public class LogoutController {
     }
 
     @DeleteMapping(value = "/logout")
-    public Callable<Object> logoutController(HttpSession httpSession){
-        return () -> logoutService.logoutService(httpSession);
+    public Object logoutController(HttpSession httpSession){
+        return logoutService.logoutService(httpSession);
     }
 
 }

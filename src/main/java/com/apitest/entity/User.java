@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @Entity
 @Data
+//必须实现序列化，才能存储到redis
 public class User implements Serializable {
 
     @Id

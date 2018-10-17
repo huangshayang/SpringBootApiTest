@@ -14,4 +14,5 @@ public interface CaseRepository extends JpaRepository<Cases, Integer> {
 
     @Transactional(rollbackFor = Exception.class)
     void deleteByApiId(Integer id);
+
 }

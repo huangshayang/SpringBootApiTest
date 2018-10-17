@@ -3,8 +3,6 @@ package com.apitest.service;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
@@ -25,13 +23,12 @@ public class CaptchaService {
         //获取生成的验证码
         String code = getNumber();
         //绑定验证码
-        httpSession.setAttribute("number", code);
+        httpSession.setAttribute("captcha", code);
         g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         g.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
         g.drawString(code, 5, 18);
         //设置消息头
         response.setContentType("image/jpeg");
-        httpSession.setMaxInactiveInterval(60);
         OutputStream os = response.getOutputStream();
         ImageIO.write(image, "jpeg", os);
     }

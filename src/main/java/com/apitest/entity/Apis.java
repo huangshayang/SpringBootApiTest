@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -19,25 +18,17 @@ public class Apis {
     private String url;
 
     @Column(nullable = false)
-    private Date create_time;
+    private Date createTime;
 
     @Column(nullable = false)
     private String method;
 
     @Column(nullable = false)
-    private Date update_time;
+    private Date updateTime;
 
     @Column(nullable = false)
-    private Boolean is_cookie;
+    private Boolean cookie;
 
     @Column(nullable = false)
     private String note;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "apiId")
-    private List<Logs> logs;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "apiId")
-    private List<Cases> cases;
 }

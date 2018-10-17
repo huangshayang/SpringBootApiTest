@@ -3,6 +3,7 @@ package com.apitest.service;
 
 import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
+import com.apitest.inf.RegisterServiceInf;
 import com.apitest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,13 +13,12 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.Callable;
 
 /**
  * @author huangshayang
  */
 @Service
-public class RegisterService {
+public class RegisterService implements RegisterServiceInf {
 
     private final UserRepository userRepository;
 
@@ -27,15 +27,19 @@ public class RegisterService {
         this.userRepository = userRepository;
     }
 
-    public Callable<Object> registerService(HttpSession httpSession, Map<String, Object> models) {
+    @Override
+    public Object registerService(HttpSession httpSession, Map<String, String> models) {
         Map<String, Object> map = new HashMap<>(8);
-        Object username = models.get("username");
-        Object password = models.get("password");
-        Object captcha = models.get("captcha");
-        String code = String.valueOf(httpSession.getAttribute("number"));
+        String username = models.get("username");
+        String password = models.get("password");
+        String captcha = models.get("captcha");
+        String code = String.valueOf(httpSession.getAttribute("captcha"));
         User user = new User();
         try {
-            if (username == null || password == null) {
+            if (username == null || password == null ||
+                    username.getClass() != String.class ||
+                    password.getClass() != String.class ||
+                    captcha.getClass() != String.class) {
                 map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
                 map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
             }else if (Objects.equals("", username) || Objects.equals("", password)){
@@ -44,12 +48,12 @@ public class RegisterService {
             }else if (userRepository.existsByUsername(username)) {
                 map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
                 map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (code == null || !code.equalsIgnoreCase(String.valueOf(captcha))) {
+            }else if (!code.equalsIgnoreCase(captcha)) {
                 map.put("status", ErrorEnum.CAPTCHA_ERROR.getStatus());
                 map.put("message", ErrorEnum.CAPTCHA_ERROR.getMessage());
             }else {
-                user.setUsername(String.valueOf(username));
-                user.setPassword(new BCryptPasswordEncoder().encode((CharSequence) password));
+                user.setUsername(username);
+                user.setPassword(new BCryptPasswordEncoder().encode(password));
                 userRepository.save(user);
                 map.put("status", ErrorEnum.REGISTER_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.REGISTER_SUCCESS.getMessage());
@@ -58,8 +62,8 @@ public class RegisterService {
             map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
             map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
         }
-        httpSession.invalidate();
-        return () -> map;
+        httpSession.removeAttribute("captcha");
+        return map;
     }
 
 }

@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
+@Table(indexes = @Index(name = "index_api_id", columnList = "apiId"))
 public class Logs {
 
     @Id
@@ -16,21 +17,21 @@ public class Logs {
     private Integer id;
 
     @Column(nullable = false)
-    private Timestamp request_time;
+    private Timestamp requestTime;
 
     @Column(nullable = false)
     @Lob
-    private String response_data;
+    private String responseData;
 
     @Column(nullable = false)
     @Lob
-    private String request_data;
+    private String requestData;
 
     @Column(nullable = false)
     @Lob
-    private String response_header;
+    private String responseHeader;
 
-    private BigDecimal response_time;
+    private BigDecimal responseTime;
 
     @Column(nullable = false)
     private Integer code;

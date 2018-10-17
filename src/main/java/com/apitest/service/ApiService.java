@@ -22,7 +22,6 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Service
@@ -40,8 +39,8 @@ public class ApiService implements ApiServiceInf {
     }
 
     @Override
-    public Callable<Object> addApiService(HttpSession httpSession, Apis api){
-        Object sessionid = httpSession.getAttribute("SESSION");
+    public Object addApiService(HttpSession httpSession, Apis api){
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -56,7 +55,7 @@ public class ApiService implements ApiServiceInf {
             }else if (api.getUrl().isEmpty()) {
                 map.put("status", ErrorEnum.API_URL_IS_EMPTY.getStatus());
                 map.put("message", ErrorEnum.API_URL_IS_EMPTY.getMessage());
-            }else if (api.getIs_cookie() == null) {
+            }else if (api.getCookie() == null) {
                 map.put("status", ErrorEnum.API_COOKIE_IS_EMPTY.getStatus());
                 map.put("message", ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
             }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
@@ -69,12 +68,12 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
             }
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> queryPageApiService(HttpSession httpSession, int page, int size){
-        Object sessionid = httpSession.getAttribute("SESSION");
+    public Object queryPageApiService(HttpSession httpSession, int page, int size){
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -91,12 +90,12 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
             }
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> queryOneApiService(HttpSession httpSession, int id){
-        Object sessionid = httpSession.getAttribute("SESSION");
+    public Object queryOneApiService(HttpSession httpSession, int id){
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -112,12 +111,12 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> modifyApiService(HttpSession httpSession, int id, Apis api){
-        Object sessionid = httpSession.getAttribute("SESSION");
+    public Object modifyApiService(HttpSession httpSession, int id, Apis api){
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -126,10 +125,10 @@ public class ApiService implements ApiServiceInf {
             if (apiRepository.findById(id).isPresent()) {
                 Apis apis = apiRepository.findById(id).get();
                 apis.setUrl(api.getUrl());
-                apis.setUpdate_time(new Date(System.currentTimeMillis()));
+                apis.setUpdateTime(new Date(System.currentTimeMillis()));
                 apis.setMethod(api.getMethod());
                 apis.setNote(api.getNote());
-                apis.setIs_cookie(api.getIs_cookie());
+                apis.setCookie(api.getCookie());
                 apiRepository.saveAndFlush(apis);
                 map.put("status", ErrorEnum.API_MODIFY_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.API_MODIFY_SUCCESS.getMessage());
@@ -138,12 +137,12 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> deleteApiService(HttpSession httpSession, int id){
-        Object sessionid = httpSession.getAttribute("SESSION");
+    public Object deleteApiService(HttpSession httpSession, int id){
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -160,12 +159,12 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> execApiService(HttpSession httpSession, int id) {
-        Object sessionid = httpSession.getAttribute("SESSION");
+    public Object execApiService(HttpSession httpSession, int id) {
+        Object sessionid = httpSession.getAttribute("user");
         List<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -180,12 +179,12 @@ public class ApiService implements ApiServiceInf {
             map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
             map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> execApiServiceOne(HttpSession httpSession, int id){
-        Object sessionid = httpSession.getAttribute("SESSION");
+    public Object execApiServiceOne(HttpSession httpSession, int id){
+        Object sessionid = httpSession.getAttribute("user");
         List<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -201,7 +200,7 @@ public class ApiService implements ApiServiceInf {
             map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
             map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
         }
-        return () -> map;
+        return map;
     }
 
     private void apicase(Apis apis, Cases aCasesList) {
@@ -210,11 +209,11 @@ public class ApiService implements ApiServiceInf {
         ClientResponse response = restHttp(apis, aCasesList).exchange().block();
         //把请求的结果保存到响应日志里
         Logs logs = new Logs();
-        logs.setRequest_data(aCasesList.getRequest_data());
-        logs.setRequest_time(new Timestamp(System.currentTimeMillis()));
+        logs.setRequestData(aCasesList.getRequestData());
+        logs.setRequestTime(new Timestamp(System.currentTimeMillis()));
         logs.setCode(Objects.requireNonNull(response).rawStatusCode());
-        logs.setResponse_header(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
-        logs.setResponse_data(response.bodyToMono(String.class).block());
+        logs.setResponseHeader(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
+        logs.setResponseData(response.bodyToMono(String.class).block());
         logs.setApiId(apis.getId());
         logs.setNote(aCasesList.getNote());
         logRepository.save(logs);
@@ -224,8 +223,8 @@ public class ApiService implements ApiServiceInf {
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
         String method = api.getMethod();
         String url =  api.getUrl();
-        String data = cases.getRequest_data();
-        boolean isCookie = api.getIs_cookie();
+        String data = cases.getRequestData();
+        boolean isCookie = api.getCookie();
         WebClient.RequestHeadersSpec<?> body = null;
         switch (method){
             case "get":
@@ -246,11 +245,11 @@ public class ApiService implements ApiServiceInf {
     }
 
     private void setApiTimeDefault(Apis api) {
-        if (api.getCreate_time() == null) {
-            api.setCreate_time(new Date(System.currentTimeMillis()));
+        if (api.getCreateTime() == null) {
+            api.setCreateTime(new Date(System.currentTimeMillis()));
         }
-        if (api.getUpdate_time() == null) {
-            api.setUpdate_time(new Date(System.currentTimeMillis()));
+        if (api.getUpdateTime() == null) {
+            api.setUpdateTime(new Date(System.currentTimeMillis()));
         }
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 @Service
 public class LogService implements LogServiceInf {
@@ -26,7 +25,7 @@ public class LogService implements LogServiceInf {
     }
 
     @Override
-    public Callable<Object> queryPageLogByApiIdService(HttpSession httpSession, int apiId, int page, int size){
+    public Object queryPageLogByApiIdService(HttpSession httpSession, int apiId, int page, int size){
         Object sessionid = httpSession.getAttribute("SESSION");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -44,11 +43,11 @@ public class LogService implements LogServiceInf {
                 map.put("message", ErrorEnum.LOG_QUERY_SUCCESS.getMessage());
             }
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> deleteOneLogService(HttpSession httpSession, int id){
+    public Object deleteOneLogService(HttpSession httpSession, int id){
         Object sessionid = httpSession.getAttribute("SESSION");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -64,11 +63,11 @@ public class LogService implements LogServiceInf {
                 map.put("message", ErrorEnum.LOG_IS_NULL.getMessage());
             }
         }
-        return () -> map;
+        return map;
     }
 
     @Override
-    public Callable<Object> deleteAllLogByApiIdService(HttpSession httpSession, int apiId) {
+    public Object deleteAllLogByApiIdService(HttpSession httpSession, int apiId) {
         Object sessionid = httpSession.getAttribute("SESSION");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -79,6 +78,6 @@ public class LogService implements LogServiceInf {
             map.put("status", ErrorEnum.LOG_DELETE_SUCCESS.getStatus());
             map.put("message", ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
         }
-        return () -> map;
+        return map;
     }
 }

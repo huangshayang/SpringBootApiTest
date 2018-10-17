@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 @RestController
 @RequestMapping(value = "/account")
@@ -23,12 +22,12 @@ public class ForgetController {
     }
 
     @PostMapping(value = "/forget")
-    public Callable<Object> forgetPasswordController(HttpSession httpSession, @RequestBody Map<String, Object> models) {
-        return () -> forgetService.forgetPasswordService(httpSession, models);
+    public Object forgetPasswordController(HttpSession httpSession, @RequestBody Map<String, String> models) {
+        return forgetService.forgetPasswordService(httpSession, models);
     }
 
     @PostMapping(value = "/forget/token")
-    public Callable<Object> getTokenController(HttpSession httpSession) {
-        return () -> forgetService.getTokenService(httpSession);
+    public Object getTokenController(HttpSession httpSession) {
+        return forgetService.getTokenService(httpSession);
     }
 }
