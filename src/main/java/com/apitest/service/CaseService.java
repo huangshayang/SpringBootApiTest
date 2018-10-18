@@ -29,7 +29,7 @@ public class CaseService implements CaseServiceInf {
 
     @Override
     public Object queryCaseByApiIdService(HttpSession httpSession, int apiId){
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -51,7 +51,7 @@ public class CaseService implements CaseServiceInf {
 
     @Override
     public Object queryOneCaseService(HttpSession httpSession, int id) {
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -67,7 +67,7 @@ public class CaseService implements CaseServiceInf {
 
     @Override
     public Object deleteAllCaseByApiIdService(HttpSession httpSession, int apiId){
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -82,7 +82,7 @@ public class CaseService implements CaseServiceInf {
 
     @Override
     public Object modifyCaseService(HttpSession httpSession, int id, Cases cases) {
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -107,7 +107,7 @@ public class CaseService implements CaseServiceInf {
 
     @Override
     public Object deleteOneCaseService(HttpSession httpSession, int id) {
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -127,7 +127,7 @@ public class CaseService implements CaseServiceInf {
 
     @Override
     public Object addCaseByApiIdService(HttpSession httpSession, Cases cases, int apiId) {
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());

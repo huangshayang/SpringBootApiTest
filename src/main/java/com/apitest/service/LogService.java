@@ -26,7 +26,7 @@ public class LogService implements LogServiceInf {
 
     @Override
     public Object queryPageLogByApiIdService(HttpSession httpSession, int apiId, int page, int size){
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -48,7 +48,7 @@ public class LogService implements LogServiceInf {
 
     @Override
     public Object deleteOneLogService(HttpSession httpSession, int id){
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -68,7 +68,7 @@ public class LogService implements LogServiceInf {
 
     @Override
     public Object deleteAllLogByApiIdService(HttpSession httpSession, int apiId) {
-        Object sessionid = httpSession.getAttribute("SESSION");
+        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());

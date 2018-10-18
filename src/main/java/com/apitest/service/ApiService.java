@@ -224,14 +224,14 @@ public class ApiService implements ApiServiceInf {
         String method = api.getMethod();
         String url =  api.getUrl();
         String data = cases.getRequestData();
-        boolean isCookie = api.getCookie();
+        boolean cookie = api.getCookie();
         WebClient.RequestHeadersSpec<?> body = null;
         switch (method){
             case "get":
-                body = RestRequest.doGet(url, data, isCookie);
+                body = RestRequest.doGet(url, data, cookie);
                 break;
             case "post":
-                body = RestRequest.doPost(url, data, isCookie);
+                body = RestRequest.doPost(url, data, cookie);
                 break;
             case "put":
                 body = RestRequest.doPut(url, data);

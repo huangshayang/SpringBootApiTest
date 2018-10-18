@@ -20,17 +20,17 @@ public class RestRequest {
     private static WebClient client = WebClient.create(ConfigConsts.URL);
     private static WebClient.RequestHeadersSpec<?> requestHeadersSpec;
 
-    public static WebClient.RequestHeadersSpec<?> doGet(String url, @Nullable String data, boolean isCookie) {
+    public static WebClient.RequestHeadersSpec<?> doGet(String url, @Nullable String data, boolean cookie) {
         requestHeadersSpec = client.get().uri(url, data).accept(MediaType.APPLICATION_JSON_UTF8);
-        if (isCookie) {
+        if (cookie) {
             requestHeadersSpec.cookie(ConfigConsts.SESSIONKEY, COOKIE);
         }
         return requestHeadersSpec;
     }
 
-    public static WebClient.RequestHeadersSpec<?> doPost(String url, @Nullable String data, boolean isCookie) {
+    public static WebClient.RequestHeadersSpec<?> doPost(String url, @Nullable String data, boolean cookie) {
         requestHeadersSpec = client.post().uri(url).contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(data);
-        if (isCookie) {
+        if (cookie) {
             requestHeadersSpec.cookie(ConfigConsts.SESSIONKEY, COOKIE);
         }
         return requestHeadersSpec;
@@ -56,4 +56,5 @@ public class RestRequest {
                 .exchange();
         return Objects.requireNonNull(Objects.requireNonNull(webClient.block()).cookies().getFirst(ConfigConsts.SESSIONKEY)).getValue();
     }
+
 }
