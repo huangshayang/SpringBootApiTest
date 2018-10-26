@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(value = "/account")
@@ -17,17 +18,17 @@ public class ForgetController {
     private final ForgetService forgetService;
 
     @Autowired
-    private ForgetController(ForgetService forgetService) {
+    public ForgetController(ForgetService forgetService) {
         this.forgetService = forgetService;
     }
 
     @PostMapping(value = "/forget")
-    public Object forgetPasswordController(HttpSession httpSession, @RequestBody Map<String, String> models) {
-        return forgetService.forgetPasswordService(httpSession, models);
+    public CompletableFuture<Object> forgetPasswordController(HttpSession httpSession, @RequestBody Map<String, String> models) {
+        return CompletableFuture.completedFuture(forgetService.forgetPasswordService(httpSession, models));
     }
 
     @PostMapping(value = "/forget/token")
-    public Object getTokenController(HttpSession httpSession) {
-        return forgetService.getTokenService(httpSession);
+    public CompletableFuture<Object> getTokenController(HttpSession httpSession) {
+        return CompletableFuture.completedFuture(forgetService.getTokenService(httpSession));
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author HSY
@@ -18,37 +19,37 @@ public class CaseController {
     private final CaseService caseService;
 
     @Autowired
-    private CaseController(CaseService caseService) {
+    public CaseController(CaseService caseService) {
         this.caseService = caseService;
     }
 
     @GetMapping(value = "/{apiId}/case")
-    public Object queryCaseByApiIdController(HttpSession httpSession, @PathVariable int apiId){
-        return caseService.queryCaseByApiIdService(httpSession, apiId);
+    public CompletableFuture<Object> queryCaseByApiIdController(HttpSession httpSession, @PathVariable int apiId){
+        return CompletableFuture.completedFuture(caseService.queryCaseByApiIdService(httpSession, apiId));
     }
 
     @PostMapping(value = "/{apiId}/case/add")
-    public Object addCaseByApiIdController(HttpSession httpSession, @RequestBody Cases cases, @PathVariable int apiId){
-        return caseService.addCaseByApiIdService(httpSession, cases, apiId);
+    public CompletableFuture<Object> addCaseByApiIdController(HttpSession httpSession, @RequestBody Cases cases, @PathVariable int apiId){
+        return CompletableFuture.completedFuture(caseService.addCaseByApiIdService(httpSession, cases, apiId));
     }
 
     @DeleteMapping(value = "/{apiId}/case")
-    public Object deleteAllCaseController(HttpSession httpSession, @PathVariable int apiId){
-        return caseService.deleteAllCaseByApiIdService(httpSession, apiId);
+    public CompletableFuture<Object> deleteAllCaseController(HttpSession httpSession, @PathVariable int apiId){
+        return CompletableFuture.completedFuture(caseService.deleteAllCaseByApiIdService(httpSession, apiId));
     }
 
     @PutMapping(value = "/case/{id}")
-    public Object modifyCaseController(HttpSession httpSession, @PathVariable int id, @RequestBody Cases cases){
-        return caseService.modifyCaseService(httpSession, id, cases);
+    public CompletableFuture<Object> modifyCaseController(HttpSession httpSession, @PathVariable int id, @RequestBody Cases cases){
+        return CompletableFuture.completedFuture(caseService.modifyCaseService(httpSession, id, cases));
     }
 
     @GetMapping(value = "/case/{id}")
-    public Object queryOneCaseController(HttpSession httpSession, @PathVariable int id){
-        return caseService.queryOneCaseService(httpSession, id);
+    public CompletableFuture<Object> queryOneCaseController(HttpSession httpSession, @PathVariable int id){
+        return CompletableFuture.completedFuture(caseService.queryOneCaseService(httpSession, id));
     }
 
     @DeleteMapping(value = "/case/{id}")
-    public Object deleteOneCaseController(HttpSession httpSession, @PathVariable int id){
-        return caseService.deleteOneCaseService(httpSession, id);
+    public CompletableFuture<Object> deleteOneCaseController(HttpSession httpSession, @PathVariable int id){
+        return CompletableFuture.completedFuture(caseService.deleteOneCaseService(httpSession, id));
     }
 }

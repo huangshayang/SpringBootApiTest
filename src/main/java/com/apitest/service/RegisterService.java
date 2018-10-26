@@ -6,6 +6,7 @@ import com.apitest.error.ErrorEnum;
 import com.apitest.inf.RegisterServiceInf;
 import com.apitest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +14,24 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author huangshayang
  */
 @Service
+@Async
 public class RegisterService implements RegisterServiceInf {
 
     private final UserRepository userRepository;
 
     @Autowired
-    private RegisterService(UserRepository userRepository) {
+    public RegisterService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public Object registerService(HttpSession httpSession, Map<String, String> models) {
+    public CompletableFuture<Object> registerService(HttpSession httpSession, Map<String, String> models) {
         Map<String, Object> map = new HashMap<>(8);
         String username = models.get("username");
         String password = models.get("password");
@@ -63,7 +66,7 @@ public class RegisterService implements RegisterServiceInf {
             map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
         }
         httpSession.removeAttribute("captcha");
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
 }

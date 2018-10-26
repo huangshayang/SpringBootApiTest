@@ -1,19 +1,22 @@
 package com.apitest.inf;
 
 import com.apitest.entity.Cases;
+import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.CompletableFuture;
 
+@Async
 public interface CaseServiceInf {
-    Object queryCaseByApiIdService(HttpSession httpSession, int apiId);
+    CompletableFuture<Object> queryCaseByApiIdService(HttpSession httpSession, int apiId);
 
-    Object queryOneCaseService(HttpSession httpSession, int id);
+    CompletableFuture<Object> queryOneCaseService(HttpSession httpSession, int id);
 
-    Object deleteAllCaseByApiIdService(HttpSession httpSession, int apiId);
+    CompletableFuture<Object> deleteAllCaseByApiIdService(HttpSession httpSession, int apiId);
 
-    Object modifyCaseService(HttpSession httpSession, int id, Cases cases);
+    CompletableFuture<Object> modifyCaseService(HttpSession httpSession, int id, Cases cases);
 
-    Object deleteOneCaseService(HttpSession httpSession, int id);
+    CompletableFuture<Object> deleteOneCaseService(HttpSession httpSession, int id);
 
-    Object addCaseByApiIdService(HttpSession httpSession, Cases cases, int apiId);
+    CompletableFuture<Object> addCaseByApiIdService(HttpSession httpSession, Cases cases, int apiId);
 }

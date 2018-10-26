@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,9 +23,11 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Service
+@Async
 public class ApiService implements ApiServiceInf {
     private final ApiRepository apiRepository;
     private final CaseRepository caseRepository;
@@ -32,14 +35,14 @@ public class ApiService implements ApiServiceInf {
     private static ReentrantLock lock = new ReentrantLock();
 
     @Autowired
-    private ApiService(ApiRepository apiRepository, CaseRepository caseRepository, LogRepository logRepository) {
+    public ApiService(ApiRepository apiRepository, CaseRepository caseRepository, LogRepository logRepository) {
         this.apiRepository = apiRepository;
         this.caseRepository = caseRepository;
         this.logRepository = logRepository;
     }
 
     @Override
-    public Object addApiService(HttpSession httpSession, Apis api){
+    public CompletableFuture<Object> addApiService(HttpSession httpSession, Apis api){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -68,11 +71,11 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object queryPageApiService(HttpSession httpSession, int page, int size){
+    public CompletableFuture<Object> queryPageApiService(HttpSession httpSession, int page, int size){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -90,11 +93,11 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object queryOneApiService(HttpSession httpSession, int id){
+    public CompletableFuture<Object> queryOneApiService(HttpSession httpSession, int id){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -111,11 +114,11 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object modifyApiService(HttpSession httpSession, int id, Apis api){
+    public CompletableFuture<Object> modifyApiService(HttpSession httpSession, int id, Apis api){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -137,11 +140,11 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object deleteApiService(HttpSession httpSession, int id){
+    public CompletableFuture<Object> deleteApiService(HttpSession httpSession, int id){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -159,11 +162,11 @@ public class ApiService implements ApiServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object execApiService(HttpSession httpSession, int id) {
+    public CompletableFuture<Object> execApiService(HttpSession httpSession, int id) {
         Object sessionid = httpSession.getAttribute("user");
         List<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
@@ -179,11 +182,11 @@ public class ApiService implements ApiServiceInf {
             map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
             map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object execApiServiceOne(HttpSession httpSession, int id){
+    public CompletableFuture<Object> execApiServiceOne(HttpSession httpSession, int id){
         Object sessionid = httpSession.getAttribute("user");
         List<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
@@ -200,7 +203,7 @@ public class ApiService implements ApiServiceInf {
             map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
             map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     private void apicase(Apis apis, Cases aCasesList) {
@@ -211,7 +214,7 @@ public class ApiService implements ApiServiceInf {
         Logs logs = new Logs();
         logs.setRequestData(aCasesList.getRequestData());
         logs.setRequestTime(new Timestamp(System.currentTimeMillis()));
-        logs.setCode(Objects.requireNonNull(response).rawStatusCode());
+        logs.setCode(Objects.requireNonNull(response).statusCode().value());
         logs.setResponseHeader(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
         logs.setResponseData(response.bodyToMono(String.class).block());
         logs.setApiId(apis.getId());

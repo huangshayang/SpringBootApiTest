@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author HSY
@@ -21,12 +22,12 @@ public class RegisterController {
     private final RegisterService registerService;
 
     @Autowired
-    private RegisterController(RegisterService registerService) {
+    public RegisterController(RegisterService registerService) {
         this.registerService = registerService;
     }
 
     @PostMapping(value = "/register")
-    public Object registerController(HttpSession httpSession, @RequestBody Map<String, String> models){
-        return registerService.registerService(httpSession, models);
+    public CompletableFuture<Object> registerController(HttpSession httpSession, @RequestBody Map<String, String> models){
+        return CompletableFuture.completedFuture(registerService.registerService(httpSession, models));
     }
 }

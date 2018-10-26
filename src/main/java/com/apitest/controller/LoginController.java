@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author HSY
@@ -16,12 +17,12 @@ public class LoginController {
     private final LoginService loginService;
 
     @Autowired
-    private LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
 
     @PostMapping(value = "/login")
-    public Object loginController(HttpSession httpSession, @RequestBody Map<String, String> models){
-        return loginService.loginService(httpSession, models);
+    public CompletableFuture<Object> loginController(HttpSession httpSession, @RequestBody Map<String, String> models){
+        return CompletableFuture.completedFuture(loginService.loginService(httpSession, models));
     }
 }

@@ -1,22 +1,25 @@
 package com.apitest.inf;
 
 import com.apitest.entity.Apis;
+import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.CompletableFuture;
 
+@Async
 public interface ApiServiceInf {
 
-    Object addApiService(HttpSession httpSession, Apis api);
+    CompletableFuture<Object> addApiService(HttpSession httpSession, Apis api);
 
-    Object queryPageApiService(HttpSession httpSession, int page, int size);
+    CompletableFuture<Object> queryPageApiService(HttpSession httpSession, int page, int size);
 
-    Object queryOneApiService(HttpSession httpSession, int id);
+    CompletableFuture<Object> queryOneApiService(HttpSession httpSession, int id);
 
-    Object modifyApiService(HttpSession httpSession, int id, Apis api);
+    CompletableFuture<Object> modifyApiService(HttpSession httpSession, int id, Apis api);
 
-    Object deleteApiService(HttpSession httpSession, int id);
+    CompletableFuture<Object> deleteApiService(HttpSession httpSession, int id);
 
-    Object execApiService(HttpSession httpSession, int id);
+    CompletableFuture<Object> execApiService(HttpSession httpSession, int id);
 
-    Object execApiServiceOne(HttpSession httpSession, int id);
+    CompletableFuture<Object> execApiServiceOne(HttpSession httpSession, int id);
 }

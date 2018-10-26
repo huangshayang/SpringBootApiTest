@@ -4,6 +4,7 @@ import com.apitest.error.ErrorEnum;
 import com.apitest.inf.LoginServiceInf;
 import com.apitest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +12,23 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author huangshayang
  */
 @Service
+@Async
 public class LoginService implements LoginServiceInf {
     private final UserRepository userRepository;
 
     @Autowired
-    private LoginService(UserRepository userRepository) {
+    public LoginService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public Object loginService(HttpSession httpSession, Map<String, String> models){
+    public CompletableFuture<Object> loginService(HttpSession httpSession, Map<String, String> models){
         Map<String, Object> map = new HashMap<>(8);
         String code = String.valueOf(httpSession.getAttribute("captcha"));
         String username = models.get("username");
@@ -55,6 +58,6 @@ public class LoginService implements LoginServiceInf {
             map.put("message", ErrorEnum.LOGIN_SUCCESS.getMessage());
         }
         httpSession.removeAttribute("captcha");
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 }

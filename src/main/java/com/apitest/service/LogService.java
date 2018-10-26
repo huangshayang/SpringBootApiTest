@@ -8,24 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
+@Async
 public class LogService implements LogServiceInf {
 
     private final LogRepository logRepository;
 
     @Autowired
-    private LogService(LogRepository logRepository){
+    public LogService(LogRepository logRepository){
         this.logRepository = logRepository;
     }
 
     @Override
-    public Object queryPageLogByApiIdService(HttpSession httpSession, int apiId, int page, int size){
+    public CompletableFuture<Object> queryPageLogByApiIdService(HttpSession httpSession, int apiId, int page, int size){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -43,11 +46,11 @@ public class LogService implements LogServiceInf {
                 map.put("message", ErrorEnum.LOG_QUERY_SUCCESS.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object deleteOneLogService(HttpSession httpSession, int id){
+    public CompletableFuture<Object> deleteOneLogService(HttpSession httpSession, int id){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -63,11 +66,11 @@ public class LogService implements LogServiceInf {
                 map.put("message", ErrorEnum.LOG_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object deleteAllLogByApiIdService(HttpSession httpSession, int apiId) {
+    public CompletableFuture<Object> deleteAllLogByApiIdService(HttpSession httpSession, int apiId) {
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -78,6 +81,6 @@ public class LogService implements LogServiceInf {
             map.put("status", ErrorEnum.LOG_DELETE_SUCCESS.getStatus());
             map.put("message", ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 }

@@ -5,6 +5,7 @@ import com.apitest.error.ErrorEnum;
 import com.apitest.inf.ForgetServiceInf;
 import com.apitest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +14,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
+@Async
 public class ForgetService implements ForgetServiceInf {
 
     private final UserRepository userRepository;
 
     @Autowired
-    private ForgetService(UserRepository userRepository){
+    public ForgetService(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
     @Override
-    public Object forgetPasswordService(HttpSession httpSession, Map<String, String> models) {
+    public CompletableFuture<Object> forgetPasswordService(HttpSession httpSession, Map<String, String> models) {
         Map<String, Object> map = new HashMap<>(8);
         String username = models.get("username");
         String newPassword = models.get("newPwd");
@@ -56,11 +59,11 @@ public class ForgetService implements ForgetServiceInf {
             map.put("message", ErrorEnum.RESET_PASSWORD_SUCCESS.getMessage());
             httpSession.removeAttribute("token");
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object getTokenService(HttpSession httpSession) {
+    public CompletableFuture<Object> getTokenService(HttpSession httpSession) {
         Map<String, Object> map = new HashMap<>(8);
         String token = UUID.randomUUID().toString();
         //创建一个session key为token
@@ -68,6 +71,6 @@ public class ForgetService implements ForgetServiceInf {
         map.put("status", ErrorEnum.TOKEN_SUSSCESS.getStatus());
         map.put("message", ErrorEnum.TOKEN_SUSSCESS.getMessage());
         map.put("data", httpSession.getAttribute("token"));
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 }

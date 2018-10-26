@@ -7,6 +7,7 @@ import com.apitest.inf.CaseServiceInf;
 import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -15,20 +16,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
+@Async
 public class CaseService implements CaseServiceInf {
     private final CaseRepository caseRepository;
     private final ApiRepository apiRepository;
 
     @Autowired
-    private CaseService(CaseRepository caseRepository, ApiRepository apiRepository) {
+    public CaseService(CaseRepository caseRepository, ApiRepository apiRepository) {
         this.caseRepository = caseRepository;
         this.apiRepository = apiRepository;
     }
 
     @Override
-    public Object queryCaseByApiIdService(HttpSession httpSession, int apiId){
+    public CompletableFuture<Object> queryCaseByApiIdService(HttpSession httpSession, int apiId){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -46,11 +49,11 @@ public class CaseService implements CaseServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object queryOneCaseService(HttpSession httpSession, int id) {
+    public CompletableFuture<Object> queryOneCaseService(HttpSession httpSession, int id) {
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -62,11 +65,11 @@ public class CaseService implements CaseServiceInf {
             map.put("message", ErrorEnum.CASE_QUERY_SUCCESS.getMessage());
             map.put("data", cases);
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object deleteAllCaseByApiIdService(HttpSession httpSession, int apiId){
+    public CompletableFuture<Object> deleteAllCaseByApiIdService(HttpSession httpSession, int apiId){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -77,11 +80,11 @@ public class CaseService implements CaseServiceInf {
             map.put("status", ErrorEnum.CASE_DELETE_SUCCESS.getStatus());
             map.put("message", ErrorEnum.CASE_DELETE_SUCCESS.getMessage());
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object modifyCaseService(HttpSession httpSession, int id, Cases cases) {
+    public CompletableFuture<Object> modifyCaseService(HttpSession httpSession, int id, Cases cases) {
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -102,11 +105,11 @@ public class CaseService implements CaseServiceInf {
                 map.put("message", ErrorEnum.CASE_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object deleteOneCaseService(HttpSession httpSession, int id) {
+    public CompletableFuture<Object> deleteOneCaseService(HttpSession httpSession, int id) {
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -122,11 +125,11 @@ public class CaseService implements CaseServiceInf {
                 map.put("message", ErrorEnum.CASE_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public Object addCaseByApiIdService(HttpSession httpSession, Cases cases, int apiId) {
+    public CompletableFuture<Object> addCaseByApiIdService(HttpSession httpSession, Cases cases, int apiId) {
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
@@ -145,7 +148,7 @@ public class CaseService implements CaseServiceInf {
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
         }
-        return map;
+        return CompletableFuture.completedFuture(map);
     }
 
     private void setApiTimeDefault(Cases cases) {
