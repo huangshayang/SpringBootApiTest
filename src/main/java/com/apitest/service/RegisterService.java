@@ -5,6 +5,7 @@ import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.RegisterServiceInf;
 import com.apitest.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +22,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @Service
 @Async
+@Log4j2
 public class RegisterService implements RegisterServiceInf {
 
     private final UserRepository userRepository;
@@ -37,6 +39,7 @@ public class RegisterService implements RegisterServiceInf {
         String password = models.get("password");
         String captcha = models.get("captcha");
         String code = String.valueOf(httpSession.getAttribute("captcha"));
+        log.warn("参数: " + models);
         User user = new User();
         try {
             if (username == null || password == null ||
@@ -62,10 +65,12 @@ public class RegisterService implements RegisterServiceInf {
                 map.put("message", ErrorEnum.REGISTER_SUCCESS.getMessage());
             }
         }catch (Exception e){
-            map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
-            map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
+            log.error("错误信息: " + e);
+            log.error("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }
         httpSession.removeAttribute("captcha");
+        log.warn("返回结果: " + map);
+        log.warn("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return CompletableFuture.completedFuture(map);
     }
 

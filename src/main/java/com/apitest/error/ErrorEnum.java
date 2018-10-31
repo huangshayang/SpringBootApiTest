@@ -17,6 +17,7 @@ public enum ErrorEnum {
     API_DELETE_SUCCESS(1, "接口删除成功"),
     API_MODIFY_SUCCESS(1, "修改接口成功"),
     API_IS_REPEAT(10013, "接口地址和方法重复"),
+    API_NOTE_IS_EMPTY(10017, "接口名不能为空"),
     USERNAME_OR_PASSWORD_IS_EMPTY(10004, "用户名或密码不能为空"),
     USER_IS_EXIST(10009, "用户已存在，不能重复注册"),
     USER_IS_NOT_EXIST(10013, "用户不存在"),

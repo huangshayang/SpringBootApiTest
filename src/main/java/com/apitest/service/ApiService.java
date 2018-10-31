@@ -10,6 +10,7 @@ import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +29,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 @Async
+@Log4j2
 public class ApiService implements ApiServiceInf {
     private final ApiRepository apiRepository;
     private final CaseRepository caseRepository;
@@ -45,32 +47,43 @@ public class ApiService implements ApiServiceInf {
     public CompletableFuture<Object> addApiService(HttpSession httpSession, Apis api){
         Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
-        if (sessionid == null) {
-            map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
-            map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
-        }else {
-            if (api.getUrl() == null || api.getMethod() == null) {
-                map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
-                map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
-            }else if (api.getMethod().isEmpty()) {
-                map.put("status", ErrorEnum.API_METHOD_IS_EMPTY.getStatus());
-                map.put("message", ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
-            }else if (api.getUrl().isEmpty()) {
-                map.put("status", ErrorEnum.API_URL_IS_EMPTY.getStatus());
-                map.put("message", ErrorEnum.API_URL_IS_EMPTY.getMessage());
-            }else if (api.getCookie() == null) {
-                map.put("status", ErrorEnum.API_COOKIE_IS_EMPTY.getStatus());
-                map.put("message", ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
-            }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
-                map.put("status", ErrorEnum.API_IS_REPEAT.getStatus());
-                map.put("message", ErrorEnum.API_IS_REPEAT.getMessage());
+        log.warn("参数: " + api);
+        try {
+            if (sessionid == null) {
+                map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+                map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
-                setApiTimeDefault(api);
-                apiRepository.save(api);
-                map.put("status", ErrorEnum.API_ADD_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
+                if (api.getUrl() == null || api.getMethod() == null || api.getCookie() == null || api.getNote() == null) {
+                    map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
+                    map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
+                }else if (api.getMethod().isEmpty()) {
+                    map.put("status", ErrorEnum.API_METHOD_IS_EMPTY.getStatus());
+                    map.put("message", ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
+                }else if (api.getUrl().isEmpty()) {
+                    map.put("status", ErrorEnum.API_URL_IS_EMPTY.getStatus());
+                    map.put("message", ErrorEnum.API_URL_IS_EMPTY.getMessage());
+                }else if (api.getCookie().toString().isEmpty()) {
+                    map.put("status", ErrorEnum.API_COOKIE_IS_EMPTY.getStatus());
+                    map.put("message", ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
+                }else if (api.getNote().isEmpty()) {
+                    map.put("status", ErrorEnum.API_NOTE_IS_EMPTY.getStatus());
+                    map.put("message", ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
+                }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
+                    map.put("status", ErrorEnum.API_IS_REPEAT.getStatus());
+                    map.put("message", ErrorEnum.API_IS_REPEAT.getMessage());
+                }else {
+                    setApiTimeDefault(api);
+                    apiRepository.save(api);
+                    map.put("status", ErrorEnum.API_ADD_SUCCESS.getStatus());
+                    map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
+                }
             }
+        }catch (Exception e){
+            log.error("错误信息: " + e);
+            log.error("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }
+        log.warn("返回结果: " + map);
+        log.warn("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return CompletableFuture.completedFuture(map);
     }
 
