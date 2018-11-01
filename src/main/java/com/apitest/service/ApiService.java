@@ -6,6 +6,7 @@ import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.ApiServiceInf;
+import com.apitest.log.ExceptionLog;
 import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
@@ -45,10 +46,10 @@ public class ApiService implements ApiServiceInf {
 
     @Override
     public CompletableFuture<Object> addApiService(HttpSession httpSession, Apis api){
-        Object sessionid = httpSession.getAttribute("user");
         Map<String, Object> map = new HashMap<>(8);
-        log.warn("参数: " + api);
         try {
+            log.info("参数: " + api);
+            Object sessionid = httpSession.getAttribute("user");
             if (sessionid == null) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
@@ -78,12 +79,11 @@ public class ApiService implements ApiServiceInf {
                     map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
                 }
             }
+            log.info("返回结果: " + map);
+            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
-            log.error("错误信息: " + e);
-            log.error("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+            new ExceptionLog(e, api);
         }
-        log.warn("返回结果: " + map);
-        log.warn("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return CompletableFuture.completedFuture(map);
     }
 

@@ -2,9 +2,11 @@ package com.apitest.service;
 
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.LoginServiceInf;
+import com.apitest.log.ExceptionLog;
 import com.apitest.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,11 +35,12 @@ public class LoginService implements LoginServiceInf {
     public CompletableFuture<Object> loginService(HttpSession httpSession, Map<String, String> models){
         Map<String, Object> map = new HashMap<>(8);
         try {
+            log.info("参数: " + models);
             String code = String.valueOf(httpSession.getAttribute("captcha"));
+            log.info("验证码: " + code);
             String username = models.get("username");
             String password = models.get("password");
             String captcha = models.get("captcha");
-            log.warn("参数: " + models);
             if (captcha == null || username == null || password == null ||
                     username.getClass() != String.class ||
                     password.getClass() != String.class ||
@@ -61,13 +64,13 @@ public class LoginService implements LoginServiceInf {
                 map.put("status", ErrorEnum.LOGIN_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.LOGIN_SUCCESS.getMessage());
             }
+            log.info("返回结果: " + map);
+            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
-            log.error("错误信息: " + e);
-            log.error("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+            new ExceptionLog(e, models);
         }
         httpSession.removeAttribute("captcha");
-        log.warn("返回结果: " + map);
-        log.warn("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        log.info(httpSession.getAttribute("captcha") == null);
         return CompletableFuture.completedFuture(map);
     }
 }
