@@ -1,16 +1,20 @@
 package com.apitest.service;
 
+import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.LoginServiceInf;
 import com.apitest.log.ExceptionLog;
 import com.apitest.repository.UserRepository;
+import com.apitest.security.SHACrypt;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +36,7 @@ public class LoginService implements LoginServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> loginService(HttpSession httpSession, Map<String, String> models){
+    public CompletableFuture<Object> loginService(HttpServletResponse response, HttpSession httpSession, Map<String, String> models){
         Map<String, Object> map = new HashMap<>(8);
         try {
             log.info("参数: " + models);
@@ -60,7 +64,12 @@ public class LoginService implements LoginServiceInf {
                 map.put("status", ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus());
                 map.put("message", ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {
-                httpSession.setAttribute("user", userRepository.findByUsername(username));
+                User user = userRepository.findByUsername(username);
+                String uInfo = new BCryptPasswordEncoder().encode((CharSequence) user);
+                httpSession.setAttribute("user", uInfo);
+                httpSession.setMaxInactiveInterval(1800);
+                response.addHeader("Set-Cookie", "uInfo=" + uInfo + ";Path=/;Max-Age=" + httpSession.getMaxInactiveInterval());
+                response.addDateHeader("expires", System.currentTimeMillis() + httpSession.getMaxInactiveInterval()*3600);
                 map.put("status", ErrorEnum.LOGIN_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.LOGIN_SUCCESS.getMessage());
             }
@@ -70,7 +79,7 @@ public class LoginService implements LoginServiceInf {
             new ExceptionLog(e, models);
         }
         httpSession.removeAttribute("captcha");
-        log.info(httpSession.getAttribute("captcha") == null);
+        log.info("captcha是否移除: " + (httpSession.getAttribute("captcha") == null));
         return CompletableFuture.completedFuture(map);
     }
 }

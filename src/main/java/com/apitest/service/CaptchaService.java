@@ -24,6 +24,7 @@ public class CaptchaService {
         String code = getNumber();
         //绑定验证码
         httpSession.setAttribute("captcha", code);
+        httpSession.setMaxInactiveInterval(60);
         g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         g.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
         g.drawString(code, 5, 18);

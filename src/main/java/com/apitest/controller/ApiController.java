@@ -5,6 +5,7 @@ import com.apitest.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.concurrent.CompletableFuture;
 
@@ -33,8 +34,8 @@ public class ApiController {
     }
 
     @GetMapping(value = "/all")
-    public CompletableFuture<Object> queryPageApiController(HttpSession httpSession, @RequestParam (value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-        return CompletableFuture.completedFuture(apiService.queryPageApiService(httpSession, page, size));
+    public CompletableFuture<Object> queryPageApiController(HttpServletRequest request, HttpSession httpSession, @RequestParam (value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        return CompletableFuture.completedFuture(apiService.queryPageApiService(request, httpSession, page, size));
     }
 
     @PutMapping(value = "/{id}")

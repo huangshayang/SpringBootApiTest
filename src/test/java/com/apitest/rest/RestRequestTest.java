@@ -1,20 +1,29 @@
 package com.apitest.rest;
 
+import com.apitest.configconsts.ConfigConsts;
+import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
-
+@Log4j2
 public class RestRequestTest {
 
 
     @Test
     public void doGet() throws IOException {
-        String url = "/organizations/{id}/departments";
-        System.out.println(RestRequest.doGet(url, "2", true).retrieve().bodyToMono(String.class).block());
+        String url = "http://localhost:8080";
+        WebClient client = WebClient.create(url);
+        WebClient.RequestHeadersSpec<?> requestHeadersSpec;
+        requestHeadersSpec = client.get().uri("/api/all").cookie("user", "sdfdsf").accept(MediaType.APPLICATION_JSON_UTF8);
+        log.info(requestHeadersSpec.retrieve().bodyToMono(String.class).block());
+//        System.out.println(RestRequest.doGet(url, "2", true).retrieve().bodyToMono(String.class).block());
 //        String data = "{}";
 //        boolean cookie = true;
 //        String responseEntity = RestRequest.doGet(url, data, cookie).getBody();

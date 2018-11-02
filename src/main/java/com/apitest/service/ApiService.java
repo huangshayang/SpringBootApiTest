@@ -11,16 +11,19 @@ import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
+import com.apitest.security.SHACrypt;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -88,23 +91,33 @@ public class ApiService implements ApiServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> queryPageApiService(HttpSession httpSession, int page, int size){
-        Object sessionid = httpSession.getAttribute("user");
+    public CompletableFuture<Object> queryPageApiService(HttpServletRequest request, HttpSession httpSession, int page, int size){
         Map<String, Object> map = new HashMap<>(8);
-        if (sessionid == null) {
-            map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
-            map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
-        }else {
-            if (page <0 || size < 0) {
-                map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
-                map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
+        try {
+            String sessionid = String.valueOf(httpSession.getAttribute("user"));
+            String uInfo = request.getHeader("Cookie").substring(request.getHeader("Cookie").indexOf("uInfo="));
+            log.info(sessionid);
+            log.info(uInfo);
+            log.info(uInfo.equals(sessionid));
+            if (sessionid == null && new BCryptPasswordEncoder().matches(uInfo, sessionid)) {
+                map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+                map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
-                Sort sort = new Sort(Sort.Direction.ASC, "id");
-                Page<Apis> apis = apiRepository.findAll(PageRequest.of(page, size, sort));
-                map.put("data", apis);
-                map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
+                if (page <0 || size < 0) {
+                    map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
+                    map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
+                }else {
+                    Sort sort = new Sort(Sort.Direction.ASC, "id");
+                    Page<Apis> apis = apiRepository.findAll(PageRequest.of(page, size, sort));
+                    map.put("data", apis);
+                    map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
+                    map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
+                }
             }
+            log.info("返回结果: " + map);
+            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        }catch (Exception e){
+            new ExceptionLog(e, page, size);
         }
         return CompletableFuture.completedFuture(map);
     }
