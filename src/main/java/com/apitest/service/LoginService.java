@@ -16,9 +16,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -64,19 +62,24 @@ public class LoginService implements LoginServiceInf {
                 map.put("status", ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus());
                 map.put("message", ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {
-                User user = userRepository.findByUsername(username);
-                String uInfo = new BCryptPasswordEncoder().encode((CharSequence) user);
+                String uInfo = new BCryptPasswordEncoder().encode(String.valueOf(userRepository.findByUsername(username)));
                 httpSession.setAttribute("user", uInfo);
                 httpSession.setMaxInactiveInterval(1800);
-                response.addHeader("Set-Cookie", "uInfo=" + uInfo + ";Path=/;Max-Age=" + httpSession.getMaxInactiveInterval());
-                response.addDateHeader("expires", System.currentTimeMillis() + httpSession.getMaxInactiveInterval()*3600);
+                Cookie cookie = new Cookie("uInfo", uInfo);
+                cookie.setMaxAge(httpSession.getMaxInactiveInterval());
+                cookie.setPath("/");
+                cookie.setHttpOnly(true);
+                response.addCookie(cookie);
+                response.addHeader("cache-control", "no-cache");
+                response.addHeader("cache-control", "no-store");
                 map.put("status", ErrorEnum.LOGIN_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.LOGIN_SUCCESS.getMessage());
             }
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
-            new ExceptionLog(e, models);
+            e.printStackTrace();
+//            new ExceptionLog(e, models);
         }
         httpSession.removeAttribute("captcha");
         log.info("captcha是否移除: " + (httpSession.getAttribute("captcha") == null));

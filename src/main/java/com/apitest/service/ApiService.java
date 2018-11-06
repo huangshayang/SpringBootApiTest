@@ -38,7 +38,7 @@ public class ApiService implements ApiServiceInf {
     private final ApiRepository apiRepository;
     private final CaseRepository caseRepository;
     private final LogRepository logRepository;
-    private static ReentrantLock lock = new ReentrantLock();
+//    private static ReentrantLock lock = new ReentrantLock();
 
     @Autowired
     public ApiService(ApiRepository apiRepository, CaseRepository caseRepository, LogRepository logRepository) {
@@ -95,11 +95,8 @@ public class ApiService implements ApiServiceInf {
         Map<String, Object> map = new HashMap<>(8);
         try {
             String sessionid = String.valueOf(httpSession.getAttribute("user"));
-            String uInfo = request.getHeader("Cookie").substring(request.getHeader("Cookie").indexOf("uInfo="));
-            log.info(sessionid);
-            log.info(uInfo);
-            log.info(uInfo.equals(sessionid));
-            if (sessionid == null && new BCryptPasswordEncoder().matches(uInfo, sessionid)) {
+            String cookieHeader = request.getHeader("Cookie");
+            if (sessionid == null || cookieHeader == null || !cookieHeader.contains("uInfo=") || !Objects.equals(sessionid, cookieHeader.substring(cookieHeader.indexOf("uInfo=")+6))) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
@@ -117,7 +114,8 @@ public class ApiService implements ApiServiceInf {
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
-            new ExceptionLog(e, page, size);
+            e.printStackTrace();
+//            new ExceptionLog(e, page, size);
         }
         return CompletableFuture.completedFuture(map);
     }
@@ -194,7 +192,7 @@ public class ApiService implements ApiServiceInf {
     @Override
     public CompletableFuture<Object> execApiService(HttpSession httpSession, int id) {
         Object sessionid = httpSession.getAttribute("user");
-        List<Cases> casesList = caseRepository.findByApiId(id);
+        Vector<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -214,7 +212,7 @@ public class ApiService implements ApiServiceInf {
     @Override
     public CompletableFuture<Object> execApiServiceOne(HttpSession httpSession, int id){
         Object sessionid = httpSession.getAttribute("user");
-        List<Cases> casesList = caseRepository.findByApiId(id);
+        Vector<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -234,7 +232,7 @@ public class ApiService implements ApiServiceInf {
 
     private void apicase(Apis apis, Cases aCasesList) {
         //向外部发送http请求
-        lock.lock();
+//        lock.lock();
         ClientResponse response = restHttp(apis, aCasesList).exchange().block();
         //把请求的结果保存到响应日志里
         Logs logs = new Logs();
@@ -246,7 +244,7 @@ public class ApiService implements ApiServiceInf {
         logs.setApiId(apis.getId());
         logs.setNote(aCasesList.getNote());
         logRepository.save(logs);
-        lock.unlock();
+//        lock.unlock();
     }
 
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {

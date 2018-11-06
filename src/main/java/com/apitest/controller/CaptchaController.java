@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @RestController
 @RequestMapping(value = "/account")
@@ -21,7 +20,7 @@ public class CaptchaController {
     }
 
     @PostMapping(value = "/verify")
-    public void captchaController(HttpServletResponse response , HttpSession httpSession) throws IOException {
+    public void captchaController(HttpServletResponse response , HttpSession httpSession) {
         captchaService.captchaService(response, httpSession);
     }
 }

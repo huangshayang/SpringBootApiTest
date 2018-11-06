@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -40,7 +37,7 @@ public class CaseService implements CaseServiceInf {
         }else {
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
-                List<Cases> cases = caseRepository.findByApiId(apiId);
+                Vector<Cases> cases = caseRepository.findByApiId(apiId);
                 map.put("status", ErrorEnum.CASE_QUERY_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.CASE_QUERY_SUCCESS.getMessage());
                 map.put("data", cases);
