@@ -11,14 +11,13 @@ import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
-import com.apitest.security.SHACrypt;
+import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,7 +28,6 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 @Async
@@ -38,7 +36,7 @@ public class ApiService implements ApiServiceInf {
     private final ApiRepository apiRepository;
     private final CaseRepository caseRepository;
     private final LogRepository logRepository;
-//    private static ReentrantLock lock = new ReentrantLock();
+    private ReentrantLock lock = new ReentrantLock();
 
     @Autowired
     public ApiService(ApiRepository apiRepository, CaseRepository caseRepository, LogRepository logRepository) {
@@ -95,8 +93,8 @@ public class ApiService implements ApiServiceInf {
         Map<String, Object> map = new HashMap<>(8);
         try {
             String sessionid = String.valueOf(httpSession.getAttribute("user"));
-            String cookieHeader = request.getHeader("Cookie");
-            if (sessionid == null || cookieHeader == null || !cookieHeader.contains("uInfo=") || !Objects.equals(sessionid, cookieHeader.substring(cookieHeader.indexOf("uInfo=")+6))) {
+            String cookieHeader = request.getHeader("cookie");
+            if (sessionid == null || cookieHeader == null || !Objects.equals(sessionid, cookieHeader.substring(cookieHeader.indexOf("uInfo=")+6))) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
@@ -192,7 +190,7 @@ public class ApiService implements ApiServiceInf {
     @Override
     public CompletableFuture<Object> execApiService(HttpSession httpSession, int id) {
         Object sessionid = httpSession.getAttribute("user");
-        Vector<Cases> casesList = caseRepository.findByApiId(id);
+        List<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -212,7 +210,7 @@ public class ApiService implements ApiServiceInf {
     @Override
     public CompletableFuture<Object> execApiServiceOne(HttpSession httpSession, int id){
         Object sessionid = httpSession.getAttribute("user");
-        Vector<Cases> casesList = caseRepository.findByApiId(id);
+        List<Cases> casesList = caseRepository.findByApiId(id);
         Map<String, Object> map = new HashMap<>(8);
         if (sessionid == null) {
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
@@ -232,7 +230,7 @@ public class ApiService implements ApiServiceInf {
 
     private void apicase(Apis apis, Cases aCasesList) {
         //向外部发送http请求
-//        lock.lock();
+        lock.lock();
         ClientResponse response = restHttp(apis, aCasesList).exchange().block();
         //把请求的结果保存到响应日志里
         Logs logs = new Logs();
@@ -244,7 +242,7 @@ public class ApiService implements ApiServiceInf {
         logs.setApiId(apis.getId());
         logs.setNote(aCasesList.getNote());
         logRepository.save(logs);
-//        lock.unlock();
+        lock.unlock();
     }
 
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {

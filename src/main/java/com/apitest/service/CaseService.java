@@ -37,7 +37,7 @@ public class CaseService implements CaseServiceInf {
         }else {
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
-                Vector<Cases> cases = caseRepository.findByApiId(apiId);
+                List<Cases> cases = caseRepository.findByApiId(apiId);
                 map.put("status", ErrorEnum.CASE_QUERY_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.CASE_QUERY_SUCCESS.getMessage());
                 map.put("data", cases);

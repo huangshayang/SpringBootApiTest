@@ -18,10 +18,10 @@ public class RestRequestTest {
 
     @Test
     public void doGet() throws IOException {
-        String url = "http://alpha.smart-iov.net";
+        String url = "http://localhost:8080";
         WebClient client = WebClient.create(url);
         WebClient.RequestHeadersSpec<?> requestHeadersSpec;
-        requestHeadersSpec = client.get().uri("/profile").cookie("IOV_SESSION", "cacdba96c95044dc9350f2b04325328d").accept(MediaType.APPLICATION_JSON_UTF8);
+        requestHeadersSpec = client.get().uri("/api/all").cookie("uInfo", "$2a$10$517irWMF1zW0suhnpSHoXuoMlYflIWtq3AH8bE5/yKe9.fPIeeDa6").accept(MediaType.APPLICATION_JSON_UTF8);
         log.info(requestHeadersSpec.retrieve().bodyToMono(String.class).block());
 //        System.out.println(RestRequest.doGet(url, "2", true).retrieve().bodyToMono(String.class).block());
 //        String data = "{}";
@@ -33,14 +33,22 @@ public class RestRequestTest {
 
     @Test
     public void doPost() {
-
-        String url = "/profile";
-        String data = "{\"username\":\"16602811927\",\"password\":\"d7190eb194ff9494625514b6d178c87f99c5973e28c398969d2233f2960a573e\"}";
-        System.out.println(RestRequest.doPost(url, data, false).retrieve().bodyToMono(String.class).block());
+        String url = "http://localhost:8080";
+        WebClient client = WebClient.create(url);
+        WebClient.RequestHeadersSpec<?> requestHeadersSpec;
+        String data = "{\"username\":\"admin\",\"password\":\"123456\"}";
+        requestHeadersSpec = client.post().uri("/account/login").contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(data);
+        System.out.println(requestHeadersSpec.exchange().block().cookies());
+//        System.out.println(RestRequest.doPost(url, data, false).retrieve().bodyToMono(String.class).block());
     }
 
     @Test
     public void doPut() {
+        String url = "http://localhost:8080";
+        WebClient client = WebClient.create(url);
+        WebClient.RequestHeadersSpec<?> requestHeadersSpec;
+        requestHeadersSpec = client.post().uri("/account/verify").contentType(MediaType.APPLICATION_JSON_UTF8);
+        System.out.println(requestHeadersSpec.retrieve().bodyToMono(String.class).block());
     }
 
     @Test
