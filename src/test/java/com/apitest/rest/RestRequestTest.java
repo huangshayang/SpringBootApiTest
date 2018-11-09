@@ -5,7 +5,11 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -14,14 +18,12 @@ import java.util.Objects;
 
 @Log4j2
 public class RestRequestTest {
-
+    private static String url = "http://localhost:8080";
+    private static WebClient client = WebClient.create(url);
 
     @Test
     public void doGet() throws IOException {
-        String url = "http://localhost:8080";
-        WebClient client = WebClient.create(url);
-        WebClient.RequestHeadersSpec<?> requestHeadersSpec;
-        requestHeadersSpec = client.get().uri("/api/all").cookie("uInfo", "$2a$10$517irWMF1zW0suhnpSHoXuoMlYflIWtq3AH8bE5/yKe9.fPIeeDa6").accept(MediaType.APPLICATION_JSON_UTF8);
+        WebClient.RequestHeadersSpec<?> requestHeadersSpec = client.get().uri("/api/all").accept(MediaType.APPLICATION_JSON_UTF8).header("auth", "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjYTBiZTI5NC02M2Y1LTQ0NTgtYjA0MC1lNGI4YzI0MzAxNjAiLCJpYXQiOjE1NDE2NzM3NTksImV4cCI6MTU0MTY3NTU1OSwic3ViIjoiVXNlcihpZD0xLCB1c2VybmFtZT1hZG1pbiwgcGFzc3dvcmQ9JDJhJDEwJGJBaFpYR0JDOG90ZmxsREduY0M1ZmVyMnpjcVp6SllCQXNlVERMeEtnbmFnVi5yc0lsSGhXKSJ9.XPEzolQmr8NrK7qTZo-jOYts_NJyE0MMnLlOms-X3w4s5Exy8KyHDRKhyRFhlc_3nynFxq9Ku-fc6KWWyyhjig");
         log.info(requestHeadersSpec.retrieve().bodyToMono(String.class).block());
 //        System.out.println(RestRequest.doGet(url, "2", true).retrieve().bodyToMono(String.class).block());
 //        String data = "{}";
@@ -31,15 +33,19 @@ public class RestRequestTest {
 //        Assert.assertEquals(200, Objects.requireNonNull(map).get("status"));
     }
 
+
     @Test
-    public void doPost() {
-        String url = "http://localhost:8080";
-        WebClient client = WebClient.create(url);
-        WebClient.RequestHeadersSpec<?> requestHeadersSpec;
-        String data = "{\"username\":\"admin\",\"password\":\"123456\"}";
-        requestHeadersSpec = client.post().uri("/account/login").contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(data);
-        System.out.println(requestHeadersSpec.exchange().block().cookies());
-//        System.out.println(RestRequest.doPost(url, data, false).retrieve().bodyToMono(String.class).block());
+    public void getHeader() {
+        String url = "http://localhost:8080/account/login";
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("username", "admin");
+        map.add("password", "123456");
+        Mono<ClientResponse> webClient = WebClient.create(url)
+                .post()
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .syncBody(map)
+                .exchange();
+        System.out.println(webClient.block().headers().asHttpHeaders());
     }
 
     @Test

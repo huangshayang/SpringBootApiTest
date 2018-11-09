@@ -45,7 +45,7 @@ public class RestRequest {
     }
 
     private static String getCookie() {
-        final String url = "http://alpha.smart-iov.net/api/v1/login";
+        String url = "http://alpha.smart-iov.net/api/v1/login";
         ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(8);
         map.put("username", ConfigConsts.USERNAME);
         map.put("password", ConfigConsts.PASSWORD);

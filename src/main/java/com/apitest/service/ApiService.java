@@ -11,7 +11,11 @@ import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
+import com.apitest.util.JwtUtil;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,8 +26,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.security.GeneralSecurityException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
@@ -37,6 +44,7 @@ public class ApiService implements ApiServiceInf {
     private final CaseRepository caseRepository;
     private final LogRepository logRepository;
     private ReentrantLock lock = new ReentrantLock();
+    private final String PAYLOAD_KEY = "apitest";
 
     @Autowired
     public ApiService(ApiRepository apiRepository, CaseRepository caseRepository, LogRepository logRepository) {
@@ -46,12 +54,12 @@ public class ApiService implements ApiServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> addApiService(HttpSession httpSession, Apis api){
+    public CompletableFuture<Object> addApiService(HttpServletRequest request, Apis api){
         Map<String, Object> map = new HashMap<>(8);
         try {
             log.info("参数: " + api);
-            Object sessionid = httpSession.getAttribute("user");
-            if (sessionid == null) {
+            String jwt = request.getHeader("auth");
+            if (jwt == null || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
@@ -82,6 +90,9 @@ public class ApiService implements ApiServiceInf {
             }
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        }catch (ExpiredJwtException | SignatureException | MalformedJwtException e){
+            map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+            map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
         }catch (Exception e){
             new ExceptionLog(e, api);
         }
@@ -89,12 +100,11 @@ public class ApiService implements ApiServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> queryPageApiService(HttpServletRequest request, HttpSession httpSession, int page, int size){
+    public CompletableFuture<Object> queryPageApiService(HttpServletRequest request, int page, int size){
         Map<String, Object> map = new HashMap<>(8);
         try {
-            String sessionid = String.valueOf(httpSession.getAttribute("user"));
-            String cookieHeader = request.getHeader("cookie");
-            if (sessionid == null || cookieHeader == null || !Objects.equals(sessionid, cookieHeader.substring(cookieHeader.indexOf("uInfo=")+6))) {
+            String jwt = request.getHeader("auth");
+            if (jwt == null || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
@@ -111,6 +121,9 @@ public class ApiService implements ApiServiceInf {
             }
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        }catch (ExpiredJwtException | SignatureException | MalformedJwtException e){
+            map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+            map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
         }catch (Exception e){
             e.printStackTrace();
 //            new ExceptionLog(e, page, size);

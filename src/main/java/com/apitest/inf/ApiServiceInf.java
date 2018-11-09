@@ -10,9 +10,9 @@ import java.util.concurrent.CompletableFuture;
 @Async
 public interface ApiServiceInf {
 
-    CompletableFuture<Object> addApiService(HttpSession httpSession, Apis api);
+    CompletableFuture<Object> addApiService(HttpServletRequest request, Apis api);
 
-    CompletableFuture<Object> queryPageApiService(HttpServletRequest request, HttpSession httpSession, int page, int size);
+    CompletableFuture<Object> queryPageApiService(HttpServletRequest request, int page, int size);
 
     CompletableFuture<Object> queryOneApiService(HttpSession httpSession, int id);
 

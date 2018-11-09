@@ -24,8 +24,8 @@ public class ApiController {
     }
 
     @PostMapping(value = "/add")
-    public CompletableFuture<Object> addApiController(HttpSession httpSession, @RequestBody Apis api){
-        return CompletableFuture.completedFuture(apiService.addApiService(httpSession, api));
+    public CompletableFuture<Object> addApiController(HttpServletRequest request, @RequestBody Apis api){
+        return CompletableFuture.completedFuture(apiService.addApiService(request, api));
     }
 
     @GetMapping(value = "/{id}")
@@ -34,8 +34,8 @@ public class ApiController {
     }
 
     @GetMapping(value = "/all")
-    public CompletableFuture<Object> queryPageApiController(HttpServletRequest request, HttpSession httpSession, @RequestParam (value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-        return CompletableFuture.completedFuture(apiService.queryPageApiService(request, httpSession, page, size));
+    public CompletableFuture<Object> queryPageApiController(HttpServletRequest request, @RequestParam (value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        return CompletableFuture.completedFuture(apiService.queryPageApiService(request, page, size));
     }
 
     @PutMapping(value = "/{id}")
