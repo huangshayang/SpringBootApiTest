@@ -104,7 +104,7 @@ public class ApiService implements ApiServiceInf {
         Map<String, Object> map = new HashMap<>(8);
         try {
             String jwt = request.getHeader("auth");
-            if (jwt == null || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
+            if (jwt.isEmpty() || jwt.isBlank() || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
