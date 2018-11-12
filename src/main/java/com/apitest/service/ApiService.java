@@ -116,9 +116,6 @@ public class ApiService implements ApiServiceInf {
             }
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        }catch (ExpiredJwtException | SignatureException | MalformedJwtException e){
-            map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
-            map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
         }catch (Exception e){
             e.printStackTrace();
 //            new ExceptionLog(e, page, size);
