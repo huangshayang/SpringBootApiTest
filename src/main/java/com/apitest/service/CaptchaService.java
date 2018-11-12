@@ -33,6 +33,7 @@ public class CaptchaService {
             response.addHeader("cache-control", "no-cache, no-store");
             OutputStream os = response.getOutputStream();
             ImageIO.write(image, "jpeg", os);
+            os.close();
         }catch (Exception e){
             e.printStackTrace();
         }
