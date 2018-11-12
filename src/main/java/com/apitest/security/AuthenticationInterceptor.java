@@ -26,6 +26,14 @@ import java.util.Objects;
 @Log4j2
 public class AuthenticationInterceptor implements HandlerInterceptor{
 
+    /**
+     * 表示是否要将当前的请求拦截下来，如果返货false请求被终止，如果为true请求会继续运行
+     * Object object表示的是被拦截的请求的目标对象
+     * @param request
+     * @param response
+     * @param object
+     * @return
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String jwt = request.getHeader("auth");
@@ -39,11 +47,13 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
                     map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                     map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
                     returnJson(response, map);
+                    return false;
                 }
             }catch (ExpiredJwtException | SignatureException | MalformedJwtException e){
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
                 returnJson(response, map);
+                return false;
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -59,6 +69,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
             String json = jsonObject.writeValueAsString(map);
             OutputStream os = response.getOutputStream();
             os.write(json.getBytes());
+            os.flush();
             os.close();
         } catch (Exception e) {
             e.printStackTrace();
