@@ -1,5 +1,6 @@
 package com.apitest.controller;
 
+import com.apitest.annotation.Auth;
 import com.apitest.entity.Apis;
 import com.apitest.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,23 +30,24 @@ public class ApiController {
     }
 
     @GetMapping(value = "/{id}")
-    public CompletableFuture<Object> querySingleApiController(HttpSession httpSession, @PathVariable int id){
-        return CompletableFuture.completedFuture(apiService.queryOneApiService(httpSession, id));
+    public CompletableFuture<Object> querySingleApiController(HttpServletRequest request, @PathVariable int id){
+        return CompletableFuture.completedFuture(apiService.queryOneApiService(request, id));
     }
 
+    @Auth
     @GetMapping(value = "/all")
     public CompletableFuture<Object> queryPageApiController(HttpServletRequest request, @RequestParam (value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
         return CompletableFuture.completedFuture(apiService.queryPageApiService(request, page, size));
     }
 
     @PutMapping(value = "/{id}")
-    public CompletableFuture<Object> modifyApiController(HttpSession httpSession, @PathVariable int id, @RequestBody Apis api){
-        return CompletableFuture.completedFuture(apiService.modifyApiService(httpSession, id, api));
+    public CompletableFuture<Object> modifyApiController(HttpServletRequest request, @PathVariable int id, @RequestBody Apis api){
+        return CompletableFuture.completedFuture(apiService.modifyApiService(request, id, api));
     }
 
     @DeleteMapping(value = "/{id}")
-    public CompletableFuture<Object> deleteApiController(HttpSession httpSession, @PathVariable int id){
-        return CompletableFuture.completedFuture(apiService.deleteApiService(httpSession, id));
+    public CompletableFuture<Object> deleteApiController(HttpServletRequest request, @PathVariable int id){
+        return CompletableFuture.completedFuture(apiService.deleteApiService(request, id));
     }
 
     @PostMapping(value = "/exec/{id}")

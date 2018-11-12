@@ -25,11 +25,11 @@ public class ApitestApplicationTests {
 //    @Autowired
 //    private RedisTemplate redisTemplate;
 
-    @Test
+//    @Test
 //    @SuppressWarnings("unchecked")
-    public void set(){
+//    public void set(){
 //        redisTemplate.opsForValue().set("test","testValue");
 //        System.out.println(redisTemplate.opsForValue().get("123"));
-    }
+//    }
 
 }

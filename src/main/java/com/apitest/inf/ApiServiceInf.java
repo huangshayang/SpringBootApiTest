@@ -14,11 +14,11 @@ public interface ApiServiceInf {
 
     CompletableFuture<Object> queryPageApiService(HttpServletRequest request, int page, int size);
 
-    CompletableFuture<Object> queryOneApiService(HttpSession httpSession, int id);
+    CompletableFuture<Object> queryOneApiService(HttpServletRequest request, int id);
 
-    CompletableFuture<Object> modifyApiService(HttpSession httpSession, int id, Apis api);
+    CompletableFuture<Object> modifyApiService(HttpServletRequest request, int id, Apis api);
 
-    CompletableFuture<Object> deleteApiService(HttpSession httpSession, int id);
+    CompletableFuture<Object> deleteApiService(HttpServletRequest request, int id);
 
     CompletableFuture<Object> execApiService(HttpSession httpSession, int id);
 

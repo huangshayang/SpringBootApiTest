@@ -1,6 +1,9 @@
 package com.apitest.rest;
 
 import com.apitest.configconsts.ConfigConsts;
+import com.apitest.error.ErrorEnum;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +16,7 @@ import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -65,5 +69,14 @@ public class RestRequestTest {
     public void strBlankTest() {
         String str = " ";
         System.out.println(str.isEmpty());
+    }
+
+    public static void main(String[] args) throws JsonProcessingException {
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+        map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
+        ObjectMapper jsonObject = new ObjectMapper();
+        String json = jsonObject.writeValueAsString(map);
+        System.out.println(json);
     }
 }

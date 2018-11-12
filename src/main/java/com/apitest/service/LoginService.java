@@ -46,7 +46,7 @@ public class LoginService implements LoginServiceInf {
                 map.put("status", ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus());
                 map.put("message", ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {
-                String jwt = JwtUtil.createJWT(username);
+                String jwt = JwtUtil.createJWT(String.valueOf(userRepository.findByUsername(username)));
                 map.put("status", ErrorEnum.LOGIN_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.LOGIN_SUCCESS.getMessage());
                 map.put("auth", jwt);

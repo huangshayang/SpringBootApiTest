@@ -1,6 +1,7 @@
 package com.apitest.service;
 
 
+import com.apitest.annotation.Auth;
 import com.apitest.entity.Apis;
 import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
@@ -28,14 +29,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.security.GeneralSecurityException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author huangshayang
+ */
 @Service
 @Async
 @Log4j2
@@ -56,10 +58,10 @@ public class ApiService implements ApiServiceInf {
     @Override
     public CompletableFuture<Object> addApiService(HttpServletRequest request, Apis api){
         Map<String, Object> map = new HashMap<>(8);
+        log.info("参数: " + api);
         try {
-            log.info("参数: " + api);
             String jwt = request.getHeader("auth");
-            if (jwt == null || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
+            if (jwt.isEmpty() || jwt.isBlank() || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
@@ -82,7 +84,6 @@ public class ApiService implements ApiServiceInf {
                     map.put("status", ErrorEnum.API_IS_REPEAT.getStatus());
                     map.put("message", ErrorEnum.API_IS_REPEAT.getMessage());
                 }else {
-                    setApiTimeDefault(api);
                     apiRepository.save(api);
                     map.put("status", ErrorEnum.API_ADD_SUCCESS.getStatus());
                     map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
@@ -103,20 +104,45 @@ public class ApiService implements ApiServiceInf {
     public CompletableFuture<Object> queryPageApiService(HttpServletRequest request, int page, int size){
         Map<String, Object> map = new HashMap<>(8);
         try {
+            if (page <0 || size < 0) {
+                map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
+                map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
+            }else {
+                Sort sort = new Sort(Sort.Direction.ASC, "id");
+                Page<Apis> apis = apiRepository.findAll(PageRequest.of(page, size, sort));
+                map.put("data", apis);
+                map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
+                map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
+            }
+            log.info("返回结果: " + map);
+            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        }catch (ExpiredJwtException | SignatureException | MalformedJwtException e){
+            map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+            map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
+        }catch (Exception e){
+            e.printStackTrace();
+//            new ExceptionLog(e, page, size);
+        }
+        return CompletableFuture.completedFuture(map);
+    }
+
+    @Override
+    public CompletableFuture<Object> queryOneApiService(HttpServletRequest request, int id){
+        Map<String, Object> map = new HashMap<>(8);
+        try {
             String jwt = request.getHeader("auth");
             if (jwt.isEmpty() || jwt.isBlank() || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
                 map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
                 map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
             }else {
-                if (page <0 || size < 0) {
-                    map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
-                    map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
-                }else {
-                    Sort sort = new Sort(Sort.Direction.ASC, "id");
-                    Page<Apis> apis = apiRepository.findAll(PageRequest.of(page, size, sort));
-                    map.put("data", apis);
+                if (apiRepository.findById(id).isPresent()) {
+                    Optional<Apis> api = apiRepository.findById(id);
+                    map.put("data", api);
                     map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
                     map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
+                }else {
+                    map.put("status", ErrorEnum.API_IS_NULL.getStatus());
+                    map.put("message", ErrorEnum.API_IS_NULL.getMessage());
                 }
             }
             log.info("返回结果: " + map);
@@ -132,70 +158,70 @@ public class ApiService implements ApiServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> queryOneApiService(HttpSession httpSession, int id){
-        Object sessionid = httpSession.getAttribute("user");
+    public CompletableFuture<Object> modifyApiService(HttpServletRequest request, int id, Apis api){
         Map<String, Object> map = new HashMap<>(8);
-        if (sessionid == null) {
+        log.info("参数: " + api);
+        try {
+            String jwt = request.getHeader("auth");
+            if (jwt.isEmpty() || jwt.isBlank() || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
+                map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+                map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
+            }else {
+                if (apiRepository.findById(id).isPresent()) {
+                    Apis apis = apiRepository.findById(id).get();
+                    apis.setUrl(api.getUrl());
+                    apis.setUpdateTime(new Date(System.currentTimeMillis()));
+                    apis.setMethod(api.getMethod());
+                    apis.setNote(api.getNote());
+                    apis.setCookie(api.getCookie());
+                    apiRepository.saveAndFlush(apis);
+                    map.put("status", ErrorEnum.API_MODIFY_SUCCESS.getStatus());
+                    map.put("message", ErrorEnum.API_MODIFY_SUCCESS.getMessage());
+                }else {
+                    map.put("status", ErrorEnum.API_IS_NULL.getStatus());
+                    map.put("message", ErrorEnum.API_IS_NULL.getMessage());
+                }
+            }
+            log.info("返回结果: " + map);
+            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        }catch (ExpiredJwtException | SignatureException | MalformedJwtException e){
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
             map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
-        }else {
-            if (apiRepository.findById(id).isPresent()) {
-                Optional<Apis> api = apiRepository.findById(id);
-                map.put("data", api);
-                map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
-            }else {
-                map.put("status", ErrorEnum.API_IS_NULL.getStatus());
-                map.put("message", ErrorEnum.API_IS_NULL.getMessage());
-            }
+        }catch (Exception e){
+            e.printStackTrace();
+//            new ExceptionLog(e, page, size);
         }
         return CompletableFuture.completedFuture(map);
     }
 
     @Override
-    public CompletableFuture<Object> modifyApiService(HttpSession httpSession, int id, Apis api){
-        Object sessionid = httpSession.getAttribute("user");
+    public CompletableFuture<Object> deleteApiService(HttpServletRequest request, int id){
         Map<String, Object> map = new HashMap<>(8);
-        if (sessionid == null) {
+        try {
+            String jwt = request.getHeader("auth");
+            if (jwt.isEmpty() || jwt.isBlank() || !Objects.equals(PAYLOAD_KEY, JwtUtil.parseJWT(jwt).get("info", String.class))) {
+                map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
+                map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
+            }else {
+                if (apiRepository.findById(id).isPresent()) {
+                    logRepository.deleteByApiId(id);
+                    caseRepository.deleteByApiId(id);
+                    apiRepository.deleteById(id);
+                    map.put("status", ErrorEnum.API_DELETE_SUCCESS.getStatus());
+                    map.put("message", ErrorEnum.API_DELETE_SUCCESS.getMessage());
+                }else {
+                    map.put("status", ErrorEnum.API_IS_NULL.getStatus());
+                    map.put("message", ErrorEnum.API_IS_NULL.getMessage());
+                }
+            }
+            log.info("返回结果: " + map);
+            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        } catch (ExpiredJwtException | SignatureException | MalformedJwtException e){
             map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
             map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
-        }else {
-            if (apiRepository.findById(id).isPresent()) {
-                Apis apis = apiRepository.findById(id).get();
-                apis.setUrl(api.getUrl());
-                apis.setUpdateTime(new Date(System.currentTimeMillis()));
-                apis.setMethod(api.getMethod());
-                apis.setNote(api.getNote());
-                apis.setCookie(api.getCookie());
-                apiRepository.saveAndFlush(apis);
-                map.put("status", ErrorEnum.API_MODIFY_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_MODIFY_SUCCESS.getMessage());
-            }else {
-                map.put("status", ErrorEnum.API_IS_NULL.getStatus());
-                map.put("message", ErrorEnum.API_IS_NULL.getMessage());
-            }
-        }
-        return CompletableFuture.completedFuture(map);
-    }
-
-    @Override
-    public CompletableFuture<Object> deleteApiService(HttpSession httpSession, int id){
-        Object sessionid = httpSession.getAttribute("user");
-        Map<String, Object> map = new HashMap<>(8);
-        if (sessionid == null) {
-            map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
-            map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
-        }else {
-            if (apiRepository.findById(id).isPresent()) {
-                logRepository.deleteByApiId(id);
-                caseRepository.deleteByApiId(id);
-                apiRepository.deleteById(id);
-                map.put("status", ErrorEnum.API_DELETE_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_DELETE_SUCCESS.getMessage());
-            }else {
-                map.put("status", ErrorEnum.API_IS_NULL.getStatus());
-                map.put("message", ErrorEnum.API_IS_NULL.getMessage());
-            }
+        }catch (Exception e){
+            e.printStackTrace();
+//            new ExceptionLog(e, page, size);
         }
         return CompletableFuture.completedFuture(map);
     }
@@ -280,14 +306,5 @@ public class ApiService implements ApiServiceInf {
             default:
         }
         return body;
-    }
-
-    private void setApiTimeDefault(Apis api) {
-        if (api.getCreateTime() == null) {
-            api.setCreateTime(new Date(System.currentTimeMillis()));
-        }
-        if (api.getUpdateTime() == null) {
-            api.setUpdateTime(new Date(System.currentTimeMillis()));
-        }
     }
 }

@@ -31,4 +31,13 @@ public class Apis {
 
     @Column(nullable = false)
     private String note;
+
+    private Apis(){
+        if (this.getCreateTime() == null) {
+            this.setCreateTime(new Date(System.currentTimeMillis()));
+        }
+        if (this.getUpdateTime() == null) {
+            this.setUpdateTime(new Date(System.currentTimeMillis()));
+        }
+    }
 }

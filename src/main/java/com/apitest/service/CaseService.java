@@ -15,6 +15,9 @@ import java.sql.Date;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author huangshayang
+ */
 @Service
 @Async
 public class CaseService implements CaseServiceInf {
@@ -136,7 +139,6 @@ public class CaseService implements CaseServiceInf {
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
                 cases.setApiId(apiId);
-                setApiTimeDefault(cases);
                 caseRepository.save(cases);
                 map.put("status", ErrorEnum.ADD_CASE_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.ADD_CASE_SUCCESS.getMessage());
@@ -146,15 +148,5 @@ public class CaseService implements CaseServiceInf {
             }
         }
         return CompletableFuture.completedFuture(map);
-    }
-
-    private void setApiTimeDefault(Cases cases) {
-        if (cases.getCreateTime() == null) {
-            cases.setCreateTime(new Date(System.currentTimeMillis()));
-        }
-        if (cases.getUpdateTime() == null) {
-            cases.setUpdateTime(new Date(System.currentTimeMillis()));
-        }
-
     }
 }
