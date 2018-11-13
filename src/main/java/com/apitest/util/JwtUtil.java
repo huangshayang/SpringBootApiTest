@@ -44,7 +44,7 @@ public class JwtUtil {
      */
     public static String createJWT(String subject) {
 
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>(8);
         claims.put("info", "apitest");
 
         // 指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。

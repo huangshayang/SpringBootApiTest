@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,7 +29,7 @@ public class LoginService implements LoginServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> loginService(String username, String password){
+    public CompletableFuture<Object> loginService(HttpServletResponse response, String username, String password){
         Map<String, Object> map = new HashMap<>(8);
         try {
             log.info("用户名: " + username);
@@ -46,10 +47,10 @@ public class LoginService implements LoginServiceInf {
                 map.put("status", ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus());
                 map.put("message", ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {
-                String jwt = JwtUtil.createJWT(String.valueOf(userRepository.findByUsername(username)));
+                String jwt = JwtUtil.createJWT(UUID.randomUUID().toString());
+                response.addHeader("auth", jwt);
                 map.put("status", ErrorEnum.LOGIN_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.LOGIN_SUCCESS.getMessage());
-                map.put("auth", jwt);
             }
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());

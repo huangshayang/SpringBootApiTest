@@ -15,7 +15,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,9 +38,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
         String jwt = request.getHeader("auth");
         String payloadKey = "apitest";
         HandlerMethod handlerMethod=(HandlerMethod)object;
-        Method method=handlerMethod.getMethod();
+        Class type = handlerMethod.getBeanType();
         Map<String, Object> map = new HashMap<>(8);
-        if (method.isAnnotationPresent(Auth.class)) {
+        if (type.isAnnotationPresent(Auth.class)) {
             try {
                 if (jwt == null || jwt.isEmpty() || jwt.isBlank() || !Objects.equals(payloadKey, JwtUtil.parseJWT(jwt).get("info", String.class))) {
                     map.put("status", ErrorEnum.AUTH_FAILED.getStatus());

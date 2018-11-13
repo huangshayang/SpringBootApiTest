@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -25,8 +24,8 @@ public class LogoutController {
     }
 
     @DeleteMapping(value = "/logout")
-    public CompletableFuture<Object> logoutController(HttpSession httpSession){
-        return CompletableFuture.completedFuture(logoutService.logoutService(httpSession));
+    public CompletableFuture<Object> logoutController(){
+        return CompletableFuture.completedFuture(logoutService.logoutService());
     }
 
 }
