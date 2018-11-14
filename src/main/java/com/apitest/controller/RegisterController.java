@@ -3,13 +3,8 @@ package com.apitest.controller;
 
 import com.apitest.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -27,7 +22,12 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public CompletableFuture<Object> registerController(HttpSession httpSession, @RequestBody Map<String, String> models){
-        return CompletableFuture.completedFuture(registerService.registerService(httpSession, models));
+    public CompletableFuture<Object> registerController(@RequestParam String usernameOrEmail, @RequestParam String password, @RequestParam String captcha){
+        return CompletableFuture.completedFuture(registerService.registerService(usernameOrEmail, password, captcha));
     }
+
+//    @GetMapping(value = "/register/mail")
+//    public CompletableFuture<Object> registerMailController(@RequestParam String email){
+//        return CompletableFuture.completedFuture(registerService.registerMailService(email));
+//    }
 }

@@ -1,6 +1,5 @@
-package com.apitest.service;
+package com.apitest.util;
 
-import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -10,8 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.util.Random;
 
-@Service
-public class CaptchaService {
+public class CaptchaUtil {
 
     public void captchaService(HttpServletResponse response, HttpSession httpSession) {
         try{

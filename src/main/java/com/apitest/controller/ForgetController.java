@@ -2,13 +2,8 @@ package com.apitest.controller;
 
 import com.apitest.service.ForgetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -22,13 +17,13 @@ public class ForgetController {
         this.forgetService = forgetService;
     }
 
-    @PostMapping(value = "/forget")
-    public CompletableFuture<Object> forgetPasswordController(HttpSession httpSession, @RequestBody Map<String, String> models) {
-        return CompletableFuture.completedFuture(forgetService.forgetPasswordService(httpSession, models));
+    @PutMapping(value = "/reset/password")
+    public CompletableFuture<Object> resetPasswordService(@RequestParam String newPassword, @RequestParam String code) {
+        return CompletableFuture.completedFuture(forgetService.resetPasswordService(newPassword, code));
     }
 
-    @PostMapping(value = "/forget/token")
-    public CompletableFuture<Object> getTokenController(HttpSession httpSession) {
-        return CompletableFuture.completedFuture(forgetService.getTokenService(httpSession));
-    }
+//    @GetMapping(value = "/reset/mail")
+//    public CompletableFuture<Object> resetPasswordMailController(@RequestParam String email){
+//        return CompletableFuture.completedFuture(forgetService.resetPasswordMailService(email));
+//    }
 }

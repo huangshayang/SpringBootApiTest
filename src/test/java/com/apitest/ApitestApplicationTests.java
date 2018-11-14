@@ -1,5 +1,6 @@
 package com.apitest;
 
+import com.apitest.service.MailSendService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,15 @@ import reactor.core.publisher.Mono;
 @SpringBootTest
 public class ApitestApplicationTests {
 
+//    @Autowired
+//    private MailSendService mailSendService;
+
     @Test
     public void contextLoads() {
+//        String subject = "Jerome的文本邮件";
+//        String content = "Jerome的文本邮件的正文部分";
+//        String toUser = "shayang888@qq.com";
+//        mailSendService.sendTextMail(toUser, subject, content);
     }
 
 //    @Autowired

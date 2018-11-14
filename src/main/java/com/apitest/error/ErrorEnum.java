@@ -20,13 +20,13 @@ public enum ErrorEnum {
     API_NOTE_IS_EMPTY(10017, "接口名不能为空"),
     USERNAME_OR_PASSWORD_IS_EMPTY(10004, "用户名或密码不能为空"),
     USER_IS_EXIST(10009, "用户已存在，不能重复注册"),
-    USER_IS_NOT_EXIST(10013, "用户不存在"),
     TOKEN_IS_EMPTY(10015, "token不能为空"),
     TOKEN_IS_ERROR(10016, "token错误"),
     RESET_PASSWORD_SUCCESS(1, "重置密码成功"),
     USER_OR_PASSWORD_ERROR(10007, "用户名或密码错误"),
-    TOKEN_SUSSCESS(1, "获取token成功"),
     USER_IS_NOT_EXISTS(10014, "用户不存在，请先注册"),
+    EMAIL_IS_ERROR(10018, "邮箱错误，请检查"),
+    EMAIL_SEND_SUCCESS(1, "邮件发送成功，请查收"),
     LOGIN_SUCCESS(1, "登录成功"),
     REGISTER_SUCCESS(1, "注册成功"),
     AUTH_FAILED(10008, "未登录"),
@@ -42,7 +42,8 @@ public enum ErrorEnum {
     LOG_DELETE_SUCCESS(1, "删除日志成功"),
     LOG_IS_NULL(10012, "日志id不存在"),
     PARAMETER_ERROR(10002, "参数传递错误"),
-    CAPTCHA_ERROR(10001, "验证码错误");
+    CAPTCHA_ERROR(10001, "验证码错误"),
+    PASSWORD_IS_EMPTY(10019, "密码不能为空");
 
     @Getter
     private int status;

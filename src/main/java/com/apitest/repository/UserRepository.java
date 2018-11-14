@@ -10,16 +10,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
-     * 通过username找到user
+     * 通过username或者email找到user
      * @param username
+     * @param email
      * @return
      */
-    User findByUsername(String username);
-
-    /**
-     * 通过
-     * @param username
-     * @return
-     */
-    boolean existsByUsername(String username);
+    User findUserByUsernameOrEmail(String username, String email);
 }

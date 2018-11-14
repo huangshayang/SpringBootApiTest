@@ -4,15 +4,14 @@ package com.apitest.service;
 import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.RegisterServiceInf;
-import com.apitest.log.ExceptionLog;
 import com.apitest.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,52 +26,58 @@ import java.util.concurrent.CompletableFuture;
 public class RegisterService implements RegisterServiceInf {
 
     private final UserRepository userRepository;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
-    public RegisterService(UserRepository userRepository) {
+    public RegisterService(UserRepository userRepository, RedisTemplate<String, Object> redisTemplate) {
         this.userRepository = userRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
-    public CompletableFuture<Object> registerService(HttpSession httpSession, Map<String, String> models) {
+    public CompletableFuture<Object> registerService(String username, String password, String captcha) {
         Map<String, Object> map = new HashMap<>(8);
         User user = new User();
         try {
-            log.info("参数: " + models);
-            String username = models.get("username");
-            String password = models.get("password");
-            String captcha = models.get("captcha");
-            String code = String.valueOf(httpSession.getAttribute("captcha"));
-            log.info("验证码: " + code);
+            log.info("用户名: " + username);
+            log.info("密码: " + password);
+            log.info("验证码" + captcha);
             if (username == null || password == null ||
-                    username.getClass() != String.class ||
-                    password.getClass() != String.class ||
-                    captcha.getClass() != String.class) {
+                    password.getClass() != String.class) {
                 map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
                 map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
-            }else if (Objects.equals("", username) || Objects.equals("", password)){
+            }else if (username.isEmpty() || username.isBlank() || password.isEmpty() || password.isBlank()){
                 map.put("status", ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getStatus());
                 map.put("message", ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getMessage());
-            }else if (userRepository.existsByUsername(username)) {
+            }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
                 map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (!code.equalsIgnoreCase(captcha)) {
+            }else if (!registerCodeCheck(captcha) || !Objects.equals(username, String.valueOf(redisTemplate.boundHashOps("mail").get(captcha)))) {
                 map.put("status", ErrorEnum.CAPTCHA_ERROR.getStatus());
                 map.put("message", ErrorEnum.CAPTCHA_ERROR.getMessage());
             }else {
                 user.setUsername(username);
+                user.setEmail(username);
                 user.setPassword(new BCryptPasswordEncoder().encode(password));
                 userRepository.save(user);
                 map.put("status", ErrorEnum.REGISTER_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.REGISTER_SUCCESS.getMessage());
+                redisTemplate.delete("mail");
             }
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
-            new ExceptionLog(e, models);
+            e.printStackTrace();
         }
-        httpSession.removeAttribute("captcha");
         return CompletableFuture.completedFuture(map);
     }
 
+    private boolean registerCodeCheck(String code){
+        boolean isMail = redisTemplate.hasKey("mail");
+        boolean isRegisterCode = redisTemplate.boundHashOps("mail").hasKey("registerCode");
+        if (isMail && isRegisterCode) {
+            return Objects.equals(code, redisTemplate.boundHashOps("mail").get("registerCode"));
+        }
+        return false;
+    }
 }
