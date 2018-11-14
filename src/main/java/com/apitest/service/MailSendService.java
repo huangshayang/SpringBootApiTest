@@ -21,24 +21,24 @@ public class MailSendService implements MailSendServiceInf {
     @Value("${spring.mail.username}")
     private String user;
 
-    private final MailSendUtil mailSend;
+    private final MailSendUtil mailSendUtil;
 
     @Autowired
-    public MailSendService(MailSendUtil mailSend) {
-        this.mailSend = mailSend;
+    public MailSendService(MailSendUtil mailSendUtil) {
+        this.mailSendUtil = mailSendUtil;
     }
 
 
     @Override
     public CompletableFuture<Object> resetPasswordMailService(String email){
         String key = "resetCode";
-        return mailSend.getObjectCompletableFuture(email, ConfigConsts.RESET_SUBJECT, key);
+        return mailSendUtil.getObjectCompletableFuture(email, ConfigConsts.RESET_SUBJECT, key);
     }
 
 
     @Override
     public CompletableFuture<Object> registerMailService(String email){
         String key = "registerCode";
-        return mailSend.getObjectCompletableFuture(email, ConfigConsts.REGESTER_SUBJECT, key);
+        return mailSendUtil.getObjectCompletableFuture(email, ConfigConsts.REGESTER_SUBJECT, key);
     }
 }
