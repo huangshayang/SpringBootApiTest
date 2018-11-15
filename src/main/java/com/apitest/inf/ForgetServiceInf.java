@@ -11,5 +11,5 @@ import java.util.concurrent.CompletableFuture;
 @Async
 public interface ForgetServiceInf {
 
-    CompletableFuture<Object> resetPasswordService(String newPassword, String code);
+    CompletableFuture<Object> resetPasswordService(String newPassword, String captcha);
 }

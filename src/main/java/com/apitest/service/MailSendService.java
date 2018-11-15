@@ -32,13 +32,13 @@ public class MailSendService implements MailSendServiceInf {
     @Override
     public CompletableFuture<Object> resetPasswordMailService(String email){
         String key = "resetCode";
-        return mailSendUtil.getObjectCompletableFuture(email, ConfigConsts.RESET_SUBJECT, key);
+        return mailSendUtil.sendMailHandler(email, ConfigConsts.RESET_SUBJECT, key);
     }
 
 
     @Override
     public CompletableFuture<Object> registerMailService(String email){
         String key = "registerCode";
-        return mailSendUtil.getObjectCompletableFuture(email, ConfigConsts.REGESTER_SUBJECT, key);
+        return mailSendUtil.sendMailHandler(email, ConfigConsts.REGESTER_SUBJECT, key);
     }
 }

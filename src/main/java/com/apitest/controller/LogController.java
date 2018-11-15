@@ -23,17 +23,17 @@ public class LogController {
     }
 
     @GetMapping(value = "/{apiId}/log")
-    public CompletableFuture<Object> queryPageLogController(HttpSession httpSession, @PathVariable int apiId, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+    public CompletableFuture<Object> queryPageLogController(HttpSession httpSession, @PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
         return CompletableFuture.completedFuture(logService.queryPageLogByApiIdService(httpSession, apiId, page, size));
     }
 
     @DeleteMapping(value = "/{apiId}/log")
-    public CompletableFuture<Object> deleteAllLogByApiIdController(HttpSession httpSession, @PathVariable int apiId){
+    public CompletableFuture<Object> deleteAllLogByApiIdController(HttpSession httpSession, @PathVariable(name = "apiId") int apiId){
         return CompletableFuture.completedFuture(logService.deleteAllLogByApiIdService(httpSession, apiId));
     }
 
     @DeleteMapping(value = "/log/{id}")
-    public CompletableFuture<Object> deleteOneLogController(HttpSession httpSession, @PathVariable int id){
+    public CompletableFuture<Object> deleteOneLogController(HttpSession httpSession, @PathVariable(name = "id") int id){
         return CompletableFuture.completedFuture(logService.deleteOneLogService(httpSession, id));
     }
 }

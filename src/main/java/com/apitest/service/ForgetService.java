@@ -29,22 +29,22 @@ public class ForgetService implements ForgetServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> resetPasswordService(String newPassword, String code) {
+    public CompletableFuture<Object> resetPasswordService(String newPassword, String captcha) {
         Map<String, Object> map = new HashMap<>(8);
-        if (newPassword == null || code == null || newPassword.getClass() != String.class) {
+        if (newPassword == null || captcha == null || newPassword.getClass() != String.class) {
             map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
             map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
         }else if (newPassword.isEmpty() || newPassword.isBlank()) {
             map.put("status", ErrorEnum.PASSWORD_IS_EMPTY.getStatus());
             map.put("message", ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
-        }else if (code.isBlank() || code.isEmpty()) {
+        }else if (captcha.isBlank() || captcha.isEmpty()) {
             map.put("status", ErrorEnum.TOKEN_IS_EMPTY.getStatus());
             map.put("message", ErrorEnum.TOKEN_IS_EMPTY.getMessage());
-        }else if (!forgetCodeCheck(code)) {
+        }else if (!forgetCodeCheck(captcha)) {
             map.put("status", ErrorEnum.TOKEN_IS_ERROR.getStatus());
             map.put("message", ErrorEnum.TOKEN_IS_ERROR.getMessage());
         }else {
-            String username = String.valueOf(redisTemplate.boundHashOps("mail").get(code));
+            String username = String.valueOf(redisTemplate.boundHashOps("mail").get(captcha));
             User user = userRepository.findUserByUsernameOrEmail(username, username);
             user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
             userRepository.saveAndFlush(user);

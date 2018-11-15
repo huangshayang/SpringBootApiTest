@@ -22,12 +22,7 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public CompletableFuture<Object> registerController(@RequestParam String usernameOrEmail, @RequestParam String password, @RequestParam String captcha){
-        return CompletableFuture.completedFuture(registerService.registerService(usernameOrEmail, password, captcha));
+    public CompletableFuture<Object> registerController(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, @RequestParam(name = "captcha") String captcha){
+        return CompletableFuture.completedFuture(registerService.registerService(username, password, captcha));
     }
-
-//    @GetMapping(value = "/register/mail")
-//    public CompletableFuture<Object> registerMailController(@RequestParam String email){
-//        return CompletableFuture.completedFuture(registerService.registerMailService(email));
-//    }
 }

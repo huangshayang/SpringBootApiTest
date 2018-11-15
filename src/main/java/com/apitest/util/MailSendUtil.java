@@ -1,6 +1,7 @@
 package com.apitest.util;
 
 import com.apitest.error.ErrorEnum;
+import com.apitest.inf.MailSendCompoentInf;
 import com.apitest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author huangshayang
  */
 @Component
-public class MailSendUtil {
+public class MailSendUtil implements MailSendCompoentInf {
 
     @Value("${spring.mail.username}")
     private String user;
@@ -35,7 +36,8 @@ public class MailSendUtil {
         this.userRepository = userRepository;
     }
 
-    private void sendMailService(String mail, String subject, Object content) {
+    @Override
+    public void sendSimpleTextMail(String mail, String subject, Object content) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(user);
         message.setTo(mail);
@@ -44,11 +46,18 @@ public class MailSendUtil {
         javaMailSender.send(message);
     }
 
-    public CompletableFuture<Object> getObjectCompletableFuture(String email, String subject, String key) {
+    /**
+     * 发送邮件
+     * @param email
+     * @param subject
+     * @param key
+     * @return
+     */
+    public CompletableFuture<Object> sendMailHandler(String email, String subject, String key) {
         Map<String, Object> map = new HashMap<>(8);
         if (userRepository.findUserByUsernameOrEmail(email, email) != null) {
-            mailTokenAndCode(email, key);
-            sendMailService(email, subject, redisTemplate.boundHashOps("mail").get(key));
+            createMailCode(email, key);
+            sendSimpleTextMail(email, subject, redisTemplate.boundHashOps("mail").get(key));
             map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
             map.put("message", ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
         }else {
@@ -58,11 +67,16 @@ public class MailSendUtil {
         return CompletableFuture.completedFuture(map);
     }
 
-    private void mailTokenAndCode(String email, String key) {
-        String code = UUID.randomUUID().toString().substring(0, 6);
+    /**
+     * 生成验证码，存入redis，过期时间1分钟
+     * @param email
+     * @param key
+     */
+    private void createMailCode(String email, String key) {
+        String code = UUID.randomUUID().toString().substring(0, 6).toUpperCase();
         //创建注册验证用的code
         redisTemplate.boundHashOps("mail").putIfAbsent(key, code);
         redisTemplate.boundHashOps("mail").putIfAbsent(code, email);
-        redisTemplate.expire("mail", 5, TimeUnit.MINUTES);
+        redisTemplate.expire("mail", 1, TimeUnit.MINUTES);
     }
 }

@@ -18,12 +18,7 @@ public class ForgetController {
     }
 
     @PutMapping(value = "/reset/password")
-    public CompletableFuture<Object> resetPasswordService(@RequestParam String newPassword, @RequestParam String code) {
-        return CompletableFuture.completedFuture(forgetService.resetPasswordService(newPassword, code));
+    public CompletableFuture<Object> resetPasswordService(@RequestParam(name = "newPassword") String newPassword, @RequestParam(name = "captcha") String captcha) {
+        return CompletableFuture.completedFuture(forgetService.resetPasswordService(newPassword, captcha));
     }
-
-//    @GetMapping(value = "/reset/mail")
-//    public CompletableFuture<Object> resetPasswordMailController(@RequestParam String email){
-//        return CompletableFuture.completedFuture(forgetService.resetPasswordMailService(email));
-//    }
 }

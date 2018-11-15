@@ -86,7 +86,7 @@ public class ApiService implements ApiServiceInf {
     public CompletableFuture<Object> queryPageApiService(int page, int size){
         Map<String, Object> map = new HashMap<>(8);
         try {
-            if (page <0 || size < 0) {
+            if (page <0 || size <= 0) {
                 map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
                 map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
             }else {
