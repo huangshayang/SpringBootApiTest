@@ -26,7 +26,7 @@ public class LogoutController {
 
     @DeleteMapping(value = "/logout")
     public CompletableFuture<Object> logoutController(){
-        return CompletableFuture.completedFuture(logoutService.logoutService());
+        return logoutService.logoutService();
     }
 
 }

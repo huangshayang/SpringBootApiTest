@@ -57,14 +57,10 @@ public class MailSendUtil implements MailSendCompoentInf {
      * @param key
      * @return
      */
-    public CompletableFuture<Object> sendMailHandler(HttpServletRequest request, String email, String subject, String key) {
+    public CompletableFuture<Object> sendResetPasswordMailHandler(HttpServletRequest request, String email, String subject, String key) {
         Map<String, Object> map = new HashMap<>(8);
         if (userRepository.findUserByUsernameOrEmail(email, email) != null) {
-            createMailCode(email, key);
-            String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+redisTemplate.boundHashOps("mail").get(key);
-            sendSimpleTextMail(email, subject, path);
-            map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
-            map.put("message", ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
+            mailHandler(request, email, subject, key, map);
         }else {
             map.put("status", ErrorEnum.EMAIL_IS_ERROR.getStatus());
             map.put("message", ErrorEnum.EMAIL_IS_ERROR.getMessage());
@@ -82,6 +78,25 @@ public class MailSendUtil implements MailSendCompoentInf {
         //创建注册验证用的code
         redisTemplate.boundHashOps("mail").putIfAbsent(key, token);
         redisTemplate.boundHashOps("mail").putIfAbsent(token, email);
-        redisTemplate.expire("mail", 1, TimeUnit.MINUTES);
+        redisTemplate.expire("mail", 5, TimeUnit.MINUTES);
+    }
+
+    public CompletableFuture<Object> sendRegisterMailHandler(HttpServletRequest request, String email, String subject, String key) {
+        Map<String, Object> map = new HashMap<>(8);
+        if (userRepository.findUserByUsernameOrEmail(email, email) == null) {
+            mailHandler(request, email, subject, key, map);
+        }else {
+            map.put("status", ErrorEnum.EMAIL_IS_ERROR.getStatus());
+            map.put("message", ErrorEnum.EMAIL_IS_ERROR.getMessage());
+        }
+        return CompletableFuture.completedFuture(map);
+    }
+
+    private void mailHandler(HttpServletRequest request, String email, String subject, String key, Map<String, Object> map) {
+        createMailCode(email, key);
+        String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+redisTemplate.boundHashOps("mail").get(key);
+        sendSimpleTextMail(email, subject, path);
+        map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
+        map.put("message", ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
     }
 }

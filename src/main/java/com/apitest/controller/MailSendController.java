@@ -24,11 +24,11 @@ public class MailSendController {
 
     @GetMapping(value = "/reset/mail")
     public CompletableFuture<Object> resetPasswordMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
-        return CompletableFuture.completedFuture(mailSendService.resetPasswordMailService(request, email));
+        return mailSendService.resetPasswordMailService(request, email);
     }
 
     @GetMapping(value = "/register/mail")
     public CompletableFuture<Object> registerMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
-        return CompletableFuture.completedFuture(mailSendService.registerMailService(request, email));
+        return mailSendService.registerMailService(request, email);
     }
 }

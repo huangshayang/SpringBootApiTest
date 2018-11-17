@@ -23,7 +23,7 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public CompletableFuture<Object> registerController(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, @RequestParam(name = "captcha") String captcha){
-        return CompletableFuture.completedFuture(registerService.registerService(username, password, captcha));
+    public CompletableFuture<Object> registerController(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, @RequestParam(name = "token") String token){
+        return registerService.registerService(username, password, token);
     }
 }

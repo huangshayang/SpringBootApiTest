@@ -35,13 +35,12 @@ public class RegisterService implements RegisterServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> registerService(String username, String password, String captcha) {
+    public CompletableFuture<Object> registerService(String username, String password, String token) {
         Map<String, Object> map = new HashMap<>(8);
         User user = new User();
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
-            log.info("验证码" + captcha);
             if (username == null || password == null ||
                     password.getClass() != String.class) {
                 map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
@@ -52,12 +51,12 @@ public class RegisterService implements RegisterServiceInf {
             }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
                 map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (!Objects.equals(captcha, String.valueOf(redisTemplate.boundHashOps("mail").get("registerCode")))) {
+            }else if (!Objects.equals(token, String.valueOf(redisTemplate.boundHashOps("mail").get("registerToken")))) {
                 map.put("status", ErrorEnum.TOKEN_IS_ERROR.getStatus());
                 map.put("message", ErrorEnum.TOKEN_IS_ERROR.getMessage());
             }else {
                 user.setUsername(username);
-                user.setEmail(username);
+                user.setEmail(String.valueOf(redisTemplate.boundHashOps("mail").get(token)));
                 user.setPassword(new BCryptPasswordEncoder().encode(password));
                 userRepository.save(user);
                 map.put("status", ErrorEnum.REGISTER_SUCCESS.getStatus());

@@ -23,6 +23,6 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     public CompletableFuture<Object> loginController(HttpServletResponse response, @RequestParam(name = "username") String username, @RequestParam(name = "password") String password){
-        return CompletableFuture.completedFuture(loginService.loginService(response, username, password));
+        return loginService.loginService(response, username, password);
     }
 }

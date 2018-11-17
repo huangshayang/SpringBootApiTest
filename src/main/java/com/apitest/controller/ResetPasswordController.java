@@ -20,6 +20,6 @@ public class ResetPasswordController {
 
     @PutMapping(value = "/reset/password")
     public CompletableFuture<Object> resetPasswordService(@RequestParam String newPassword, @RequestParam(name = "token") String token) {
-        return CompletableFuture.completedFuture(resetPasswordService.resetPasswordService(newPassword, token));
+        return resetPasswordService.resetPasswordService(newPassword, token);
     }
 }

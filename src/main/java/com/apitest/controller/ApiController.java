@@ -36,26 +36,26 @@ public class ApiController {
 
     @GetMapping(value = "/all")
     public CompletableFuture<Object> queryPageApiController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
-        return CompletableFuture.completedFuture(apiService.queryPageApiService(page, size));
+        return apiService.queryPageApiService(page, size);
     }
 
     @PutMapping(value = "/{id}")
     public CompletableFuture<Object> modifyApiController(@PathVariable(name = "id") int id, @RequestBody Apis api){
-        return CompletableFuture.completedFuture(apiService.modifyApiService(id, api));
+        return apiService.modifyApiService(id, api);
     }
 
     @DeleteMapping(value = "/{id}")
     public CompletableFuture<Object> deleteApiController(@PathVariable(name = "id") int id){
-        return CompletableFuture.completedFuture(apiService.deleteApiService(id));
+        return apiService.deleteApiService(id);
     }
 
     @PostMapping(value = "/exec/{id}")
     public CompletableFuture<Object> execApiController(@PathVariable(name = "id") int id){
-        return CompletableFuture.completedFuture(apiService.execApiService(id));
+        return apiService.execApiService(id);
     }
 
     @PostMapping(value = "/exec/one/{id}")
     public CompletableFuture<Object> execApiOneController(@PathVariable int id){
-        return CompletableFuture.completedFuture(apiService.execApiServiceOne(id));
+        return apiService.execApiServiceOne(id);
     }
 }

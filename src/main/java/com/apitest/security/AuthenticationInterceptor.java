@@ -10,7 +10,7 @@ import io.jsonwebtoken.SignatureException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +21,7 @@ import java.util.*;
  * @author huangshayang
  */
 @Log4j2
-public class AuthenticationInterceptor implements HandlerInterceptor{
+public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
     /**
      * 表示是否要将当前的请求拦截下来，如果返货false请求被终止，如果为true请求会继续运行
@@ -55,6 +55,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
                 e.printStackTrace();
             }
         }
+        log.info("preHandle");
         return true;
     }
 
