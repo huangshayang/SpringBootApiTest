@@ -47,7 +47,7 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
             }else if (token.isBlank() || token.isEmpty()) {
                 map.put("status", ErrorEnum.TOKEN_IS_EMPTY.getStatus());
                 map.put("message", ErrorEnum.TOKEN_IS_EMPTY.getMessage());
-            }else if (!forgetCodeCheck(token)) {
+            }else if (!Objects.equals(token, String.valueOf(redisTemplate.boundHashOps("mail").get("resetToken")))) {
                 map.put("status", ErrorEnum.TOKEN_IS_ERROR.getStatus());
                 map.put("message", ErrorEnum.TOKEN_IS_ERROR.getMessage());
             }else {
@@ -65,13 +65,5 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
         log.info("返回结果: " + map);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return CompletableFuture.completedFuture(map);
-    }
-
-    private boolean forgetCodeCheck(String token){
-        boolean isResetCode = redisTemplate.boundHashOps("mail").hasKey("resetToken");
-        if (isResetCode) {
-            return Objects.equals(token, String.valueOf(redisTemplate.boundHashOps("mail").get("resetToken")));
-        }
-        return false;
     }
 }

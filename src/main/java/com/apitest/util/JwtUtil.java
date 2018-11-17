@@ -67,7 +67,7 @@ public class JwtUtil {
                 .setId(JWT_ID)
                 //iat: jwt的签发时间
                 .setIssuedAt(now)
-                .setExpiration(new Date(nowMillis + 1800*1000))
+                .setExpiration(new Date(nowMillis + 60*1000))
                 //sub(Subject)：代表这个JWT的主体，即它的所有人，这个是一个json格式的字符串，可以存放什么userid，roldid之类的，作为什么用户的唯一标志。
                 .setSubject(subject)
                 //设置签名使用的签名算法和签名使用的秘钥

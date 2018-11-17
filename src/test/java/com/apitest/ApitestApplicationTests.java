@@ -14,6 +14,8 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,13 +33,13 @@ public class ApitestApplicationTests {
     }
 
 //    @Autowired
-//    private RedisTemplate redisTemplate;
+//    private RedisTemplate<String, Object> redisTemplate;
 
 //    @Test
-//    @SuppressWarnings("unchecked")
 //    public void set(){
-//        redisTemplate.opsForValue().set("test","testValue");
-//        System.out.println(redisTemplate.opsForValue().get("123"));
+//        Optional<Boolean> b = Optional.ofNullable(null);
+//        System.out.println(b);
+//        b.ifPresent(aBoolean -> System.out.println(aBoolean.booleanValue()));
 //    }
 
 }

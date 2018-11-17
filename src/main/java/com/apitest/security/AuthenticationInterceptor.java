@@ -15,9 +15,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author huangshayang
@@ -37,9 +35,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String jwt = request.getHeader("auth");
         String payloadKey = "apitest";
+        Map<String, Object> map = new HashMap<>(8);
         HandlerMethod handlerMethod=(HandlerMethod)object;
         Class type = handlerMethod.getBeanType();
-        Map<String, Object> map = new HashMap<>(8);
         if (type.isAnnotationPresent(Auth.class)) {
             try {
                 if (jwt == null || jwt.isEmpty() || jwt.isBlank() || !Objects.equals(payloadKey, JwtUtil.parseJWT(jwt).get("info", String.class))) {
@@ -59,7 +57,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
         }
         return true;
     }
-
 
     private void returnJson(HttpServletResponse response, Map<String, Object> map) {
         response.setContentType(String.valueOf(MediaType.APPLICATION_JSON_UTF8));

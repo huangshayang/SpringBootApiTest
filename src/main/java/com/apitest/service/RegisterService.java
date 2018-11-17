@@ -52,9 +52,9 @@ public class RegisterService implements RegisterServiceInf {
             }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
                 map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (!registerCodeCheck(captcha) || !Objects.equals(username, String.valueOf(redisTemplate.boundHashOps("mail").get(captcha)))) {
-                map.put("status", ErrorEnum.CAPTCHA_ERROR.getStatus());
-                map.put("message", ErrorEnum.CAPTCHA_ERROR.getMessage());
+            }else if (!Objects.equals(captcha, String.valueOf(redisTemplate.boundHashOps("mail").get("registerCode")))) {
+                map.put("status", ErrorEnum.TOKEN_IS_ERROR.getStatus());
+                map.put("message", ErrorEnum.TOKEN_IS_ERROR.getMessage());
             }else {
                 user.setUsername(username);
                 user.setEmail(username);
@@ -70,14 +70,5 @@ public class RegisterService implements RegisterServiceInf {
             e.printStackTrace();
         }
         return CompletableFuture.completedFuture(map);
-    }
-
-    private boolean registerCodeCheck(String code){
-        boolean isMail = redisTemplate.hasKey("mail");
-        boolean isRegisterCode = redisTemplate.boundHashOps("mail").hasKey("registerCode");
-        if (isMail && isRegisterCode) {
-            return Objects.equals(code, redisTemplate.boundHashOps("mail").get("registerCode"));
-        }
-        return false;
     }
 }
