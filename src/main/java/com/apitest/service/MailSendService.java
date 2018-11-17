@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -30,15 +31,15 @@ public class MailSendService implements MailSendServiceInf {
 
 
     @Override
-    public CompletableFuture<Object> resetPasswordMailService(String email){
-        String key = "resetCode";
-        return mailSendUtil.sendMailHandler(email, ConfigConsts.RESET_SUBJECT, key);
+    public CompletableFuture<Object> resetPasswordMailService(HttpServletRequest request, String email){
+        String key = "resetToken";
+        return mailSendUtil.sendMailHandler(request, email, ConfigConsts.RESET_SUBJECT, key);
     }
 
 
     @Override
-    public CompletableFuture<Object> registerMailService(String email){
-        String key = "registerCode";
-        return mailSendUtil.sendMailHandler(email, ConfigConsts.REGESTER_SUBJECT, key);
+    public CompletableFuture<Object> registerMailService(HttpServletRequest request, String email){
+        String key = "registerToken";
+        return mailSendUtil.sendMailHandler(request, email, ConfigConsts.REGESTER_SUBJECT, key);
     }
 }

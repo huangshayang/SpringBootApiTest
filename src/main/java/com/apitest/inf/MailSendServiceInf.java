@@ -2,6 +2,7 @@ package com.apitest.inf;
 
 import org.springframework.scheduling.annotation.Async;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -9,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @Async
 public interface MailSendServiceInf {
-    CompletableFuture<Object> resetPasswordMailService(String email);
+    CompletableFuture<Object> resetPasswordMailService(HttpServletRequest request, String email);
 
-    CompletableFuture<Object> registerMailService(String email);
+    CompletableFuture<Object> registerMailService(HttpServletRequest request, String email);
 }

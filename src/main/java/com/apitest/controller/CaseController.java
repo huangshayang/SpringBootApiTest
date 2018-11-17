@@ -1,9 +1,11 @@
 package com.apitest.controller;
 
 
+import com.apitest.annotation.Auth;
 import com.apitest.entity.Cases;
 import com.apitest.service.CaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +15,8 @@ import java.util.concurrent.CompletableFuture;
  * @author HSY
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, headers = "auth")
+@Auth
 public class CaseController {
 
     private final CaseService caseService;

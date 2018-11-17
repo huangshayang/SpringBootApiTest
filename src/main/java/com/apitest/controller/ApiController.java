@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
  * @author HSY
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, headers = "auth")
 @Auth
 public class ApiController {
 
@@ -34,7 +34,7 @@ public class ApiController {
         return CompletableFuture.completedFuture(apiService.queryOneApiService(id));
     }
 
-    @GetMapping(value = "/all", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/all")
     public CompletableFuture<Object> queryPageApiController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
         return CompletableFuture.completedFuture(apiService.queryPageApiService(page, size));
     }
