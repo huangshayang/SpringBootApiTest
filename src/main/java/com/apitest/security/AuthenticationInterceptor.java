@@ -36,6 +36,9 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         String jwt = request.getHeader("auth");
         String payloadKey = "apitest";
         Map<String, Object> map = new HashMap<>(8);
+        if (!"REQUEST".equals(request.getDispatcherType().name())) {
+            return true;
+        }
         HandlerMethod handlerMethod=(HandlerMethod)object;
         Class type = handlerMethod.getBeanType();
         if (type.isAnnotationPresent(Auth.class)) {
@@ -55,7 +58,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                 e.printStackTrace();
             }
         }
-        log.info("preHandle");
         return true;
     }
 
