@@ -1,14 +1,12 @@
 package com.apitest.inf;
 
-import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.CompletableFuture;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author huangshayang
  */
-@Async
 public interface LoginServiceInf {
-    CompletableFuture<Object> loginService(HttpServletResponse response, String username, String password);
+    Object loginService(HttpServletResponse response, HttpSession httpSession, String username, String password);
 }

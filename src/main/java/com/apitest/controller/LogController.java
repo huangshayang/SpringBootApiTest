@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author HSY
  */
 @RestController
-@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, headers = "auth")
+@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Auth
 public class LogController {
 
@@ -26,17 +24,17 @@ public class LogController {
     }
 
     @GetMapping(value = "/{apiId}/log")
-    public CompletableFuture<Object> queryPageLogController(HttpSession httpSession, @PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
-        return logService.queryPageLogByApiIdService(httpSession, apiId, page, size);
+    public Object queryPageLogController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+        return logService.queryPageLogByApiIdService(apiId, page, size);
     }
 
     @DeleteMapping(value = "/{apiId}/log")
-    public CompletableFuture<Object> deleteAllLogByApiIdController(HttpSession httpSession, @PathVariable(name = "apiId") int apiId){
-        return logService.deleteAllLogByApiIdService(httpSession, apiId);
+    public Object deleteAllLogByApiIdController(@PathVariable(name = "apiId") int apiId){
+        return logService.deleteAllLogByApiIdService(apiId);
     }
 
     @DeleteMapping(value = "/log/{id}")
-    public CompletableFuture<Object> deleteOneLogController(HttpSession httpSession, @PathVariable(name = "id") int id){
-        return logService.deleteOneLogService(httpSession, id);
+    public Object deleteOneLogController(@PathVariable(name = "id") int id){
+        return logService.deleteOneLogService(id);
     }
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author huangshayang
@@ -34,7 +33,7 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> resetPasswordService(String newPassword, String token) {
+    public Object resetPasswordService(String newPassword, String token) {
         Map<String, Object> map = new HashMap<>(8);
         try {
             log.info("参数: " + newPassword);
@@ -64,6 +63,6 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
         }
         log.info("返回结果: " + map);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return CompletableFuture.completedFuture(map);
+        return map;
     }
 }

@@ -1,10 +1,11 @@
 package com.apitest.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -22,11 +23,13 @@ public class Cases {
     @Lob
     private String expectResult;
 
-    @Column(nullable = false)
-    private Date createTime;
+    @Column
+    @JsonIgnore
+    private Timestamp createTime;
 
-    @Column(nullable = false)
-    private Date updateTime;
+    @Column
+    @JsonIgnore
+    private Timestamp updateTime;
 
     @Column(nullable = false)
     private Integer apiId;
@@ -36,10 +39,10 @@ public class Cases {
 
     private Cases(){
         if (this.getCreateTime() == null) {
-            this.setCreateTime(new Date(System.currentTimeMillis()));
+            this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }
         if (this.getUpdateTime() == null) {
-            this.setUpdateTime(new Date(System.currentTimeMillis()));
+            this.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         }
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.CompletableFuture;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author HSY
@@ -22,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
-    public CompletableFuture<Object> loginController(HttpServletResponse response, @RequestParam(name = "username") String username, @RequestParam(name = "password") String password){
-        return loginService.loginService(response, username, password);
+    public Object loginController(HttpServletResponse response, HttpSession httpSession, @RequestParam(name = "username") String username, @RequestParam(name = "password") String password){
+        return loginService.loginService(response, httpSession, username, password);
     }
 }

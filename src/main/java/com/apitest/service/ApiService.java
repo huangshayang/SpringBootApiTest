@@ -6,7 +6,6 @@ import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.ApiServiceInf;
-import com.apitest.log.ExceptionLog;
 import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
@@ -17,21 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author huangshayang
  */
 @Service
-@Async
 @Log4j2
 public class ApiService implements ApiServiceInf {
     private final ApiRepository apiRepository;
@@ -47,7 +42,7 @@ public class ApiService implements ApiServiceInf {
     }
 
     @Override
-    public CompletableFuture<Object> addApiService(Apis api){
+    public Object addApiService(Apis api){
         Map<String, Object> map = new HashMap<>(8);
         log.info("参数: " + api);
         try {
@@ -74,16 +69,16 @@ public class ApiService implements ApiServiceInf {
                 map.put("status", ErrorEnum.API_ADD_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
             }
-            log.info("返回结果: " + map);
-            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
-            new ExceptionLog(e, api);
+            e.printStackTrace();
         }
-        return CompletableFuture.completedFuture(map);
+        log.info("返回结果: " + map);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return map;
     }
 
     @Override
-    public CompletableFuture<Object> queryPageApiService(int page, int size){
+    public Object queryPageApiService(int page, int size){
         Map<String, Object> map = new HashMap<>(8);
         try {
             if (page <0 || size <= 0) {
@@ -96,17 +91,16 @@ public class ApiService implements ApiServiceInf {
                 map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
             }
-            log.info("返回结果: " + map);
-            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
             e.printStackTrace();
-//            new ExceptionLog(e, page, size);
         }
-        return CompletableFuture.completedFuture(map);
+        log.info("返回结果: " + map);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return map;
     }
 
     @Override
-    public CompletableFuture<Object> queryOneApiService(int id){
+    public Object queryOneApiService(int id){
         Map<String, Object> map = new HashMap<>(8);
         try {
             if (apiRepository.findById(id).isPresent()) {
@@ -118,24 +112,23 @@ public class ApiService implements ApiServiceInf {
                 map.put("status", ErrorEnum.API_IS_NULL.getStatus());
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
-            log.info("返回结果: " + map);
-            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
             e.printStackTrace();
-//            new ExceptionLog(e, page, size);
         }
-        return CompletableFuture.completedFuture(map);
+        log.info("返回结果: " + map);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return map;
     }
 
     @Override
-    public CompletableFuture<Object> modifyApiService(int id, Apis api){
+    public Object modifyApiService(int id, Apis api){
         Map<String, Object> map = new HashMap<>(8);
         log.info("参数: " + api);
         try {
             if (apiRepository.findById(id).isPresent()) {
                 Apis apis = apiRepository.findById(id).get();
                 apis.setUrl(api.getUrl());
-                apis.setUpdateTime(new Date(System.currentTimeMillis()));
+                apis.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                 apis.setMethod(api.getMethod());
                 apis.setNote(api.getNote());
                 apis.setCookie(api.getCookie());
@@ -146,17 +139,16 @@ public class ApiService implements ApiServiceInf {
                 map.put("status", ErrorEnum.API_IS_NULL.getStatus());
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
-            log.info("返回结果: " + map);
-            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
             e.printStackTrace();
-//            new ExceptionLog(e, page, size);
         }
-        return CompletableFuture.completedFuture(map);
+        log.info("返回结果: " + map);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return map;
     }
 
     @Override
-    public CompletableFuture<Object> deleteApiService(int id){
+    public Object deleteApiService(int id){
         Map<String, Object> map = new HashMap<>(8);
         try {
             if (apiRepository.findById(id).isPresent()) {
@@ -169,17 +161,16 @@ public class ApiService implements ApiServiceInf {
                 map.put("status", ErrorEnum.API_IS_NULL.getStatus());
                 map.put("message", ErrorEnum.API_IS_NULL.getMessage());
             }
-            log.info("返回结果: " + map);
-            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
             e.printStackTrace();
-//            new ExceptionLog(e, page, size);
         }
-        return CompletableFuture.completedFuture(map);
+        log.info("返回结果: " + map);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return map;
     }
 
     @Override
-    public CompletableFuture<Object> execApiService(int id) {
+    public Object execApiService(int id) {
         Map<String, Object> map = new HashMap<>(8);
         try {
             List<Cases> casesList = caseRepository.findByApiId(id);
@@ -190,16 +181,16 @@ public class ApiService implements ApiServiceInf {
                 map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
-            log.info("返回结果: " + map);
-            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
             e.printStackTrace();
         }
-        return CompletableFuture.completedFuture(map);
+        log.info("返回结果: " + map);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return map;
     }
 
     @Override
-    public CompletableFuture<Object> execApiServiceOne(int id){
+    public Object execApiServiceOne(int id){
         Map<String, Object> map = new HashMap<>(8);
         try {
             List<Cases> casesList = caseRepository.findByApiId(id);
@@ -211,17 +202,19 @@ public class ApiService implements ApiServiceInf {
                 map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
-            log.info("返回结果: " + map);
-            log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
             e.printStackTrace();
         }
-        return CompletableFuture.completedFuture(map);
+        log.info("返回结果: " + map);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return map;
     }
 
     private void apicase(Apis apis, Cases aCasesList) {
         //向外部发送http请求
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程进入");
         lock.lock();
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",加锁成功");
         ClientResponse response = restHttp(apis, aCasesList).exchange().block();
         //把请求的结果保存到响应日志里
         Logs logs = new Logs();
@@ -234,6 +227,7 @@ public class ApiService implements ApiServiceInf {
         logs.setNote(aCasesList.getNote());
         logRepository.save(logs);
         lock.unlock();
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",释放锁完成");
     }
 
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
