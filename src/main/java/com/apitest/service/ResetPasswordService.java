@@ -7,10 +7,10 @@ import com.apitest.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -19,7 +19,6 @@ import java.util.Objects;
  * @author huangshayang
  */
 @Service
-@Async
 @Log4j2
 public class ResetPasswordService implements ResetPasswordServiceInf {
 
@@ -53,6 +52,7 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
                 String username = String.valueOf(redisTemplate.boundHashOps("mail").get(token));
                 User user = userRepository.findUserByUsernameOrEmail(username, username);
                 user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+                user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                 userRepository.saveAndFlush(user);
                 map.put("status", ErrorEnum.RESET_PASSWORD_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.RESET_PASSWORD_SUCCESS.getMessage());

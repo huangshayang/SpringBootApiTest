@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -23,12 +22,12 @@ public class MailSendController {
     }
 
     @GetMapping(value = "/reset/mail")
-    public CompletableFuture<Object> resetPasswordMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
+    public Object resetPasswordMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
         return mailSendService.resetPasswordMailService(request, email);
     }
 
     @GetMapping(value = "/register/mail")
-    public CompletableFuture<Object> registerMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
+    public Object registerMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
         return mailSendService.registerMailService(request, email);
     }
 }

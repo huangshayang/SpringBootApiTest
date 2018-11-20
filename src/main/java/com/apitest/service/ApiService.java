@@ -10,7 +10,6 @@ import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
-import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +21,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author huangshayang
@@ -177,7 +177,7 @@ public class ApiService implements ApiServiceInf {
             if (apiRepository.findById(id).isPresent()) {
                 Apis apis = apiRepository.findById(id).get();
                 //根据case的数量起对应数量的多线程
-                casesList.forEach(cases -> new Thread(() -> apicase(apis, cases)).start());
+                casesList.forEach(cases -> new Thread(() -> apiCaseExecByLock(apis, cases)).start());
                 map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
@@ -197,7 +197,7 @@ public class ApiService implements ApiServiceInf {
             if (apiRepository.findById(id).isPresent()) {
                 Apis apis = apiRepository.findById(id).get();
                 for (Cases aCasesList : casesList) {
-                    apicase(apis, aCasesList);
+                    apiCaseExec(apis, aCasesList);
                 }
                 map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
@@ -210,24 +210,37 @@ public class ApiService implements ApiServiceInf {
         return map;
     }
 
-    private void apicase(Apis apis, Cases aCasesList) {
+    private void apiCaseExecByLock(Apis apis, Cases aCasesList) {
         //向外部发送http请求
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程进入");
+        Timestamp requestTime = new Timestamp(System.currentTimeMillis());
         lock.lock();
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",加锁成功");
         ClientResponse response = restHttp(apis, aCasesList).exchange().block();
+        lock.unlock();
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",释放锁完成");
         //把请求的结果保存到响应日志里
+        responseWriteToLog(apis, aCasesList, response, requestTime);
+    }
+
+    private void apiCaseExec(Apis apis, Cases aCasesList) {
+        //向外部发送http请求
+        Timestamp requestTime = new Timestamp(System.currentTimeMillis());
+        ClientResponse response = restHttp(apis, aCasesList).exchange().block();
+        //把请求的结果保存到响应日志里
+        responseWriteToLog(apis, aCasesList, response, requestTime);
+    }
+
+    private void responseWriteToLog(Apis apis, Cases aCasesList, ClientResponse response, Timestamp requestTime) {
         Logs logs = new Logs();
         logs.setRequestData(aCasesList.getRequestData());
-        logs.setRequestTime(new Timestamp(System.currentTimeMillis()));
+        logs.setRequestTime(requestTime);
         logs.setCode(Objects.requireNonNull(response).statusCode().value());
         logs.setResponseHeader(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
         logs.setResponseData(response.bodyToMono(String.class).block());
         logs.setApiId(apis.getId());
         logs.setNote(aCasesList.getNote());
         logRepository.save(logs);
-        lock.unlock();
-        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",释放锁完成");
     }
 
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {

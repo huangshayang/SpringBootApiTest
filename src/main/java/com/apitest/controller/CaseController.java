@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @author HSY
  */
 @RestController
-@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, headers = "auth")
+@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Auth
 public class CaseController {
 

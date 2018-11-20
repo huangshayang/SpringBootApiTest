@@ -4,7 +4,6 @@ package com.apitest.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -16,7 +15,7 @@ public class Logs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column
     private Timestamp requestTime;
 
     @Column(nullable = false)
@@ -30,8 +29,6 @@ public class Logs {
     @Column(nullable = false)
     @Lob
     private String responseHeader;
-
-    private BigDecimal responseTime;
 
     @Column(nullable = false)
     private Integer code;
