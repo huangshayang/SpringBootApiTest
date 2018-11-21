@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -51,17 +50,17 @@ public class RegisterService implements RegisterServiceInf {
             }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 map.put("status", ErrorEnum.USER_IS_EXIST.getStatus());
                 map.put("message", ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (!Objects.equals(token, String.valueOf(redisTemplate.boundHashOps("mail").get("registerToken")))) {
+            }else if (!new BCryptPasswordEncoder().matches(String.valueOf(redisTemplate.opsForValue().get(token)), token)) {
                 map.put("status", ErrorEnum.TOKEN_IS_ERROR.getStatus());
                 map.put("message", ErrorEnum.TOKEN_IS_ERROR.getMessage());
             }else {
                 user.setUsername(username);
-                user.setEmail(String.valueOf(redisTemplate.boundHashOps("mail").get(token)));
+                user.setEmail(String.valueOf(redisTemplate.opsForValue().get(token)));
                 user.setPassword(new BCryptPasswordEncoder().encode(password));
                 userRepository.save(user);
                 map.put("status", ErrorEnum.REGISTER_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.REGISTER_SUCCESS.getMessage());
-                redisTemplate.delete("mail");
+                redisTemplate.delete(token);
             }
             log.info("返回结果: " + map);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());

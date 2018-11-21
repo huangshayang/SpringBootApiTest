@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author huangshayang
@@ -45,18 +44,18 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
             }else if (token.isBlank() || token.isEmpty()) {
                 map.put("status", ErrorEnum.TOKEN_IS_EMPTY.getStatus());
                 map.put("message", ErrorEnum.TOKEN_IS_EMPTY.getMessage());
-            }else if (!Objects.equals(token, String.valueOf(redisTemplate.boundHashOps("mail").get("resetToken")))) {
+            }else if (!new BCryptPasswordEncoder().matches(String.valueOf(redisTemplate.opsForValue().get(token)), token)) {
                 map.put("status", ErrorEnum.TOKEN_IS_ERROR.getStatus());
                 map.put("message", ErrorEnum.TOKEN_IS_ERROR.getMessage());
             }else {
-                String username = String.valueOf(redisTemplate.boundHashOps("mail").get(token));
+                String username = String.valueOf(redisTemplate.opsForValue().get(token));
                 User user = userRepository.findUserByUsernameOrEmail(username, username);
                 user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
                 user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                 userRepository.saveAndFlush(user);
                 map.put("status", ErrorEnum.RESET_PASSWORD_SUCCESS.getStatus());
                 map.put("message", ErrorEnum.RESET_PASSWORD_SUCCESS.getMessage());
-                redisTemplate.delete("mail");
+                redisTemplate.delete(token);
             }
         }catch (Exception e){
             e.printStackTrace();

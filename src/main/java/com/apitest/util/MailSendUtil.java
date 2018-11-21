@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,16 +52,15 @@ public class MailSendUtil implements MailSendCompoentInf {
     }
 
     /**
-     * 发送邮件
+     * 发送重置密码邮件
      * @param email
      * @param subject
-     * @param key
      * @return
      */
-    public Object sendResetPasswordMailHandler(HttpServletRequest request, String email, String subject, String key) {
+    public Object sendResetPasswordMailHandler(HttpServletRequest request, String email, String subject) {
         Map<String, Object> map = new HashMap<>(8);
         if (userRepository.findUserByUsernameOrEmail(email, email) != null) {
-            mailHandler(request, email, subject, key, map);
+            mailHandler(request, email, subject, map);
         }else {
             map.put("status", ErrorEnum.EMAIL_IS_ERROR.getStatus());
             map.put("message", ErrorEnum.EMAIL_IS_ERROR.getMessage());
@@ -72,22 +69,16 @@ public class MailSendUtil implements MailSendCompoentInf {
     }
 
     /**
-     * 生成验证码，存入redis，过期时间1分钟
+     * 发送注册邮件
+     * @param request
      * @param email
-     * @param key
+     * @param subject
+     * @return
      */
-    private void createMailCode(String email, String key) {
-        String token = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes());
-        //创建注册验证用的code
-        redisTemplate.boundHashOps("mail").putIfAbsent(key, token);
-        redisTemplate.boundHashOps("mail").putIfAbsent(token, email);
-        redisTemplate.expire("mail", 5, TimeUnit.MINUTES);
-    }
-
-    public Object sendRegisterMailHandler(HttpServletRequest request, String email, String subject, String key) {
+    public Object sendRegisterMailHandler(HttpServletRequest request, String email, String subject) {
         Map<String, Object> map = new HashMap<>(8);
         if (userRepository.findUserByUsernameOrEmail(email, email) == null) {
-            mailHandler(request, email, subject, key, map);
+            mailHandler(request, email, subject, map);
         }else {
             map.put("status", ErrorEnum.EMAIL_IS_ERROR.getStatus());
             map.put("message", ErrorEnum.EMAIL_IS_ERROR.getMessage());
@@ -95,9 +86,10 @@ public class MailSendUtil implements MailSendCompoentInf {
         return map;
     }
 
-    private void mailHandler(HttpServletRequest request, String email, String subject, String key, Map<String, Object> map) {
-        createMailCode(email, key);
-        String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+redisTemplate.boundHashOps("mail").get(key);
+    private void mailHandler(HttpServletRequest request, String email, String subject, Map<String, Object> map) {
+        String token = new BCryptPasswordEncoder().encode(email);
+        redisTemplate.opsForValue().set(token, email, 5, TimeUnit.MINUTES);
+        String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+token;
         sendSimpleTextMail(email, subject, path);
         map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
         map.put("message", ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
