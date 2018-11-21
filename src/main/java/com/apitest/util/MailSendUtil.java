@@ -88,7 +88,7 @@ public class MailSendUtil implements MailSendCompoentInf {
 
     private void mailHandler(HttpServletRequest request, String email, String subject, Map<String, Object> map) {
         String token = new BCryptPasswordEncoder().encode(email);
-        redisTemplate.opsForValue().set(token, email, 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().setIfAbsent(token, email, 5, TimeUnit.MINUTES);
         String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+token;
         sendSimpleTextMail(email, subject, path);
         map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
