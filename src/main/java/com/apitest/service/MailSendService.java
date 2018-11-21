@@ -4,7 +4,6 @@ import com.apitest.configconsts.ConfigConsts;
 import com.apitest.inf.MailSendServiceInf;
 import com.apitest.util.MailSendUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class MailSendService implements MailSendServiceInf {
 
-    @Value("${spring.mail.username}")
-    private String user;
-
     private final MailSendUtil mailSendUtil;
 
     @Autowired
@@ -26,12 +22,10 @@ public class MailSendService implements MailSendServiceInf {
         this.mailSendUtil = mailSendUtil;
     }
 
-
     @Override
     public Object resetPasswordMailService(HttpServletRequest request, String email){
         return mailSendUtil.sendResetPasswordMailHandler(request, email, ConfigConsts.RESET_SUBJECT);
     }
-
 
     @Override
     public Object registerMailService(HttpServletRequest request, String email){

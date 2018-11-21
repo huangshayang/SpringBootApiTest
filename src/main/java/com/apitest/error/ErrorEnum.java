@@ -42,7 +42,8 @@ public enum ErrorEnum {
     TOKEN_IS_EMPTY(10015, "token不能为空"),
     API_NOTE_IS_EMPTY(10016, "接口名不能为空"),
     PASSWORD_IS_EMPTY(10017, "密码不能为空"),
-    EMAIL_IS_ERROR(10018, "邮箱错误，请检查");
+    EMAIL_IS_ERROR(10018, "邮箱错误，请检查"),
+    REQUEST_NUM_FULL(10019, "请求次数过多，请明天再试");
 
     @Getter
     private int status;

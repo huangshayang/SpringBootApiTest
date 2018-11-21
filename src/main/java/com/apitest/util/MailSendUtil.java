@@ -86,13 +86,42 @@ public class MailSendUtil implements MailSendCompoentInf {
         return map;
     }
 
+    /**
+     * 邮件发送设置
+     * @param request
+     * @param email
+     * @param subject
+     * @param map
+     */
     private void mailHandler(HttpServletRequest request, String email, String subject, Map<String, Object> map) {
-        String token = new BCryptPasswordEncoder().encode(email);
-        redisTemplate.opsForValue().setIfAbsent(token, email, 5, TimeUnit.MINUTES);
-        String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+token;
-        sendSimpleTextMail(email, subject, path);
-        map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
-        map.put("message", ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
+        String ip = request.getRemoteAddr();
+        int emailNum = redisTemplate.opsForValue().get(email) == null ? 0 : (Integer)redisTemplate.opsForValue().get(email);
+        int ipNum = redisTemplate.opsForValue().get(ip) == null ? 0 : (Integer)redisTemplate.opsForValue().get(ip);
+        //限制同一个ip或者同一个email一天内超过5次的请求发送
+        if (emailNum < 5 || ipNum < 5) {
+            String token = new BCryptPasswordEncoder().encode(email);
+            redisTemplate.opsForValue().setIfAbsent(token, email, 1, TimeUnit.MINUTES);
+            String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+token;
+            sendSimpleTextMail(email, subject, path);
+            map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
+            map.put("message", ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
+            saveMail(subject, path);
+            redisTemplate.opsForValue().increment(email, 1);
+            redisTemplate.opsForValue().increment(ip, 1);
+            redisTemplate.expire(email, 24, TimeUnit.HOURS);
+            redisTemplate.expire(ip, 24, TimeUnit.HOURS);
+        }else {
+            map.put("status", ErrorEnum.REQUEST_NUM_FULL.getStatus());
+            map.put("message", ErrorEnum.REQUEST_NUM_FULL.getMessage());
+        }
+    }
+
+    /**
+     * 把邮件存到数据库
+     * @param subject
+     * @param path
+     */
+    private void saveMail(String subject, String path){
         Mails mails = new Mails();
         mails.setSubject(subject);
         mails.setContent(path);
