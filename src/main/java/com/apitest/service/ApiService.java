@@ -10,6 +10,7 @@ import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
+import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public class ApiService implements ApiServiceInf {
     private final CaseRepository caseRepository;
     private final LogRepository logRepository;
     private ReentrantLock lock = new ReentrantLock();
+    private static ServerResponse serverResponse;
 
     @Autowired
     public ApiService(ApiRepository apiRepository, CaseRepository caseRepository, LogRepository logRepository) {
@@ -42,87 +44,70 @@ public class ApiService implements ApiServiceInf {
     }
 
     @Override
-    public Object addApiService(Apis api){
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse addApiService(Apis api){
         log.info("参数: " + api);
         try {
             if (api.getUrl() == null || api.getMethod() == null || api.getCookie() == null || api.getNote() == null) {
-                map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
-                map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
             }else if (api.getMethod().isEmpty()) {
-                map.put("status", ErrorEnum.API_METHOD_IS_EMPTY.getStatus());
-                map.put("message", ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_METHOD_IS_EMPTY.getStatus(), ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
             }else if (api.getUrl().isEmpty()) {
-                map.put("status", ErrorEnum.API_URL_IS_EMPTY.getStatus());
-                map.put("message", ErrorEnum.API_URL_IS_EMPTY.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
             }else if (api.getCookie().toString().isEmpty()) {
-                map.put("status", ErrorEnum.API_COOKIE_IS_EMPTY.getStatus());
-                map.put("message", ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
             }else if (api.getNote().isEmpty()) {
-                map.put("status", ErrorEnum.API_NOTE_IS_EMPTY.getStatus());
-                map.put("message", ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
             }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
-                map.put("status", ErrorEnum.API_IS_REPEAT.getStatus());
-                map.put("message", ErrorEnum.API_IS_REPEAT.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
             }else {
                 apiRepository.save(api);
-                map.put("status", ErrorEnum.API_ADD_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_ADD_SUCCESS.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_ADD_SUCCESS.getStatus(), ErrorEnum.API_ADD_SUCCESS.getMessage());
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("返回结果: " + map);
+        log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return map;
+        return serverResponse;
     }
 
     @Override
-    public Object queryPageApiService(int page, int size){
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse queryPageApiService(int page, int size){
         try {
             if (page <0 || size <= 0) {
-                map.put("status", ErrorEnum.PARAMETER_ERROR.getStatus());
-                map.put("message", ErrorEnum.PARAMETER_ERROR.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
             }else {
                 Sort sort = new Sort(Sort.Direction.ASC, "id");
                 Page<Apis> apis = apiRepository.findAll(PageRequest.of(page, size, sort));
-                map.put("data", apis);
-                map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
+                serverResponse = new ServerResponse<>(ErrorEnum.API_QUERY_SUCCESS.getStatus(), ErrorEnum.API_QUERY_SUCCESS.getMessage(), apis);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("返回结果: " + map);
+        log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return map;
+        return serverResponse;
     }
 
     @Override
-    public Object queryOneApiService(int id){
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse queryOneApiService(int id){
         try {
             if (apiRepository.findById(id).isPresent()) {
                 Optional<Apis> api = apiRepository.findById(id);
-                map.put("data", api);
-                map.put("status", ErrorEnum.API_QUERY_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_QUERY_SUCCESS.getMessage());
+                serverResponse = new ServerResponse<>(ErrorEnum.API_QUERY_SUCCESS.getStatus(), ErrorEnum.API_QUERY_SUCCESS.getMessage(), api);
             }else {
-                map.put("status", ErrorEnum.API_IS_NULL.getStatus());
-                map.put("message", ErrorEnum.API_IS_NULL.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("返回结果: " + map);
+        log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return map;
+        return serverResponse;
     }
 
     @Override
-    public Object modifyApiService(int id, Apis api){
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse modifyApiService(int id, Apis api){
         log.info("参数: " + api);
         try {
             if (apiRepository.findById(id).isPresent()) {
@@ -133,65 +118,57 @@ public class ApiService implements ApiServiceInf {
                 apis.setNote(api.getNote());
                 apis.setCookie(api.getCookie());
                 apiRepository.saveAndFlush(apis);
-                map.put("status", ErrorEnum.API_MODIFY_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_MODIFY_SUCCESS.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_MODIFY_SUCCESS.getStatus(), ErrorEnum.API_MODIFY_SUCCESS.getMessage());
             }else {
-                map.put("status", ErrorEnum.API_IS_NULL.getStatus());
-                map.put("message", ErrorEnum.API_IS_NULL.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("返回结果: " + map);
+        log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return map;
+        return serverResponse;
     }
 
     @Override
-    public Object deleteApiService(int id){
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse deleteApiService(int id){
         try {
             if (apiRepository.findById(id).isPresent()) {
                 logRepository.deleteByApiId(id);
                 caseRepository.deleteByApiId(id);
                 apiRepository.deleteById(id);
-                map.put("status", ErrorEnum.API_DELETE_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.API_DELETE_SUCCESS.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_DELETE_SUCCESS.getStatus(), ErrorEnum.API_DELETE_SUCCESS.getMessage());
             }else {
-                map.put("status", ErrorEnum.API_IS_NULL.getStatus());
-                map.put("message", ErrorEnum.API_IS_NULL.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("返回结果: " + map);
+        log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return map;
+        return serverResponse;
     }
 
     @Override
-    public Object execApiService(int id) {
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse execApiService(int id) {
         try {
             List<Cases> casesList = caseRepository.findByApiId(id);
             if (apiRepository.findById(id).isPresent()) {
                 Apis apis = apiRepository.findById(id).get();
                 //根据case的数量起对应数量的多线程
                 casesList.forEach(cases -> new Thread(() -> apiCaseExecByLock(apis, cases)).start());
-                map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.HTTP_EXEC_SUCCESS.getStatus(), ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("返回结果: " + map);
+        log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return map;
+        return serverResponse;
     }
 
     @Override
-    public Object execApiServiceOne(int id){
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse execApiServiceOne(int id){
         try {
             List<Cases> casesList = caseRepository.findByApiId(id);
             if (apiRepository.findById(id).isPresent()) {
@@ -199,17 +176,21 @@ public class ApiService implements ApiServiceInf {
                 for (Cases aCasesList : casesList) {
                     apiCaseExec(apis, aCasesList);
                 }
-                map.put("status", ErrorEnum.HTTP_EXEC_SUCCESS.getStatus());
-                map.put("message", ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
+                serverResponse = new ServerResponse(ErrorEnum.HTTP_EXEC_SUCCESS.getStatus(), ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("返回结果: " + map);
+        log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        return map;
+        return serverResponse;
     }
 
+    /**
+     * 多线程并发执行测试用例，为了避免用例重复使用，所以加入ReentrantLock的非公平锁
+     * @param apis
+     * @param aCasesList
+     */
     private void apiCaseExecByLock(Apis apis, Cases aCasesList) {
         //向外部发送http请求
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程进入");
@@ -223,6 +204,11 @@ public class ApiService implements ApiServiceInf {
         responseWriteToLog(apis, aCasesList, response, requestTime);
     }
 
+    /**
+     * 单个线程执行所有用例
+     * @param apis
+     * @param aCasesList
+     */
     private void apiCaseExec(Apis apis, Cases aCasesList) {
         //向外部发送http请求
         Timestamp requestTime = new Timestamp(System.currentTimeMillis());
@@ -231,6 +217,13 @@ public class ApiService implements ApiServiceInf {
         responseWriteToLog(apis, aCasesList, response, requestTime);
     }
 
+    /**
+     * 响应结果存入Log表里
+     * @param apis
+     * @param aCasesList
+     * @param response
+     * @param requestTime
+     */
     private void responseWriteToLog(Apis apis, Cases aCasesList, ClientResponse response, Timestamp requestTime) {
         Logs logs = new Logs();
         logs.setRequestData(aCasesList.getRequestData());
@@ -243,6 +236,12 @@ public class ApiService implements ApiServiceInf {
         logRepository.save(logs);
     }
 
+    /**
+     * 根据api的请求方法调用RestRequest类的对应请求方法
+     * @param api
+     * @param cases
+     * @return
+     */
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
         String method = api.getMethod();
         String url =  api.getUrl();

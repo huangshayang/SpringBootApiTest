@@ -1,19 +1,19 @@
 package com.apitest.inf;
 
 import com.apitest.entity.Cases;
+import com.apitest.util.ServerResponse;
 
-import javax.servlet.http.HttpSession;
 
 public interface CaseServiceInf {
-    Object queryCaseByApiIdService(HttpSession httpSession, int apiId);
+    ServerResponse queryCaseByApiIdService(int apiId);
 
-    Object queryOneCaseService(HttpSession httpSession, int id);
+    ServerResponse queryOneCaseService(int id);
 
-    Object deleteAllCaseByApiIdService(HttpSession httpSession, int apiId);
+    ServerResponse deleteAllCaseByApiIdService(int apiId);
 
-    Object modifyCaseService(HttpSession httpSession, int id, Cases cases);
+    ServerResponse modifyCaseService(int id, Cases cases);
 
-    Object deleteOneCaseService(HttpSession httpSession, int id);
+    ServerResponse deleteOneCaseService(int id);
 
-    Object addCaseByApiIdService(HttpSession httpSession, Cases cases, int apiId);
+    ServerResponse addCaseByApiIdService(Cases cases, int apiId);
 }

@@ -2,20 +2,19 @@ package com.apitest.service;
 
 
 import com.apitest.error.ErrorEnum;
+import com.apitest.util.ServerResponse;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * @author huangshayang
+ */
 @Service
 public class LogoutService {
 
-    public Object logoutService(HttpSession httpSession){
-        Map<String, Object> map = new HashMap<>(8);
-        map.put("status", ErrorEnum.LOGOUT_SUCCESS.getStatus());
-        map.put("message", ErrorEnum.LOGOUT_SUCCESS.getMessage());
+    public ServerResponse logoutService(HttpSession httpSession){
         httpSession.invalidate();
-        return map;
+        return new ServerResponse(ErrorEnum.LOGOUT_SUCCESS.getStatus(), ErrorEnum.LOGOUT_SUCCESS.getMessage());
     }
 }

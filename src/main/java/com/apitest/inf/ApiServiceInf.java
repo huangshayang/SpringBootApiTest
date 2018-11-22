@@ -1,21 +1,22 @@
 package com.apitest.inf;
 
 import com.apitest.entity.Apis;
+import com.apitest.util.ServerResponse;
 
 
 public interface ApiServiceInf {
 
-    Object addApiService(Apis api);
+    ServerResponse addApiService(Apis api);
 
-    Object queryPageApiService(int page, int size);
+    ServerResponse queryPageApiService(int page, int size);
 
-    Object queryOneApiService(int id);
+    ServerResponse queryOneApiService(int id);
 
-    Object modifyApiService(int id, Apis api);
+    ServerResponse modifyApiService(int id, Apis api);
 
-    Object deleteApiService(int id);
+    ServerResponse deleteApiService(int id);
 
-    Object execApiService(int id);
+    ServerResponse execApiService(int id);
 
-    Object execApiServiceOne(int id);
+    ServerResponse execApiServiceOne(int id);
 }

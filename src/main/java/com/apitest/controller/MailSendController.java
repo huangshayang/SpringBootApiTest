@@ -1,6 +1,7 @@
 package com.apitest.controller;
 
 import com.apitest.service.MailSendService;
+import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +23,12 @@ public class MailSendController {
     }
 
     @GetMapping(value = "/reset/mail")
-    public Object resetPasswordMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
+    public ServerResponse resetPasswordMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
         return mailSendService.resetPasswordMailService(request, email);
     }
 
     @GetMapping(value = "/register/mail")
-    public Object registerMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
+    public ServerResponse registerMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
         return mailSendService.registerMailService(request, email);
     }
 }

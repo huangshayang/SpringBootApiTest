@@ -3,6 +3,7 @@ package com.apitest.controller;
 
 import com.apitest.annotation.Auth;
 import com.apitest.service.LogService;
+import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,17 +25,17 @@ public class LogController {
     }
 
     @GetMapping(value = "/{apiId}/log")
-    public Object queryPageLogController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+    public ServerResponse queryPageLogController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
         return logService.queryPageLogByApiIdService(apiId, page, size);
     }
 
     @DeleteMapping(value = "/{apiId}/log")
-    public Object deleteAllLogByApiIdController(@PathVariable(name = "apiId") int apiId){
+    public ServerResponse deleteAllLogByApiIdController(@PathVariable(name = "apiId") int apiId){
         return logService.deleteAllLogByApiIdService(apiId);
     }
 
     @DeleteMapping(value = "/log/{id}")
-    public Object deleteOneLogController(@PathVariable(name = "id") int id){
+    public ServerResponse deleteOneLogController(@PathVariable(name = "id") int id){
         return logService.deleteOneLogService(id);
     }
 }

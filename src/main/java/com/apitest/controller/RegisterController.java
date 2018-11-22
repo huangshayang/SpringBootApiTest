@@ -2,11 +2,11 @@ package com.apitest.controller;
 
 
 import com.apitest.service.RegisterService;
+import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author HSY
@@ -23,7 +23,7 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public CompletableFuture<Object> registerController(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, @RequestParam(name = "token") String token){
+    public ServerResponse registerController(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, @RequestParam(name = "token") String token){
         return registerService.registerService(username, password, token);
     }
 }

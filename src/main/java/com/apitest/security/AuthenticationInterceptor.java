@@ -2,6 +2,7 @@ package com.apitest.security;
 
 import com.apitest.annotation.Auth;
 import com.apitest.error.ErrorEnum;
+import com.apitest.util.ServerResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
@@ -12,7 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -30,11 +30,8 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
      * @return
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws UnsupportedEncodingException {
-//        String jwt = request.getHeader("auth");
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String reqCookie = request.getHeader("cookie");
-//        String payloadKey = "apitest";
-        Map<String, Object> map = new HashMap<>(8);
         if (!"REQUEST".equals(request.getDispatcherType().name())) {
             return true;
         }
@@ -42,16 +39,8 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         Class type = handlerMethod.getBeanType();
         if (type.isAnnotationPresent(Auth.class)) {
             try {
-//                if (jwt == null || jwt.isEmpty() || jwt.isBlank() || !Objects.equals(payloadKey, JwtUtil.parseJWT(jwt).get("info", String.class))) {
-//                    map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
-//                    map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
-//                    returnJson(response, map);
-//                    return false;
-//                }
                 if (reqCookie == null || reqCookie.isBlank() || reqCookie.isEmpty() || !Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute("user_session"))) {
-                    map.put("status", ErrorEnum.AUTH_FAILED.getStatus());
-                    map.put("message", ErrorEnum.AUTH_FAILED.getMessage());
-                    resToJson(response, map);
+                    resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                     return false;
                 }
             }catch (Exception e){
@@ -66,11 +55,11 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    private void resToJson(HttpServletResponse response, Map<String, Object> map) {
+    private void resToJson(HttpServletResponse response, ServerResponse serverResponse) {
         response.setContentType(String.valueOf(MediaType.APPLICATION_JSON_UTF8));
         ObjectMapper jsonObject = new ObjectMapper();
         try {
-            String json = jsonObject.writeValueAsString(map);
+            String json = jsonObject.writeValueAsString(serverResponse);
             OutputStream os = response.getOutputStream();
             os.write(json.getBytes());
             os.flush();

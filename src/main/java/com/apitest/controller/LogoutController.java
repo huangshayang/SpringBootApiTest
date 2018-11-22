@@ -2,6 +2,7 @@ package com.apitest.controller;
 
 
 import com.apitest.service.LogoutService;
+import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +26,7 @@ public class LogoutController {
     }
 
     @DeleteMapping(value = "/logout")
-    public Object logoutController(HttpSession httpSession){
+    public ServerResponse logoutController(HttpSession httpSession){
         return logoutService.logoutService(httpSession);
     }
 

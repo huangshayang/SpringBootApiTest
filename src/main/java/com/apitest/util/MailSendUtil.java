@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,6 +31,7 @@ public class MailSendUtil implements MailSendCompoentInf {
     private final RedisTemplate<String, Object> redisTemplate;
     private final UserRepository userRepository;
     private final MailRepository mailRepository;
+    private static ServerResponse serverResponse;
 
     @Autowired
     public MailSendUtil(JavaMailSender javaMailSender, RedisTemplate<String, Object> redisTemplate, UserRepository userRepository, MailRepository mailRepository) {
@@ -57,15 +57,13 @@ public class MailSendUtil implements MailSendCompoentInf {
      * @param subject
      * @return
      */
-    public Object sendResetPasswordMailHandler(HttpServletRequest request, String email, String subject) {
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse sendResetPasswordMailHandler(HttpServletRequest request, String email, String subject) {
         if (userRepository.findUserByUsernameOrEmail(email, email) != null) {
-            mailHandler(request, email, subject, map);
+            mailHandler(request, email, subject);
         }else {
-            map.put("status", ErrorEnum.EMAIL_IS_ERROR.getStatus());
-            map.put("message", ErrorEnum.EMAIL_IS_ERROR.getMessage());
+            serverResponse = new ServerResponse(ErrorEnum.EMAIL_IS_ERROR.getStatus(), ErrorEnum.EMAIL_IS_ERROR.getMessage());
         }
-        return map;
+        return serverResponse;
     }
 
     /**
@@ -75,15 +73,13 @@ public class MailSendUtil implements MailSendCompoentInf {
      * @param subject
      * @return
      */
-    public Object sendRegisterMailHandler(HttpServletRequest request, String email, String subject) {
-        Map<String, Object> map = new HashMap<>(8);
+    public ServerResponse sendRegisterMailHandler(HttpServletRequest request, String email, String subject) {
         if (userRepository.findUserByUsernameOrEmail(email, email) == null) {
-            mailHandler(request, email, subject, map);
+            mailHandler(request, email, subject);
         }else {
-            map.put("status", ErrorEnum.EMAIL_IS_ERROR.getStatus());
-            map.put("message", ErrorEnum.EMAIL_IS_ERROR.getMessage());
+            serverResponse = new ServerResponse(ErrorEnum.EMAIL_IS_ERROR.getStatus(), ErrorEnum.EMAIL_IS_ERROR.getMessage());
         }
-        return map;
+        return serverResponse;
     }
 
     /**
@@ -91,9 +87,8 @@ public class MailSendUtil implements MailSendCompoentInf {
      * @param request
      * @param email
      * @param subject
-     * @param map
      */
-    private void mailHandler(HttpServletRequest request, String email, String subject, Map<String, Object> map) {
+    private void mailHandler(HttpServletRequest request, String email, String subject) {
         String ip = request.getRemoteAddr();
         String uri = request.getRequestURI();
         int emailNum = keyNum(email);
@@ -106,8 +101,7 @@ public class MailSendUtil implements MailSendCompoentInf {
             redisTemplate.opsForValue().setIfAbsent(token, email, 1, TimeUnit.MINUTES);
             String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+token;
             sendSimpleTextMail(email, subject, path);
-            map.put("status", ErrorEnum.EMAIL_SEND_SUCCESS.getStatus());
-            map.put("message", ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
+            serverResponse = new ServerResponse(ErrorEnum.EMAIL_SEND_SUCCESS.getStatus(), ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
             saveMail(subject, path);
             redisTemplate.opsForValue().increment(email, 1);
             redisTemplate.opsForValue().increment(ip, 1);
@@ -116,8 +110,7 @@ public class MailSendUtil implements MailSendCompoentInf {
             redisTemplate.expire(ip, 24, TimeUnit.HOURS);
             redisTemplate.expire(uri, 24, TimeUnit.HOURS);
         }else {
-            map.put("status", ErrorEnum.REQUEST_NUM_FULL.getStatus());
-            map.put("message", ErrorEnum.REQUEST_NUM_FULL.getMessage());
+            serverResponse = new ServerResponse(ErrorEnum.REQUEST_NUM_FULL.getStatus(), ErrorEnum.REQUEST_NUM_FULL.getMessage());
         }
     }
 

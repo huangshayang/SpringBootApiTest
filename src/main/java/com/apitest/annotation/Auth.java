@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// 可用在方法名上
+// 可用在类名上
 @Target({ElementType.TYPE})
 // 运行时有效
 @Retention(RetentionPolicy.RUNTIME)

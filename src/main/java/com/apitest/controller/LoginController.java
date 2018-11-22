@@ -1,6 +1,7 @@
 package com.apitest.controller;
 
 import com.apitest.service.LoginService;
+import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
-    public Object loginController(HttpServletResponse response, HttpSession httpSession, @RequestParam(name = "username") String username, @RequestParam(name = "password") String password){
+    public ServerResponse loginController(HttpServletResponse response, HttpSession httpSession, @RequestParam(name = "username") String username, @RequestParam(name = "password") String password){
         return loginService.loginService(response, httpSession, username, password);
     }
 }

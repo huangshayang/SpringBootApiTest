@@ -1,10 +1,15 @@
 package com.apitest.inf;
 
 
+import com.apitest.util.ServerResponse;
+
+/**
+ * @author huangshayang
+ */
 public interface LogServiceInf {
-    Object queryPageLogByApiIdService(int apiId, int page, int size);
+    ServerResponse queryPageLogByApiIdService(int apiId, int page, int size);
 
-    Object deleteOneLogService(int id);
+    ServerResponse deleteOneLogService(int id);
 
-    Object deleteAllLogByApiIdService(int apiId);
+    ServerResponse deleteAllLogByApiIdService(int apiId);
 }
