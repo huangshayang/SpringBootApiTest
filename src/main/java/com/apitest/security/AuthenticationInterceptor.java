@@ -37,9 +37,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         String sitePart = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
         log.info(sitePart);
         log.info(referer);
-        if (!"REQUEST".equals(request.getDispatcherType().name())) {
-            return true;
-        }
         HandlerMethod handlerMethod=(HandlerMethod)object;
         Class type = handlerMethod.getBeanType();
         if (type.isAnnotationPresent(Auth.class)) {
@@ -64,7 +61,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         resCookie.setHttpOnly(true);
         resCookie.setPath("/");
         response.addCookie(resCookie);
-        log.info(request.getHeader("referer"));
         return true;
     }
 
