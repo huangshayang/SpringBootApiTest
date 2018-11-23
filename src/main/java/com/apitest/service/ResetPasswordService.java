@@ -4,6 +4,7 @@ import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.ResetPasswordServiceInf;
 import com.apitest.repository.UserRepository;
+import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
 
     private final UserRepository userRepository;
     private final RedisTemplate<String, Object> redisTemplate;
-    private static ServerResponse serverResponse;
 
     @Autowired
     public ResetPasswordService(UserRepository userRepository, RedisTemplate<String, Object> redisTemplate){
@@ -32,6 +32,7 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
 
     @Override
     public ServerResponse resetPasswordService(String newPassword, String token) {
+        ServerResponse serverResponse;
         try {
             log.info("参数: " + newPassword);
             if (newPassword == null || token == null || newPassword.getClass() != String.class) {
@@ -52,7 +53,8 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
                 redisTemplate.delete(token);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());

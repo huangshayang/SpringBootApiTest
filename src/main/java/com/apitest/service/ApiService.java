@@ -10,6 +10,7 @@ import com.apitest.repository.ApiRepository;
 import com.apitest.repository.CaseRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
+import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,8 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.API_ADD_SUCCESS.getStatus(), ErrorEnum.API_ADD_SUCCESS.getMessage());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
@@ -82,7 +84,8 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse<>(ErrorEnum.API_QUERY_SUCCESS.getStatus(), ErrorEnum.API_QUERY_SUCCESS.getMessage(), apis);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
@@ -99,7 +102,8 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
@@ -123,7 +127,8 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
@@ -142,7 +147,8 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
@@ -160,7 +166,8 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.HTTP_EXEC_SUCCESS.getStatus(), ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
@@ -179,7 +186,8 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.HTTP_EXEC_SUCCESS.getStatus(), ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());

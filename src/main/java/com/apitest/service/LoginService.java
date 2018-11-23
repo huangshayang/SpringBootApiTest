@@ -3,6 +3,7 @@ package com.apitest.service;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.LoginServiceInf;
 import com.apitest.repository.UserRepository;
+import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
+
 /**
  * @author huangshayang
  */
@@ -20,7 +23,6 @@ import javax.servlet.http.HttpSession;
 @Log4j2
 public class LoginService implements LoginServiceInf {
     private final UserRepository userRepository;
-    private static ServerResponse serverResponse;
 
     @Autowired
     public LoginService(UserRepository userRepository) {
@@ -29,6 +31,7 @@ public class LoginService implements LoginServiceInf {
 
     @Override
     public ServerResponse loginService(HttpServletResponse response, HttpSession httpSession, String username, String password){
+        ServerResponse serverResponse;
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
@@ -42,8 +45,8 @@ public class LoginService implements LoginServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus(), ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {
                 String session = new BCryptPasswordEncoder().encode(String.valueOf(userRepository.findUserByUsernameOrEmail(username, username)));
-                httpSession.setAttribute("user_session", session);
-                Cookie resCookie = new Cookie("user_session", session);
+                httpSession.setAttribute(USERSESSION_KEY, session);
+                Cookie resCookie = new Cookie(USERSESSION_KEY, session);
                 resCookie.setPath("/");
                 resCookie.setHttpOnly(true);
                 resCookie.setMaxAge(httpSession.getMaxInactiveInterval());
@@ -51,7 +54,8 @@ public class LoginService implements LoginServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.LOGIN_SUCCESS.getStatus(), ErrorEnum.LOGIN_SUCCESS.getMessage());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         log.info("返回结果: " + serverResponse);
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());

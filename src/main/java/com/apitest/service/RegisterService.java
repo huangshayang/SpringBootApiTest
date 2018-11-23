@@ -5,6 +5,7 @@ import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.RegisterServiceInf;
 import com.apitest.repository.UserRepository;
+import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ public class RegisterService implements RegisterServiceInf {
 
     private final UserRepository userRepository;
     private final RedisTemplate<String, Object> redisTemplate;
-    private static ServerResponse serverResponse;
 
     @Autowired
     public RegisterService(UserRepository userRepository, RedisTemplate<String, Object> redisTemplate) {
@@ -33,6 +33,7 @@ public class RegisterService implements RegisterServiceInf {
     @Override
     public ServerResponse registerService(String username, String password, String token) {
         User user = new User();
+        ServerResponse serverResponse;
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
@@ -55,7 +56,8 @@ public class RegisterService implements RegisterServiceInf {
             log.info("返回结果: " + serverResponse);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         }catch (Exception e){
-            e.printStackTrace();
+            new ExceptionUtil(e);
+            return null;
         }
         return serverResponse;
     }

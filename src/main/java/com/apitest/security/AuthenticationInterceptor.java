@@ -2,6 +2,7 @@ package com.apitest.security;
 
 import com.apitest.annotation.Auth;
 import com.apitest.error.ErrorEnum;
+import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.util.*;
 
+import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
+
 /**
  * @author huangshayang
  */
@@ -23,11 +26,10 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
     /**
      * 表示是否要将当前的请求拦截下来，如果返货false请求被终止，如果为true请求会继续运行
-     * Object object表示的是被拦截的请求的目标对象
-     * @param request
-     * @param response
-     * @param object
-     * @return
+     * @param request 请求
+     * @param response 响应
+     * @param object 表示的是被拦截的请求的目标对象
+     * @return true or false
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
@@ -35,25 +37,28 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         String referer = request.getHeader("referer");
         //获取访问地址
         String sitePart = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
-        log.info(sitePart);
-        log.info(referer);
-        HandlerMethod handlerMethod=(HandlerMethod)object;
-        Class type = handlerMethod.getBeanType();
-        if (type.isAnnotationPresent(Auth.class)) {
-            try {
-                if (reqCookie == null || reqCookie.isBlank() || reqCookie.isEmpty()) {
-                    resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
-                    return false;
-                }else if (!Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute("user_session"))) {
-                    resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
+        log.info("request cookie: " + reqCookie);
+        log.info("referer: " + referer);
+        log.info("sitePart: " + sitePart);
+        if (object instanceof HandlerMethod){
+            HandlerMethod handlerMethod=(HandlerMethod)object;
+            Class type = handlerMethod.getBeanType();
+            if (type.isAnnotationPresent(Auth.class)) {
+                try {
+                    if (reqCookie == null || reqCookie.isBlank() || reqCookie.isEmpty()) {
+                        resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
+                        return false;
+                    }else if (!Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute(USERSESSION_KEY))) {
+                        resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
+                        return false;
+                    }
+                }catch (Exception e){
+                    new ExceptionUtil(e);
                     return false;
                 }
-            }catch (Exception e){
-                e.printStackTrace();
-                return false;
             }
         }
-        Cookie resCookie = new Cookie("user_session", cookieToMap(reqCookie));
+        Cookie resCookie = new Cookie(USERSESSION_KEY, cookieToMap(reqCookie));
         resCookie.setMaxAge(request.getSession().getMaxInactiveInterval());
         resCookie.setHttpOnly(true);
         resCookie.setPath("/");
@@ -71,21 +76,21 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
             os.flush();
             os.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            new ExceptionUtil(e);
         }
     }
 
     private String cookieToMap(String reqCookie){
         Map<String, String> map = new HashMap<>(8);
-        try {
+//        try {
             String[] str = reqCookie.split(";");
             for (String s : str) {
                 String[] str2 = s.split("=");
                 map.put(str2[0].trim(), str2[1]);
             }
-        }catch (ArrayIndexOutOfBoundsException e){
-            map.put("user_session", "");
-        }
+//        }catch (ArrayIndexOutOfBoundsException e){
+//            map.put("user_session", "");
+//        }
         return map.get("user_session");
     }
 }
