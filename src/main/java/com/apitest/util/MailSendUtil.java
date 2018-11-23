@@ -98,7 +98,8 @@ public class MailSendUtil implements MailSendCompoentInf {
         //限制同一个ip或者同一个email一天内同一个接口超过5次的请求发送
         if (numLessFive) {
             String token = new BCryptPasswordEncoder().encode(email);
-            redisTemplate.opsForValue().setIfAbsent(token, email, 1, TimeUnit.MINUTES);
+            log.info(request.getHeader("referer"));
+            redisTemplate.opsForValue().setIfAbsent(token, email, 5, TimeUnit.MINUTES);
             String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+token;
             sendSimpleTextMail(email, subject, path);
             serverResponse = new ServerResponse(ErrorEnum.EMAIL_SEND_SUCCESS.getStatus(), ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());

@@ -32,6 +32,11 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String reqCookie = request.getHeader("cookie");
+        String referer = request.getHeader("referer");
+        //获取访问地址
+        String sitePart = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+        log.info(sitePart);
+        log.info(referer);
         if (!"REQUEST".equals(request.getDispatcherType().name())) {
             return true;
         }
@@ -39,12 +44,19 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         Class type = handlerMethod.getBeanType();
         if (type.isAnnotationPresent(Auth.class)) {
             try {
-                if (reqCookie == null || reqCookie.isBlank() || reqCookie.isEmpty() || !Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute("user_session"))) {
+                if (reqCookie == null || reqCookie.isBlank() || reqCookie.isEmpty()) {
+                    resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
+                    return false;
+                }else if (!Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute("user_session"))) {
+                    resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
+                    return false;
+                }else if (referer == null || !referer.startsWith(sitePart)) {
                     resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                     return false;
                 }
             }catch (Exception e){
                 e.printStackTrace();
+                return false;
             }
         }
         Cookie resCookie = new Cookie("user_session", cookieToMap(reqCookie));
@@ -52,6 +64,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         resCookie.setHttpOnly(true);
         resCookie.setPath("/");
         response.addCookie(resCookie);
+        log.info(request.getHeader("referer"));
         return true;
     }
 

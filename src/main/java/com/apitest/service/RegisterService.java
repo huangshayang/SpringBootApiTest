@@ -42,7 +42,7 @@ public class RegisterService implements RegisterServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getMessage());
             }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_IS_EXIST.getStatus(), ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (!new BCryptPasswordEncoder().matches(String.valueOf(redisTemplate.opsForValue().get(token)), token)) {
+            }else if (redisTemplate.opsForValue().get(token) == null) {
                 serverResponse = new ServerResponse(ErrorEnum.TOKEN_IS_ERROR.getStatus(), ErrorEnum.TOKEN_IS_ERROR.getMessage());
             }else {
                 user.setUsername(username);
