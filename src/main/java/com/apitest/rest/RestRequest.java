@@ -2,6 +2,7 @@ package com.apitest.rest;
 
 
 import com.apitest.configconsts.ConfigConsts;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.*;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author huangshayang
  */
+@Log4j2
 public class RestRequest {
 
     private static final String COOKIE = getCookie();

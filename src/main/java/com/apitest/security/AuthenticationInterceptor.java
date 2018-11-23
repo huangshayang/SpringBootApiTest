@@ -47,9 +47,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                 }else if (!Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute("user_session"))) {
                     resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                     return false;
-                }else if (referer == null || !referer.startsWith(sitePart)) {
-                    resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
-                    return false;
                 }
             }catch (Exception e){
                 e.printStackTrace();
