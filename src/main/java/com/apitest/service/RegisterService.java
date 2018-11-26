@@ -13,6 +13,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
+
 
 /**
  * @author huangshayang
@@ -37,7 +39,7 @@ public class RegisterService implements RegisterServiceInf {
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
-            if (username.isBlank() || password.isBlank()){
+            if (isBlank(username) || isBlank(password)){
                 serverResponse = new ServerResponse(ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getMessage());
             }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_IS_EXIST.getStatus(), ErrorEnum.USER_IS_EXIST.getMessage());

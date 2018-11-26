@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
+import static org.apache.commons.lang.StringUtils.isBlank;
 
 /**
  * @author huangshayang
@@ -35,7 +36,7 @@ public class LoginService implements LoginServiceInf {
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
-            if (username.isBlank() || password.isBlank()) {
+            if (isBlank(username) || isBlank(password)) {
                 serverResponse = new ServerResponse(ErrorEnum.PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
             }else if (userRepository.findUserByUsernameOrEmail(username, username) == null) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_IS_NOT_EXISTS.getStatus(), ErrorEnum.USER_IS_NOT_EXISTS.getMessage());
@@ -45,9 +46,9 @@ public class LoginService implements LoginServiceInf {
                 String session = new BCryptPasswordEncoder().encode(String.valueOf(userRepository.findUserByUsernameOrEmail(username, username)));
                 httpSession.setAttribute(USERSESSION_KEY, session);
                 Cookie resCookie = new Cookie(USERSESSION_KEY, session);
-                resCookie.setPath("/");
                 resCookie.setHttpOnly(true);
                 resCookie.setMaxAge(httpSession.getMaxInactiveInterval());
+                resCookie.setPath("/");
                 response.addCookie(resCookie);
                 serverResponse = new ServerResponse(ErrorEnum.LOGIN_SUCCESS.getStatus(), ErrorEnum.LOGIN_SUCCESS.getMessage());
             }

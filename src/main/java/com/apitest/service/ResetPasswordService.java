@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
+
 /**
  * @author huangshayang
  */
@@ -35,7 +37,7 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
         ServerResponse serverResponse;
         try {
             log.info("参数: " + newPassword);
-            if (newPassword.isBlank()) {
+            if (isBlank(newPassword)) {
                 serverResponse = new ServerResponse(ErrorEnum.PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
             }else if (redisTemplate.opsForValue().get(token) == null) {
                 serverResponse = new ServerResponse(ErrorEnum.TOKEN_IS_ERROR.getStatus(), ErrorEnum.TOKEN_IS_ERROR.getMessage());

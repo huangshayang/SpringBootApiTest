@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
+
 /**
  * @author huangshayang
  */
@@ -48,13 +50,13 @@ public class ApiService implements ApiServiceInf {
     public ServerResponse addApiService(Apis api){
         log.info("参数: " + api);
         try {
-            if (api.getMethod().isBlank()) {
+            if (isBlank(api.getMethod())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_METHOD_IS_EMPTY.getStatus(), ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
-            }else if (api.getUrl().isBlank()) {
+            }else if (isBlank(api.getUrl())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
-            }else if (api.getCookie().toString().isBlank()) {
+            }else if (isBlank(api.getCookie().toString())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
-            }else if (api.getNote().isBlank()) {
+            }else if (isBlank(api.getNote())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
             }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
@@ -110,13 +112,13 @@ public class ApiService implements ApiServiceInf {
         try {
             if (apiRepository.findById(id).isPresent()) {
                 Apis apis = apiRepository.findById(id).get();
-                if (api.getUrl().isBlank()) {
+                if (isBlank(api.getUrl())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
-                }else if (api.getMethod().isBlank()) {
+                }else if (isBlank(api.getMethod())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_METHOD_IS_EMPTY.getStatus(), ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
-                }else if (api.getCookie().toString().isBlank()) {
+                }else if (isBlank(api.getCookie().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
-                }else if (api.getNote().isBlank()) {
+                }else if (isBlank(api.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
                 }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());

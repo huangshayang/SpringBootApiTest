@@ -35,11 +35,11 @@ public class ApitestApplicationTests {
 //    @Autowired
 //    private RedisTemplate<String, Object> redisTemplate;
 
-//    @Test
-//    public void set(){
-//        Optional<Boolean> b = Optional.ofNullable(null);
-//        System.out.println(b);
-//        b.ifPresent(aBoolean -> System.out.println(aBoolean.booleanValue()));
-//    }
+    @Test
+    public void set(){
+        Optional<Boolean> b = Optional.ofNullable(null);
+        System.out.println(b);
+        b.ifPresent(aBoolean -> System.out.println(aBoolean.booleanValue()));
+    }
 
 }

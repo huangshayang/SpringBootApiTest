@@ -27,7 +27,7 @@ public class RestRequest {
         try {
             log.info("uri: " + url);
             log.info("data:" + data);
-            requestHeadersSpec = client.get().uri(url, data).accept(MediaType.APPLICATION_JSON_UTF8);
+            requestHeadersSpec = client.get().uri(url, data).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
             if (cookie) {
                 requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, COOKIE);
             }

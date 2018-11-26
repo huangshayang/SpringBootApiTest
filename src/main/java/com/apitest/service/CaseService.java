@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.*;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
+
 /**
  * @author huangshayang
  */
@@ -87,9 +89,9 @@ public class CaseService implements CaseServiceInf {
         try {
             log.info("参数: " + cases);
             if (caseRepository.findById(id).isPresent()){
-                if (cases.getRequestData().isBlank()) {
+                if (isBlank(cases.getRequestData())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getStatus(), ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getMessage());
-                }else if (cases.getNote().isBlank()) {
+                }else if (isBlank(cases.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
                 }else {
                     Cases cs = caseRepository.findById(id).get();
@@ -136,9 +138,9 @@ public class CaseService implements CaseServiceInf {
             log.info("参数: " + cases);
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
-                if (cases.getRequestData().isBlank()) {
+                if (isBlank(cases.getRequestData())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getStatus(), ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getMessage());
-                }else if (cases.getNote().isBlank()) {
+                }else if (isBlank(cases.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
                 }else {
                     cases.setApiId(apiId);

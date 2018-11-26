@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.util.*;
 
 import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
+import static org.apache.commons.lang.StringUtils.isBlank;
 
 /**
  * @author huangshayang
@@ -37,15 +38,12 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         String referer = request.getHeader("referer");
         //获取访问地址
         String sitePart = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
-        log.info("request cookie: " + reqCookie);
-        log.info("referer: " + referer);
-        log.info("sitePart: " + sitePart);
         if (object instanceof HandlerMethod){
             HandlerMethod handlerMethod=(HandlerMethod)object;
             Class type = handlerMethod.getBeanType();
             if (type.isAnnotationPresent(Auth.class)) {
                 try {
-                    if (reqCookie.isBlank()) {
+                    if (isBlank(reqCookie)) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
                     }else if (!Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute(USERSESSION_KEY))) {
@@ -82,15 +80,11 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
     private String cookieToMap(String reqCookie){
         Map<String, String> map = new HashMap<>(8);
-//        try {
-            String[] str = reqCookie.split(";");
-            for (String s : str) {
-                String[] str2 = s.split("=");
-                map.put(str2[0].trim(), str2[1]);
-            }
-//        }catch (ArrayIndexOutOfBoundsException e){
-//            map.put("user_session", "");
-//        }
+        String[] str = reqCookie.split(";");
+        for (String s : str) {
+            String[] str2 = s.split("=");
+            map.put(str2[0].trim(), str2[1]);
+        }
         return map.get("user_session");
     }
 }
