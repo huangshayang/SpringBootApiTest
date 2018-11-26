@@ -3,6 +3,7 @@ package com.apitest.service;
 import com.apitest.entity.Logs;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.LogServiceInf;
+import com.apitest.repository.ApiRepository;
 import com.apitest.repository.LogRepository;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
@@ -19,11 +20,13 @@ import org.springframework.stereotype.Service;
 public class LogService implements LogServiceInf {
 
     private final LogRepository logRepository;
+    private final ApiRepository apiRepository;
     private static ServerResponse serverResponse;
 
     @Autowired
-    public LogService(LogRepository logRepository){
+    public LogService(LogRepository logRepository, ApiRepository apiRepository){
         this.logRepository = logRepository;
+        this.apiRepository = apiRepository;
     }
 
     @Override
@@ -66,8 +69,12 @@ public class LogService implements LogServiceInf {
     @Override
     public ServerResponse deleteAllLogByApiIdService(int apiId) {
         try {
-            logRepository.deleteByApiId(apiId);
-            serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
+            if (apiRepository.findById(apiId).isPresent()) {
+                logRepository.deleteByApiId(apiId);
+                serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
+            }else {
+                serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
+            }
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;

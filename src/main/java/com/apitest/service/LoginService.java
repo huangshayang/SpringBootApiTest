@@ -35,12 +35,10 @@ public class LoginService implements LoginServiceInf {
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
-            if (username == null || password == null || password.getClass() != String.class) {
-                serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
+            if (username.isBlank() || password.isBlank()) {
+                serverResponse = new ServerResponse(ErrorEnum.PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
             }else if (userRepository.findUserByUsernameOrEmail(username, username) == null) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_IS_NOT_EXISTS.getStatus(), ErrorEnum.USER_IS_NOT_EXISTS.getMessage());
-            }else if (password.isEmpty() || password.isBlank()) {
-                serverResponse = new ServerResponse(ErrorEnum.PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
             }else if (!new BCryptPasswordEncoder().matches(password, userRepository.findUserByUsernameOrEmail(username, username).getPassword())) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus(), ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {

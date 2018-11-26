@@ -48,15 +48,13 @@ public class ApiService implements ApiServiceInf {
     public ServerResponse addApiService(Apis api){
         log.info("参数: " + api);
         try {
-            if (api.getUrl() == null || api.getMethod() == null || api.getCookie() == null || api.getNote() == null) {
-                serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
-            }else if (api.getMethod().isEmpty()) {
+            if (api.getMethod().isBlank()) {
                 serverResponse = new ServerResponse(ErrorEnum.API_METHOD_IS_EMPTY.getStatus(), ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
-            }else if (api.getUrl().isEmpty()) {
+            }else if (api.getUrl().isBlank()) {
                 serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
-            }else if (api.getCookie().toString().isEmpty()) {
+            }else if (api.getCookie().toString().isBlank()) {
                 serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
-            }else if (api.getNote().isEmpty()) {
+            }else if (api.getNote().isBlank()) {
                 serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
             }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
@@ -95,12 +93,8 @@ public class ApiService implements ApiServiceInf {
     @Override
     public ServerResponse queryOneApiService(int id){
         try {
-            if (apiRepository.findById(id).isPresent()) {
-                Optional<Apis> api = apiRepository.findById(id);
-                serverResponse = new ServerResponse<>(ErrorEnum.API_QUERY_SUCCESS.getStatus(), ErrorEnum.API_QUERY_SUCCESS.getMessage(), api);
-            }else {
-                serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
-            }
+            Optional<Apis> api = apiRepository.findById(id);
+            serverResponse = new ServerResponse<>(ErrorEnum.API_QUERY_SUCCESS.getStatus(), ErrorEnum.API_QUERY_SUCCESS.getMessage(), api);
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;
@@ -116,13 +110,25 @@ public class ApiService implements ApiServiceInf {
         try {
             if (apiRepository.findById(id).isPresent()) {
                 Apis apis = apiRepository.findById(id).get();
-                apis.setUrl(api.getUrl());
-                apis.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-                apis.setMethod(api.getMethod());
-                apis.setNote(api.getNote());
-                apis.setCookie(api.getCookie());
-                apiRepository.saveAndFlush(apis);
-                serverResponse = new ServerResponse(ErrorEnum.API_MODIFY_SUCCESS.getStatus(), ErrorEnum.API_MODIFY_SUCCESS.getMessage());
+                if (api.getUrl().isBlank()) {
+                    serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
+                }else if (api.getMethod().isBlank()) {
+                    serverResponse = new ServerResponse(ErrorEnum.API_METHOD_IS_EMPTY.getStatus(), ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
+                }else if (api.getCookie().toString().isBlank()) {
+                    serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
+                }else if (api.getNote().isBlank()) {
+                    serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
+                }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
+                    serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
+                }else {
+                    apis.setUrl(api.getUrl());
+                    apis.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    apis.setMethod(api.getMethod());
+                    apis.setNote(api.getNote());
+                    apis.setCookie(api.getCookie());
+                    apiRepository.saveAndFlush(apis);
+                    serverResponse = new ServerResponse(ErrorEnum.API_MODIFY_SUCCESS.getStatus(), ErrorEnum.API_MODIFY_SUCCESS.getMessage());
+                }
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
@@ -158,8 +164,8 @@ public class ApiService implements ApiServiceInf {
     @Override
     public ServerResponse execApiService(int id) {
         try {
-            List<Cases> casesList = caseRepository.findByApiId(id);
             if (apiRepository.findById(id).isPresent()) {
+                List<Cases> casesList = caseRepository.findByApiId(id);
                 Apis apis = apiRepository.findById(id).get();
                 //根据case的数量起对应数量的多线程
                 casesList.forEach(cases -> new Thread(() -> apiCaseExecByLock(apis, cases)).start());
@@ -177,8 +183,8 @@ public class ApiService implements ApiServiceInf {
     @Override
     public ServerResponse execApiServiceOne(int id){
         try {
-            List<Cases> casesList = caseRepository.findByApiId(id);
             if (apiRepository.findById(id).isPresent()) {
+                List<Cases> casesList = caseRepository.findByApiId(id);
                 Apis apis = apiRepository.findById(id).get();
                 for (Cases aCasesList : casesList) {
                     apiCaseExec(apis, aCasesList);

@@ -39,11 +39,12 @@ public enum ErrorEnum {
     LOG_IS_NULL(10012, "日志id不存在"),
     API_IS_REPEAT(10013, "接口地址和方法重复"),
     USER_IS_NOT_EXISTS(10014, "用户不存在，请先注册"),
-    TOKEN_IS_EMPTY(10015, "token不能为空"),
-    API_NOTE_IS_EMPTY(10016, "接口名不能为空"),
-    PASSWORD_IS_EMPTY(10017, "密码不能为空"),
-    EMAIL_IS_ERROR(10018, "邮箱错误，请检查"),
-    REQUEST_NUM_FULL(10019, "请求次数过多，请明天再试");
+    API_NOTE_IS_EMPTY(10015, "接口名不能为空"),
+    PASSWORD_IS_EMPTY(10016, "密码不能为空"),
+    EMAIL_IS_ERROR(10017, "邮箱错误，请检查"),
+    REQUEST_NUM_FULL(10018, "请求次数过多，请明天再试"),
+    CASE_REQUESTDATA_IS_EMPTY(10019, "用例请求数据不能为空"),
+    CASE_NOTE_IS_EMPTY(10020, "用例名不能为空");
 
     @Getter
     private int status;

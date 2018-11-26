@@ -35,12 +35,8 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
         ServerResponse serverResponse;
         try {
             log.info("参数: " + newPassword);
-            if (newPassword == null || token == null || newPassword.getClass() != String.class) {
-                serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
-            }else if (newPassword.isEmpty() || newPassword.isBlank()) {
+            if (newPassword.isBlank()) {
                 serverResponse = new ServerResponse(ErrorEnum.PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
-            }else if (token.isBlank() || token.isEmpty()) {
-                serverResponse = new ServerResponse(ErrorEnum.TOKEN_IS_EMPTY.getStatus(), ErrorEnum.TOKEN_IS_EMPTY.getMessage());
             }else if (redisTemplate.opsForValue().get(token) == null) {
                 serverResponse = new ServerResponse(ErrorEnum.TOKEN_IS_ERROR.getStatus(), ErrorEnum.TOKEN_IS_ERROR.getMessage());
             }else {

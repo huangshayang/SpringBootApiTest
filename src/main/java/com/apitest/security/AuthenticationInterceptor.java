@@ -45,7 +45,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
             Class type = handlerMethod.getBeanType();
             if (type.isAnnotationPresent(Auth.class)) {
                 try {
-                    if (reqCookie == null || reqCookie.isBlank() || reqCookie.isEmpty()) {
+                    if (reqCookie.isBlank()) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
                     }else if (!Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute(USERSESSION_KEY))) {

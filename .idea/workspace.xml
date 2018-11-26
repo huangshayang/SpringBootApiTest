@@ -2,27 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="908c700a-0a5e-45e9-9b07-e75c26252f38" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/apitest/util/ExceptionUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_3_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/configconsts/ConfigConsts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/configconsts/ConfigConsts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/log/ExceptionLog.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/rest/RestRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/rest/RestRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apitest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/apitest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/security/InterceptorConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/security/InterceptorConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/service/ApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/service/ApiService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/service/CaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/service/CaseService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/service/LogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/service/LogService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/service/LoginService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/service/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/service/RegisterService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/service/ResetPasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/service/ResetPasswordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/util/MailSendUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/util/MailSendUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/configconsts/ConfigConsts.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/apitest/configconsts/ConfigConsts.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/rest/RestRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/apitest/rest/RestRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/service/ApiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/apitest/service/ApiService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/service/CaseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/apitest/service/CaseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/service/LogService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/apitest/service/LogService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/service/CaseService.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/service/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/apitest/service/LoginService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/apitest/service/RegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/apitest/service/RegisterService.class" afterDir="false" />
     </list>
@@ -38,14 +30,14 @@
     <option name="MAKE_PROJECT_ON_SAVE" value="true" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/apitest$CalcTest.exec" NAME="CalcTest Coverage Results" MODIFIED="1535618496630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="jacoco" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.apitest.service.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/apitest$com_apitest_rest_in_apitest.ic" NAME="com.apitest.rest in apitest Coverage Results" MODIFIED="1535945723914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.apitest.rest.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/apitest$CalcTest.ic" NAME="CalcTest Coverage Results" MODIFIED="1535618728050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.apitest.rest.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/apitest$CalcTest.exec" NAME="CalcTest Coverage Results" MODIFIED="1535618496630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="jacoco" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>com.apitest.service.*</FILTER>
     </SUITE>
   </component>
   <component name="CoverageViewManager">
@@ -72,20 +64,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/MailSendService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="672">
-              <caret line="43" column="128" selection-start-line="43" selection-start-column="128" selection-end-line="43" selection-end-column="128" />
+            <state relative-caret-position="306">
+              <caret line="27" column="45" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/CaptchaUtil.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/ApiService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            <state relative-caret-position="156">
+              <caret line="111" column="61" lean-forward="true" selection-start-line="111" selection-start-column="61" selection-end-line="111" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,28 +86,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/ExceptionUtil.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/entity/Apis.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+            <state relative-caret-position="323">
+              <caret line="32" column="19" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/JwtUtil.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/CaseService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/MailSendUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1581">
-              <caret line="144" column="23" selection-start-line="144" selection-start-column="23" selection-end-line="144" selection-end-column="23" />
+            <state relative-caret-position="282">
+              <caret line="97" column="48" lean-forward="true" selection-start-line="97" selection-start-column="48" selection-end-line="97" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,10 +107,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/ServerResponse.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/ResetPasswordService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+            <state relative-caret-position="170">
+              <caret line="40" column="135" lean-forward="true" selection-start-line="40" selection-start-column="135" selection-end-line="40" selection-end-column="135" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -136,31 +119,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/RegisterService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="63" column="31" lean-forward="true" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="31" />
+            <state relative-caret-position="272">
+              <caret line="42" column="58" lean-forward="true" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/configconsts/ConfigConsts.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="56" lean-forward="true" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -168,11 +133,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/LoginService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="48" column="61" selection-start-line="48" selection-start-column="61" selection-end-line="48" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="282">
+              <caret line="38" column="72" lean-forward="true" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="72" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="629">
+              <caret line="37" column="43" lean-forward="true" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="19" lean-forward="true" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -229,7 +218,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/entity/Mails.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/apitest/ApitestApplicationTests.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/util/CusAccessUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/controller/LogoutController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/inf/LoginServiceInf.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/controller/LoginController.java" />
@@ -264,15 +252,16 @@
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/util/ExceptionLog.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/rest/RestRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/security/InterceptorConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/ApiService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/CaseService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/LogService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/RegisterService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/ResetPasswordService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/apitest/util/MailSendUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/configconsts/ConfigConsts.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/LoginService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/RegisterService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/apitest/util/MailSendUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/LogService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/CaseService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/ResetPasswordService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/apitest/service/ApiService.java" />
       </list>
     </option>
   </component>
@@ -285,7 +274,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="$PROJECT_DIR$/../apache-maven-3.5.4" />
+        <option name="mavenHome" value="D:/apache-maven-3.5.4" />
       </MavenGeneralSettings>
     </option>
     <option name="importingSettings">
@@ -310,7 +299,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -327,56 +316,38 @@
         <subPane>
           <expand>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="configconsts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -384,35 +355,8 @@
               <item name="entity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="error" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="inf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="redisconfig" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -420,26 +364,8 @@
               <item name="repository" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="security" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -447,17 +373,8 @@
               <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="apitest" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SpringBootApiTest-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SpringBootApiTest-master" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringBootApiTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpringBootApiTest" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
@@ -828,6 +745,7 @@
       <workItem from="1542979090220" duration="3418000" />
       <workItem from="1542982809072" duration="563000" />
       <workItem from="1542983404855" duration="12400000" />
+      <workItem from="1543196360704" duration="4959000" />
     </task>
     <servers />
   </component>
@@ -864,7 +782,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1022876000" />
+    <option name="totallyTimeSpent" value="1027835000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -877,8 +795,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49068323" visible="true" weight="0.20842217" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49068323" visible="true" weight="0.21055438" />
       <window_info id="Structure" order="1" sideWeight="0.50931674" side_tool="true" weight="0.21108742" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -895,13 +814,13 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286334" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.3286334" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3275488" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50852877" side_tool="true" weight="0.324295" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5090618" side_tool="true" weight="0.32321042" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4946695" weight="0.4186551" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" weight="0.3286334" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="13" weight="0.329718" />
       <window_info anchor="bottom" id="Problems" order="14" weight="0.3286334" />
-      <window_info active="true" anchor="bottom" id="Run Dashboard" order="15" sideWeight="0.4914712" visible="true" weight="0.324295" />
+      <window_info anchor="bottom" id="Run Dashboard" order="15" sideWeight="0.49093816" visible="true" weight="0.32321042" />
       <window_info anchor="bottom" id="Duplicate detector" order="16" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="17" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -923,19 +842,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/ApitestApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#313#314#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/${log4j2.root.path}.log" />
-    <entry file="file://$PROJECT_DIR$/${log4j2.package.path}.log" />
     <entry file="file://$PROJECT_DIR$/mvnw">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -966,35 +872,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logs/warn/warn.log">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="LogFileEditorProvider" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/error/error.log">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="LogFileEditorProvider" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/info/info-2018-11-23.log">
-      <provider selected="true" editor-type-id="LogFileEditorProvider" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/info/info.log">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="LogFileEditorProvider">
-        <state relative-caret-position="-219">
-          <caret line="9" column="137" selection-start-line="9" selection-start-column="137" selection-end-line="9" selection-end-column="137" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/info/info-2018-11-23 23-02.log">
-      <provider selected="true" editor-type-id="LogFileEditorProvider" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/warn/warn.log" />
+    <entry file="file://$PROJECT_DIR$/logs/error/error.log" />
+    <entry file="file://$PROJECT_DIR$/logs/info/info-2018-11-23.log" />
+    <entry file="file://$PROJECT_DIR$/logs/info/info.log" />
+    <entry file="file://$PROJECT_DIR$/logs/info/info-2018-11-23 23-02.log" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/controller/CaseController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="655">
@@ -1056,13 +938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/repository/CaseRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/controller/ApiController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1077,13 +952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/entity/Apis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="32" column="19" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1131,26 +999,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/ApiService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-567">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/CaseService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/LogoutService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1161,47 +1009,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/LogService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/MailSendService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="27" column="46" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/RegisterService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="24" column="62" selection-start-line="24" selection-start-column="62" selection-end-line="24" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/ResetPasswordService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/CaptchaUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state relative-caret-position="221">
+          <caret line="13" column="87" selection-start-line="13" selection-start-column="87" selection-end-line="13" selection-end-column="87" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1222,16 +1033,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/MailSendUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1581">
-          <caret line="144" column="23" selection-start-line="144" selection-start-column="23" selection-end-line="144" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/ServerResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
@@ -1242,44 +1043,143 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/configconsts/ConfigConsts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        <state relative-caret-position="187">
+          <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/LoginService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/LogService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="48" column="61" selection-start-line="48" selection-start-column="61" selection-end-line="48" selection-end-column="61" />
+        <state relative-caret-position="299">
+          <caret line="76" column="13" selection-start-line="76" selection-start-column="13" selection-end-line="76" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/configconsts/ConfigConsts.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/repository/UserRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="56" lean-forward="true" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+        <state relative-caret-position="136">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/repository/LogRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/repository/CaseRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/repository/ApiRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="63" column="31" lean-forward="true" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="31" />
+        <state relative-caret-position="272">
+          <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/CaseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="97" column="48" lean-forward="true" selection-start-line="97" selection-start-column="48" selection-end-line="97" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/RegisterService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="43" column="128" selection-start-line="43" selection-start-column="128" selection-end-line="43" selection-end-column="128" />
+        <state relative-caret-position="272">
+          <caret line="42" column="58" lean-forward="true" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/MailSendService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="27" column="45" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/util/MailSendUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1112">
+          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/error/ErrorEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="43" lean-forward="true" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/entity/Apis.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="32" column="19" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/ApiService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="111" column="61" lean-forward="true" selection-start-line="111" selection-start-column="61" selection-end-line="111" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/ResetPasswordService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="40" column="135" lean-forward="true" selection-start-line="40" selection-start-column="135" selection-end-line="40" selection-end-column="135" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/apitest/service/LoginService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="38" column="72" lean-forward="true" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="19" lean-forward="true" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
         </state>
       </provider>
     </entry>

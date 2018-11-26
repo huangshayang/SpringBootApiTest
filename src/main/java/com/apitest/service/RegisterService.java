@@ -37,9 +37,7 @@ public class RegisterService implements RegisterServiceInf {
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
-            if (username == null || password == null || password.getClass() != String.class) {
-                serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
-            }else if (username.isEmpty() || username.isBlank() || password.isEmpty() || password.isBlank()){
+            if (username.isBlank() || password.isBlank()){
                 serverResponse = new ServerResponse(ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getMessage());
             }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_IS_EXIST.getStatus(), ErrorEnum.USER_IS_EXIST.getMessage());
