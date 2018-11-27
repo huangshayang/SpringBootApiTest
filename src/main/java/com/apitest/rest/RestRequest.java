@@ -68,7 +68,7 @@ public class RestRequest {
         try {
             log.info("uri: " + url);
             log.info("data:" + data);
-            return client.delete().uri(url, data).accept(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSION_KEY, COOKIE);
+            return client.delete().uri(url, data).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).cookie(ConfigConsts.SESSION_KEY, COOKIE);
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;

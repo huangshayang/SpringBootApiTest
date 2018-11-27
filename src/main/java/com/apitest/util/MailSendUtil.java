@@ -66,7 +66,9 @@ public class MailSendUtil implements MailSendCompoentInf {
         try {
             log.info("email: " + email);
             if (userRepository.findUserByUsernameOrEmail(email, email) != null) {
-                mailHandler(request, email, subject);
+                String token = new BCryptPasswordEncoder().encode(email);
+                String path = request.getScheme()+"://" + request.getServerName() + "/reset-password?token="+token;
+                mailHandler(request, email, subject, path, token);
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.EMAIL_IS_ERROR.getStatus(), ErrorEnum.EMAIL_IS_ERROR.getMessage());
             }
@@ -88,7 +90,9 @@ public class MailSendUtil implements MailSendCompoentInf {
         try {
             log.info("email: " + email);
             if (userRepository.findUserByUsernameOrEmail(email, email) == null) {
-                mailHandler(request, email, subject);
+                String token = new BCryptPasswordEncoder().encode(email);
+                String path = request.getScheme()+"://" + request.getServerName() + "/register-password?token="+token;
+                mailHandler(request, email, subject, path, token);
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.EMAIL_IS_ERROR.getStatus(), ErrorEnum.EMAIL_IS_ERROR.getMessage());
             }
@@ -105,7 +109,7 @@ public class MailSendUtil implements MailSendCompoentInf {
      * @param email 要发送到的邮箱
      * @param subject 邮件主题
      */
-    private void mailHandler(HttpServletRequest request, String email, String subject) {
+    private void mailHandler(HttpServletRequest request, String email, String subject, String path, String token) {
         try {
             String ip = request.getRemoteAddr();
             String uri = request.getRequestURI();
@@ -115,11 +119,8 @@ public class MailSendUtil implements MailSendCompoentInf {
             boolean numLessFive = (emailNum < 5 || ipNum < 5) && uriNum < 5;
             //限制同一个ip或者同一个email一天内同一个接口超过5次的请求发送
             if (numLessFive) {
-                String token = new BCryptPasswordEncoder().encode(email);
                 redisTemplate.opsForValue().setIfAbsent(token, email, 5, TimeUnit.MINUTES);
-                String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getRequestURI()+"?token="+token;
                 sendSimpleTextMail(email, subject, path);
-                serverResponse = new ServerResponse(ErrorEnum.EMAIL_SEND_SUCCESS.getStatus(), ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
                 saveMail(subject, path);
                 redisTemplate.opsForValue().increment(email, 1);
                 redisTemplate.opsForValue().increment(ip, 1);
@@ -127,6 +128,7 @@ public class MailSendUtil implements MailSendCompoentInf {
                 redisTemplate.expire(email, 24, TimeUnit.HOURS);
                 redisTemplate.expire(ip, 24, TimeUnit.HOURS);
                 redisTemplate.expire(uri, 24, TimeUnit.HOURS);
+                serverResponse = new ServerResponse(ErrorEnum.EMAIL_SEND_SUCCESS.getStatus(), ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.REQUEST_NUM_FULL.getStatus(), ErrorEnum.REQUEST_NUM_FULL.getMessage());
             }
