@@ -76,6 +76,8 @@ public class MailSendUtil implements MailSendCompoentInf {
             new ExceptionUtil(e);
             return null;
         }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return serverResponse;
     }
 
@@ -100,6 +102,8 @@ public class MailSendUtil implements MailSendCompoentInf {
             new ExceptionUtil(e);
             return null;
         }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return serverResponse;
     }
 
