@@ -79,8 +79,8 @@ public class RestRequest {
         try {
             String url = "http://alpha.smart-iov.net/api/v1/login";
             ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(8);
-            map.put("username", ConfigConsts.USERNAME);
-            map.put("password", ConfigConsts.PASSWORD);
+            map.putIfAbsent("username", ConfigConsts.USERNAME);
+            map.putIfAbsent("password", ConfigConsts.PASSWORD);
             Mono<ClientResponse> webClient = WebClient.create(url)
                     .post()
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
