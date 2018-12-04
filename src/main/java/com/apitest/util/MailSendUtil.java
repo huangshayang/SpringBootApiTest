@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -117,18 +118,15 @@ public class MailSendUtil implements MailSendCompoentInf {
         try {
             String ip = request.getRemoteAddr();
             String uri = request.getRequestURI();
-            int emailNum = keyNum(email);
-            int ipNum = keyNum(ip);
-            int uriNum = keyNum(uri);
-            boolean numLessFive = (emailNum < 5 || ipNum < 5) && uriNum < 5;
+            long emailNum = redisTemplate.opsForValue().increment(email);
+            long ipNum = redisTemplate.opsForValue().increment(ip);
+            long uriNum = redisTemplate.opsForValue().increment(uri);
+            boolean numLessFive = (emailNum < 6 || ipNum < 6) && uriNum < 6;
             //限制同一个ip或者同一个email一天内同一个接口超过5次的请求发送
             if (numLessFive) {
                 redisTemplate.opsForValue().setIfAbsent(token, email, 5, TimeUnit.MINUTES);
                 sendSimpleTextMail(email, subject, path);
                 saveMail(subject, path);
-                redisTemplate.opsForValue().increment(email, 1);
-                redisTemplate.opsForValue().increment(ip, 1);
-                redisTemplate.opsForValue().increment(uri, 1);
                 redisTemplate.expire(email, 24, TimeUnit.HOURS);
                 redisTemplate.expire(ip, 24, TimeUnit.HOURS);
                 redisTemplate.expire(uri, 24, TimeUnit.HOURS);
@@ -139,10 +137,6 @@ public class MailSendUtil implements MailSendCompoentInf {
         }catch (Exception e){
             new ExceptionUtil(e);
         }
-    }
-
-    private int keyNum(String key){
-        return redisTemplate.opsForValue().get(key) == null ? 0 : (Integer)redisTemplate.opsForValue().get(key);
     }
 
     /**

@@ -146,6 +146,7 @@ public class ApiService implements ApiServiceInf {
     @Override
     public ServerResponse deleteApiService(int id){
         try {
+            lock.lock();
             if (apiRepository.findById(id).isPresent()) {
                 logRepository.deleteByApiId(id);
                 caseRepository.deleteByApiId(id);
@@ -154,6 +155,7 @@ public class ApiService implements ApiServiceInf {
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
+            lock.unlock();
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;

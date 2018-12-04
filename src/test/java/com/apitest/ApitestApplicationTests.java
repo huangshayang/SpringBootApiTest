@@ -14,7 +14,10 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 @RunWith(SpringRunner.class)
@@ -23,6 +26,7 @@ public class ApitestApplicationTests {
 
 //    @Autowired
 //    private MailSendService mailSendService;
+    private static AtomicInteger atomicInteger=new AtomicInteger(0);
 
     @Test
     public void contextLoads() {
@@ -35,11 +39,9 @@ public class ApitestApplicationTests {
 //    @Autowired
 //    private RedisTemplate<String, Object> redisTemplate;
 
-    @Test
-    public void set(){
-        Optional<Boolean> b = Optional.ofNullable(null);
-        System.out.println(b);
-        b.ifPresent(aBoolean -> System.out.println(aBoolean.booleanValue()));
+
+    public static void add(){
+        System.out.println(atomicInteger.incrementAndGet());
     }
 
 }
