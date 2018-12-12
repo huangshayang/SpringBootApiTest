@@ -5,6 +5,10 @@
     当设置成trace时，你会看到log4j2内部各种详细输出-->
 <!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
 <configuration status="info">
+    <Properties>
+        <property name="pattern">[%d{YYYY-MM-dd HH:mm:ss}] - [%t] - %l - %m%n</property>
+        <property name="basePath">/var/log/apitest</property>
+    </Properties>
     <!--先定义所有的appender-->
     <appenders>
         <console name="Console" target="SYSTEM_OUT">
@@ -18,32 +22,32 @@
                 因为经过ThresholdFilter的时候，如果有匹配项，则直接打印日志了，所以需要把高等级的日志级别放在前面
                 并且，onMatch属性设置为DENY，过滤掉高等级的日志；onMismatch设置为NEUTRAL，把低等级的日志放行，
                 到我们想要的级别后，onMache设为ACCEPT，获取到日志，并onMismatch设置为DENY，丢弃低等级日志，并执行结束-->
-        <RollingFile name="RollingFileInfo" fileName="/var/log/apitest/info/info.log" filePattern="/var/log/apitest/info/info-%d{yyyy-MM-dd HH}.log">
+        <RollingFile name="RollingFileInfo" fileName="${basePath}/info/info.log" filePattern="${basePath}/info/info-%d{yyyy-MM-dd HH}.log">
             <Filters>
                 <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
                 <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-            <PatternLayout pattern="[%d{YYYY-MM-dd HH:mm:ss}] - [%t] - %l - %m%n"/>
+            <PatternLayout pattern="${pattern}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>
         </RollingFile>
 
-        <RollingFile name="RollingFileWarn" fileName="/var/log/apitest/warn/warn.log" filePattern="/var/log/apitest/warn/warn-%d{yyyy-MM-dd HH}.log">
+        <RollingFile name="RollingFileWarn" fileName="${basePath}/warn/warn.log" filePattern="${basePath}/warn/warn-%d{yyyy-MM-dd HH}.log">
             <Filters>
                 <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-            <PatternLayout pattern="[%d{YYYY-MM-dd HH:mm:ss}] - [%t] - %l - %m%n"/>
+            <PatternLayout pattern="${pattern}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>
         </RollingFile>
 
-        <RollingFile name="RollingFileError" fileName="/var/log/apitest/error/error.log" filePattern="/var/log/apitest/error/error-%d{yyyy-MM-dd HH}.log">
+        <RollingFile name="RollingFileError" fileName="${basePath}/error/error.log" filePattern="${basePath}/error/error-%d{yyyy-MM-dd HH}.log">
             <ThresholdFilter level="ERROR"/>
-            <PatternLayout pattern="[%d{YYYY-MM-dd HH:mm:ss}] - [%t] - %l - %m%n"/>
+            <PatternLayout pattern="${pattern}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>

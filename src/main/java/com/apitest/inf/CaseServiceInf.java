@@ -5,7 +5,7 @@ import com.apitest.util.ServerResponse;
 
 
 public interface CaseServiceInf {
-    ServerResponse queryCaseByApiIdService(int apiId);
+    ServerResponse queryCaseByApiIdService(int apiId, int page, int size);
 
     ServerResponse queryOneCaseService(int id);
 

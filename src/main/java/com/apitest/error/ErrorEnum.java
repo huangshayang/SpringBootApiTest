@@ -43,8 +43,7 @@ public enum ErrorEnum {
     PASSWORD_IS_EMPTY(10016, "密码不能为空"),
     EMAIL_IS_ERROR(10017, "邮箱错误，请检查"),
     REQUEST_NUM_FULL(10018, "请求次数过多，请明天再试"),
-    CASE_REQUESTDATA_IS_EMPTY(10019, "用例请求数据不能为空"),
-    CASE_NOTE_IS_EMPTY(10020, "用例名不能为空");
+    CASE_NOTE_IS_EMPTY(10019, "用例名不能为空");
 
     @Getter
     private int status;

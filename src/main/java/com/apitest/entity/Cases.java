@@ -19,8 +19,15 @@ public class Cases {
 
     @Column(nullable = false)
     @Lob
-    private String requestData;
+    private String jsonData;
 
+    @Column(nullable = false)
+    private String paramsData;
+
+    @Column
+    private String contentType;
+
+    @Column
     @Lob
     private String expectResult;
 
@@ -46,6 +53,12 @@ public class Cases {
         }
         if (this.getUpdateTime() == null) {
             this.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        }
+        if (jsonData == null) {
+            this.jsonData = "";
+        }
+        if (paramsData == null) {
+            this.paramsData = "";
         }
     }
 }

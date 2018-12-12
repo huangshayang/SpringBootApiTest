@@ -26,8 +26,8 @@ public class CaseController {
     }
 
     @GetMapping(value = "/{apiId}/case")
-    public ServerResponse queryCaseByApiIdController(@PathVariable(name = "apiId") int apiId){
-        return caseService.queryCaseByApiIdService(apiId);
+    public ServerResponse queryCaseByApiIdController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+        return caseService.queryCaseByApiIdService(apiId, page, size);
     }
 
     @PostMapping(value = "/{apiId}/case/add")

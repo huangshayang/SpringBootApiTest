@@ -110,8 +110,11 @@ public class ApiService implements ApiServiceInf {
     public ServerResponse modifyApiService(int id, Apis api){
         log.info("参数: " + api);
         try {
-            if (apiRepository.findById(id).isPresent()) {
-                Apis apis = apiRepository.findById(id).get();
+            //根据传递的id查询是否存在api
+            Optional<Apis> apisOptional = apiRepository.findById(id);
+            //根据传递的参数里的url和method，查找是否存在对应的api
+            Apis apisByUrlAndMethod = apiRepository.findByUrlAndMethod(api.getUrl(), api.getMethod());
+            if (apisOptional.isPresent()) {
                 if (isBlank(api.getUrl())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
                 }else if (isBlank(api.getMethod())) {
@@ -120,9 +123,11 @@ public class ApiService implements ApiServiceInf {
                     serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
                 }else if (isBlank(api.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
-                }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
+                }else if (apisByUrlAndMethod != null && apisByUrlAndMethod.getId() != id) {
+                    //如果能根据传递的参数里的url和method找到对应的api，且该api的id不等于传递的id，那么判断为该api重复，无法修改
                     serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
                 }else {
+                    Apis apis = apisOptional.get();
                     apis.setUrl(api.getUrl());
                     apis.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                     apis.setMethod(api.getMethod());
@@ -244,7 +249,8 @@ public class ApiService implements ApiServiceInf {
      */
     private void responseWriteToLog(Apis apis, Cases aCasesList, ClientResponse response, Timestamp requestTime) {
         Logs logs = new Logs();
-        logs.setRequestData(aCasesList.getRequestData());
+        logs.setJsonData(aCasesList.getJsonData());
+        logs.setParamsData(aCasesList.getParamsData());
         logs.setRequestTime(requestTime);
         logs.setCode(Objects.requireNonNull(response).statusCode().value());
         logs.setResponseHeader(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
@@ -263,21 +269,22 @@ public class ApiService implements ApiServiceInf {
     private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
         String method = api.getMethod();
         String url =  api.getUrl();
-        String data = cases.getRequestData();
+        String jsonData = cases.getJsonData();
+        String paramsData = cases.getParamsData();
         boolean cookie = api.getCookie();
         WebClient.RequestHeadersSpec<?> body = null;
         switch (method){
             case "get":
-                body = RestRequest.doGet(url, data, cookie);
+                body = RestRequest.doGet(url, jsonData, paramsData, cookie);
                 break;
             case "post":
-                body = RestRequest.doPost(url, data, cookie);
+                body = RestRequest.doPost(url, jsonData, paramsData, cookie);
                 break;
             case "put":
-                body = RestRequest.doPut(url, data);
+                body = RestRequest.doPut(url, jsonData, paramsData);
                 break;
             case "delete":
-                body = RestRequest.doDelete(url, data);
+                body = RestRequest.doDelete(url, jsonData, paramsData);
                 break;
             default:
         }

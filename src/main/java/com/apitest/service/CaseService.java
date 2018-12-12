@@ -10,6 +10,9 @@ import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -34,12 +37,17 @@ public class CaseService implements CaseServiceInf {
     }
 
     @Override
-    public ServerResponse queryCaseByApiIdService(int apiId){
+    public ServerResponse queryCaseByApiIdService(int apiId, int page, int size){
         try {
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
-                List<Cases> cases = caseRepository.findByApiId(apiId);
-                serverResponse = new ServerResponse<>(ErrorEnum.CASE_QUERY_SUCCESS.getStatus(), ErrorEnum.CASE_QUERY_SUCCESS.getMessage(), cases);
+                if (page <0 || size <= 0) {
+                    serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
+                }else {
+                    Sort sort = new Sort(Sort.Direction.ASC, "id");
+                    Page<Cases> cases = caseRepository.findCasesByApiId(apiId, PageRequest.of(page, size, sort));
+                    serverResponse = new ServerResponse<>(ErrorEnum.CASE_QUERY_SUCCESS.getStatus(), ErrorEnum.CASE_QUERY_SUCCESS.getMessage(), cases);
+                }
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
@@ -89,13 +97,11 @@ public class CaseService implements CaseServiceInf {
         try {
             log.info("参数: " + cases);
             if (caseRepository.findById(id).isPresent()){
-                if (isBlank(cases.getRequestData())) {
-                    serverResponse = new ServerResponse(ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getStatus(), ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getMessage());
-                }else if (isBlank(cases.getNote())) {
+                if (isBlank(cases.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
                 }else {
                     Cases cs = caseRepository.findById(id).get();
-                    cs.setRequestData(cases.getRequestData());
+                    cs.setJsonData(cases.getJsonData());
                     cs.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                     cs.setNote(cases.getNote());
                     cs.setExpectResult(cases.getExpectResult());
@@ -138,9 +144,7 @@ public class CaseService implements CaseServiceInf {
             log.info("参数: " + cases);
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
-                if (isBlank(cases.getRequestData())) {
-                    serverResponse = new ServerResponse(ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getStatus(), ErrorEnum.CASE_REQUESTDATA_IS_EMPTY.getMessage());
-                }else if (isBlank(cases.getNote())) {
+                if (isBlank(cases.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
                 }else {
                     cases.setApiId(apiId);

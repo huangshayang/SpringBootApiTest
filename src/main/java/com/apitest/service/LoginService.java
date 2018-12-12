@@ -1,5 +1,6 @@
 package com.apitest.service;
 
+import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.LoginServiceInf;
 import com.apitest.repository.UserRepository;
@@ -36,14 +37,15 @@ public class LoginService implements LoginServiceInf {
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
+            User u = userRepository.findUserByUsernameOrEmail(username, username);
             if (isBlank(username) || isBlank(password)) {
                 serverResponse = new ServerResponse(ErrorEnum.PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
-            }else if (userRepository.findUserByUsernameOrEmail(username, username) == null) {
+            }else if (u == null) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_IS_NOT_EXISTS.getStatus(), ErrorEnum.USER_IS_NOT_EXISTS.getMessage());
-            }else if (!new BCryptPasswordEncoder().matches(password, userRepository.findUserByUsernameOrEmail(username, username).getPassword())) {
+            }else if (!new BCryptPasswordEncoder().matches(password, u.getPassword())) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus(), ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {
-                String session = new BCryptPasswordEncoder().encode(String.valueOf(userRepository.findUserByUsernameOrEmail(username, username)));
+                String session = new BCryptPasswordEncoder().encode(String.valueOf(u));
                 httpSession.setAttribute(USERSESSION_KEY, session);
                 Cookie resCookie = new Cookie(USERSESSION_KEY, session);
                 resCookie.setHttpOnly(true);

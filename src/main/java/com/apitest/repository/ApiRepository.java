@@ -13,4 +13,6 @@ public interface ApiRepository extends JpaRepository<Apis, Integer> {
      * @return
      */
     boolean existsByUrlAndMethod(String url, String method);
+
+    Apis findByUrlAndMethod(String url, String method);
 }

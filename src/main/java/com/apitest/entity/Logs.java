@@ -26,7 +26,13 @@ public class Logs {
 
     @Column(nullable = false)
     @Lob
-    private String requestData;
+    private String jsonData;
+
+    @Column(nullable = false)
+    private String paramsData;
+
+    @Column(nullable = false)
+    private String contentType;
 
     @Column(nullable = false)
     @Lob
@@ -40,4 +46,13 @@ public class Logs {
 
     @Column(nullable = false)
     private String note;
+
+    public Logs(){
+        if (jsonData == null) {
+            this.jsonData = "";
+        }
+        if (paramsData == null) {
+            this.paramsData = "";
+        }
+    }
 }
