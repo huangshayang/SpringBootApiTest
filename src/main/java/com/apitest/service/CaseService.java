@@ -99,6 +99,8 @@ public class CaseService implements CaseServiceInf {
             if (caseRepository.findById(id).isPresent()){
                 if (isBlank(cases.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
+                }else if (isBlank(cases.getAvailable().toString())) {
+                    serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
                 }else {
                     Cases cs = caseRepository.findById(id).get();
                     cs.setJsonData(cases.getJsonData());
@@ -146,6 +148,8 @@ public class CaseService implements CaseServiceInf {
             if (apiRepository.findById(apiId).isPresent()) {
                 if (isBlank(cases.getNote())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
+                }else if (isBlank(cases.getAvailable().toString())) {
+                    serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
                 }else {
                     cases.setApiId(apiId);
                     caseRepository.save(cases);

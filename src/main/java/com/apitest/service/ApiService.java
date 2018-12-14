@@ -177,7 +177,11 @@ public class ApiService implements ApiServiceInf {
                 List<Cases> casesList = caseRepository.findByApiId(id);
                 Apis apis = apiRepository.findById(id).get();
                 //根据case的数量起对应数量的多线程
-                casesList.forEach(cases -> new Thread(() -> apiCaseExecByLock(apis, cases)).start());
+                casesList.forEach(cases -> new Thread(() -> {
+                    if (cases.getAvailable()) {
+                        apiCaseExecByLock(apis, cases);
+                    }
+                }).start());
                 serverResponse = new ServerResponse(ErrorEnum.HTTP_EXEC_SUCCESS.getStatus(), ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }
         }catch (Exception e){
@@ -196,7 +200,9 @@ public class ApiService implements ApiServiceInf {
                 List<Cases> casesList = caseRepository.findByApiId(id);
                 Apis apis = apiRepository.findById(id).get();
                 for (Cases aCasesList : casesList) {
-                    apiCaseExec(apis, aCasesList);
+                    if (aCasesList.getAvailable()) {
+                        apiCaseExec(apis, aCasesList);
+                    }
                 }
                 serverResponse = new ServerResponse(ErrorEnum.HTTP_EXEC_SUCCESS.getStatus(), ErrorEnum.HTTP_EXEC_SUCCESS.getMessage());
             }

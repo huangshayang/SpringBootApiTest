@@ -7,7 +7,7 @@
 <configuration status="info">
     <Properties>
         <property name="pattern">[%d{YYYY-MM-dd HH:mm:ss}] - [%t] - %l - %m%n</property>
-        <property name="basePath">/var/log/apitest</property>
+        <property name="basePath">/Users/huangshayang/IdeaProjects/SpringBootApiTest/log/apitest</property>
     </Properties>
     <!--先定义所有的appender-->
     <appenders>

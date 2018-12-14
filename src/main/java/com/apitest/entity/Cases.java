@@ -47,6 +47,9 @@ public class Cases {
     @Column(nullable = false)
     private String note;
 
+    @Column(nullable = false)
+    private Boolean available;
+
     private Cases(){
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
