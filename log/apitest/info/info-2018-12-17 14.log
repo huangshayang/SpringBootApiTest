@@ -1,0 +1,409 @@
+[2018-12-17 14:41:29] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:38) - 用户名: admin
+[2018-12-17 14:41:29] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 密码: 123456
+[2018-12-17 14:41:29] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:61) - 返回结果: ServerResponse(status=1, message=登录成功, data=null)
+[2018-12-17 14:41:29] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 50,线程状态: RUNNABLE
+[2018-12-17 14:41:29] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-17 14:41:29] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 51,线程状态: RUNNABLE
+[2018-12-17 14:41:32] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 5 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-17 14:41:32] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 52,线程状态: RUNNABLE
+[2018-12-17 14:41:36] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:41:36] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 53,线程状态: RUNNABLE
+[2018-12-17 14:41:38] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=117, jsonData={
+    "task_id": "e520c9ee-a420-43bd-9ba3-235149564f1e",
+    "type": "C01",
+    "params": {
+        "start_time": 1544716800,
+        "end_time": 1544771887,
+        "radius": 1,
+        "point": {
+            "lat": 37.8914997484785,
+            "lng": 116.53199307074439
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:31:09.0, updateTime=2018-12-17 10:20:55.0, apiId=68, note=创建C01告警条件, available=false)])
+[2018-12-17 14:41:38] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 54,线程状态: RUNNABLE
+[2018-12-17 14:41:53] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C01",
+    "params": {
+        "start_time": 1544976000,
+        "end_time": 1544987306,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-17 14:41:53.547, updateTime=2018-12-17 14:41:53.547, apiId=null, note=创建C01告警条件, available=false)
+[2018-12-17 14:41:53] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:41:53] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 55,线程状态: RUNNABLE
+[2018-12-17 14:41:53] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:41:53] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 56,线程状态: RUNNABLE
+[2018-12-17 14:42:08] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=118, jsonData={
+    "task_id": "a6ffccfb-35bc-4d8f-8de0-9f17da7fd58f",
+    "type": "C04",
+    "params": {
+        "start_time": 1543573500,
+        "end_time": 1543919100,
+        "radius": 60,
+        "point": {
+            "lat": 26.199144795156812,
+            "lng": 139.17219139805036
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-11 16:32:25.0, updateTime=2018-12-11 16:33:13.0, apiId=68, note=条件类型和条件参数不一致, available=false)])
+[2018-12-17 14:42:08] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 57,线程状态: RUNNABLE
+[2018-12-17 14:42:18] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C04",
+    "params": {
+        "start_time": 1544976000,
+        "end_time": 1544987306,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-17 14:42:18.139, updateTime=2018-12-17 14:42:18.139, apiId=null, note=条件类型和条件参数不一致, available=false)
+[2018-12-17 14:42:18] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:42:18] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-9,线程id: 58,线程状态: RUNNABLE
+[2018-12-17 14:42:18] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:42:18] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 59,线程状态: RUNNABLE
+[2018-12-17 14:42:22] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=117, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C01",
+    "params": {
+        "start_time": 1544976000,
+        "end_time": 1544987306,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:31:09.0, updateTime=2018-12-17 14:41:54.0, apiId=68, note=创建C01告警条件, available=false)])
+[2018-12-17 14:42:22] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 50,线程状态: RUNNABLE
+[2018-12-17 14:42:25] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C01",
+    "params": {
+        "start_time": 1544976000,
+        "end_time": 1544987306,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-17 14:42:25.21, updateTime=2018-12-17 14:42:25.21, apiId=null, note=创建C01告警条件, available=true)
+[2018-12-17 14:42:25] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:42:25] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 51,线程状态: RUNNABLE
+[2018-12-17 14:42:25] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:42:25] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 52,线程状态: RUNNABLE
+[2018-12-17 14:42:26] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=118, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C04",
+    "params": {
+        "start_time": 1544976000,
+        "end_time": 1544987306,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-11 16:32:25.0, updateTime=2018-12-17 14:42:18.0, apiId=68, note=条件类型和条件参数不一致, available=false)])
+[2018-12-17 14:42:26] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 53,线程状态: RUNNABLE
+[2018-12-17 14:42:28] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C04",
+    "params": {
+        "start_time": 1544976000,
+        "end_time": 1544987306,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-17 14:42:28.91, updateTime=2018-12-17 14:42:28.91, apiId=null, note=条件类型和条件参数不一致, available=true)
+[2018-12-17 14:42:28] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:42:28] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 54,线程状态: RUNNABLE
+[2018-12-17 14:42:29] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:42:29] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 55,线程状态: RUNNABLE
+[2018-12-17 14:42:31] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=119, jsonData={
+    "task_id": "a6ffccfb-35bc-4d8f-8de0-9f17da7fd58f",
+    "type": "C02",
+    "params": {
+        "start_time": 1543573500,
+        "end_time": 1543919100,
+        "duration": 1800,
+        "radius": 60,
+        "point": {
+            "lat": 26.199144795156812,
+            "lng": 139.17219139805036
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-11 16:35:26.0, updateTime=2018-12-11 16:39:10.0, apiId=68, note=创建C02告警条件, available=false)])
+[2018-12-17 14:42:31] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 56,线程状态: RUNNABLE
+[2018-12-17 14:42:55] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C02",
+    "params": {
+        "start_time": 1544992623,
+        "end_time": 1545000363,
+        "radius": 1,
+        "duration": 10800,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-17 14:42:55.308, updateTime=2018-12-17 14:42:55.308, apiId=null, note=创建C02告警条件, available=true)
+[2018-12-17 14:42:55] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:42:55] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 57,线程状态: RUNNABLE
+[2018-12-17 14:42:55] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:42:55] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-9,线程id: 58,线程状态: RUNNABLE
+[2018-12-17 14:43:05] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=117, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C01",
+    "params": {
+        "start_time": 1544976000,
+        "end_time": 1544987306,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:31:09.0, updateTime=2018-12-17 14:42:25.0, apiId=68, note=创建C01告警条件, available=true)])
+[2018-12-17 14:43:05] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 59,线程状态: RUNNABLE
+[2018-12-17 14:43:08] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:43:08] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 50,线程状态: RUNNABLE
+[2018-12-17 14:43:11] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=120, jsonData={
+    "task_id": "c48117f1-e0e2-4498-8fb6-5a1eaaa184f4",
+    "type": "C01",
+    "params": {
+        "start_time": 1544646945,
+        "end_time": 1544630400,
+        "radius": 1,
+        "point": {
+            "lat": 37.96750936408527,
+            "lng": 116.57231006695645
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:36:55.0, updateTime=2018-12-13 15:41:00.0, apiId=68, note=创建C01告警条件，开始时间大于结束时间, available=false)])
+[2018-12-17 14:43:11] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 51,线程状态: RUNNABLE
+[2018-12-17 14:43:30] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C01",
+    "params": {
+        "start_time": 1544987306,
+        "end_time": 1544976000,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-17 14:43:30.382, updateTime=2018-12-17 14:43:30.382, apiId=null, note=创建C01告警条件，开始时间大于结束时间, available=true)
+[2018-12-17 14:43:30] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:43:30] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 52,线程状态: RUNNABLE
+[2018-12-17 14:43:30] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:43:30] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 53,线程状态: RUNNABLE
+[2018-12-17 14:43:32] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=119, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C02",
+    "params": {
+        "start_time": 1544992623,
+        "end_time": 1545000363,
+        "radius": 1,
+        "duration": 10800,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-11 16:35:26.0, updateTime=2018-12-17 14:42:55.0, apiId=68, note=创建C02告警条件, available=true)])
+[2018-12-17 14:43:32] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 54,线程状态: RUNNABLE
+[2018-12-17 14:43:34] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:43:34] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 55,线程状态: RUNNABLE
+[2018-12-17 14:43:55] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=123, jsonData={
+    "task_id": "a6ffccfb-35bc-4d8f-8de0-9f17da7fd58f"
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:39:51.0, updateTime=2018-12-11 16:39:51.0, apiId=68, note=只传taskid, available=false)])
+[2018-12-17 14:43:55] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 56,线程状态: RUNNABLE
+[2018-12-17 14:44:02] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa"
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-17 14:44:02.272, updateTime=2018-12-17 14:44:02.272, apiId=null, note=只传taskid, available=false)
+[2018-12-17 14:44:02] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:44:02] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 57,线程状态: RUNNABLE
+[2018-12-17 14:44:02] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:44:02] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-9,线程id: 58,线程状态: RUNNABLE
+[2018-12-17 14:45:33] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=124, jsonData={
+    "task_id": "a6ffccfb-35bc-4d8f-8de0-9f17da7fd58f",
+    "type": "C03",
+    "params": {
+        "start_time": 1543573500,
+        "end_time": 1543919100
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:46:15.0, updateTime=2018-12-11 16:46:15.0, apiId=68, note=创建C03告警条件, available=false)])
+[2018-12-17 14:45:33] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 59,线程状态: RUNNABLE
+[2018-12-17 14:45:39] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "ebd1781e-30a0-4708-a07b-98aeb5a1ffc6",
+    "type": "C03",
+    "params": {
+        "start_time": 1544544000,
+        "end_time": 1545022297
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-17 14:45:39.878, updateTime=2018-12-17 14:45:39.878, apiId=null, note=创建C03告警条件, available=true)
+[2018-12-17 14:45:39] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:45:39] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 50,线程状态: RUNNABLE
+[2018-12-17 14:45:40] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:45:40] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 51,线程状态: RUNNABLE
+[2018-12-17 14:45:43] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=123, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa"
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:39:51.0, updateTime=2018-12-17 14:44:02.0, apiId=68, note=只传taskid, available=false)])
+[2018-12-17 14:45:43] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 52,线程状态: RUNNABLE
+[2018-12-17 14:45:45] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa"
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-17 14:45:45.426, updateTime=2018-12-17 14:45:45.426, apiId=null, note=只传taskid, available=true)
+[2018-12-17 14:45:45] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:45:45] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 53,线程状态: RUNNABLE
+[2018-12-17 14:45:45] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:45:45] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 54,线程状态: RUNNABLE
+[2018-12-17 14:45:47] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=121, jsonData={
+    "type": "C01"
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-11 16:37:57.0, updateTime=2018-12-11 16:47:06.0, apiId=68, note=只传type, available=false)])
+[2018-12-17 14:45:47] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 55,线程状态: RUNNABLE
+[2018-12-17 14:45:50] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "type": "C01"
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-17 14:45:50.069, updateTime=2018-12-17 14:45:50.069, apiId=null, note=只传type, available=true)
+[2018-12-17 14:45:50] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:45:50] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 56,线程状态: RUNNABLE
+[2018-12-17 14:45:50] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:45:50] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 57,线程状态: RUNNABLE
+[2018-12-17 14:45:51] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=120, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C01",
+    "params": {
+        "start_time": 1544987306,
+        "end_time": 1544976000,
+        "radius": 1,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:36:55.0, updateTime=2018-12-17 14:43:30.0, apiId=68, note=创建C01告警条件，开始时间大于结束时间, available=true)])
+[2018-12-17 14:45:51] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-9,线程id: 58,线程状态: RUNNABLE
+[2018-12-17 14:45:53] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:45:53] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 59,线程状态: RUNNABLE
+[2018-12-17 14:45:54] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=119, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C02",
+    "params": {
+        "start_time": 1544992623,
+        "end_time": 1545000363,
+        "radius": 1,
+        "duration": 10800,
+        "point": {
+            "lat": 37.82165169962277,
+            "lng": 116.46025339979198
+        }
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-11 16:35:26.0, updateTime=2018-12-17 14:42:55.0, apiId=68, note=创建C02告警条件, available=true)])
+[2018-12-17 14:45:54] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 50,线程状态: RUNNABLE
+[2018-12-17 14:45:55] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:45:55] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 51,线程状态: RUNNABLE
+[2018-12-17 14:46:00] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=124, jsonData={
+    "task_id": "ebd1781e-30a0-4708-a07b-98aeb5a1ffc6",
+    "type": "C03",
+    "params": {
+        "start_time": 1544544000,
+        "end_time": 1545022297
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:46:15.0, updateTime=2018-12-17 14:45:40.0, apiId=68, note=创建C03告警条件, available=true)])
+[2018-12-17 14:46:00] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 52,线程状态: RUNNABLE
+[2018-12-17 14:46:02] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:46:02] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 53,线程状态: RUNNABLE
+[2018-12-17 14:46:12] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=125, jsonData={
+    "task_id": "a6ffccfb-35bc-4d8f-8de0-9f17da7fd58f",
+    "type": "C04",
+    "params": {
+        "duration": 1800
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:46:44.0, updateTime=2018-12-11 16:46:44.0, apiId=68, note=创建C04告警条件, available=false)])
+[2018-12-17 14:46:12] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 54,线程状态: RUNNABLE
+[2018-12-17 14:46:18] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C04",
+    "params": {
+        "duration": 3600
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-17 14:46:18.157, updateTime=2018-12-17 14:46:18.157, apiId=null, note=创建C04告警条件, available=true)
+[2018-12-17 14:46:18] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:46:18] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 55,线程状态: RUNNABLE
+[2018-12-17 14:46:18] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:46:18] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 56,线程状态: RUNNABLE
+[2018-12-17 14:47:50] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=125, jsonData={
+    "task_id": "d0c36350-620f-4d69-9c80-8d68f84fe2fa",
+    "type": "C04",
+    "params": {
+        "duration": 3600
+    }
+}, paramsData=, contentType=null, expectResult=, createTime=2018-12-11 16:46:44.0, updateTime=2018-12-17 14:46:18.0, apiId=68, note=创建C04告警条件, available=true)])
+[2018-12-17 14:47:50] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 57,线程状态: RUNNABLE
+[2018-12-17 14:47:52] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:47:52] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-9,线程id: 58,线程状态: RUNNABLE
+[2018-12-17 14:47:54] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-17 14:47:54] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 59,线程状态: RUNNABLE
+[2018-12-17 14:47:57] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 5 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-17 14:47:57] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 50,线程状态: RUNNABLE
+[2018-12-17 14:52:18] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 3 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:52:18] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 51,线程状态: RUNNABLE
+[2018-12-17 14:53:16] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=86, jsonData={"cnum":"冀RQ2R31","start_time":1544005500,"start_point":{"name":"起始点","lat":39.483125793652164,"lng":116.79814097509325},"end_point":{"name":"结束点","lat":40.753073708949344,"lng":114.88801083187069}}, paramsData=, contentType=, expectResult=null, createTime=2018-12-11 10:36:25.0, updateTime=2018-12-11 10:40:43.0, apiId=65, note=车辆为冀RQ2R31, available=false)])
+[2018-12-17 14:53:16] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 52,线程状态: RUNNABLE
+[2018-12-17 14:54:08] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:98) - 参数: Cases(id=null, jsonData={
+    "cnum": "冀TE9T49",
+    "driver": {
+        "name": "测试司机",
+        "mobile": "16602811927"
+    },
+    "start_time": 1544976000,
+    "start_point": {
+        "name": "起始点",
+        "lat": 37.50022678586189,
+        "lng": 116.265875167579
+    },
+    "end_point": {
+        "name": "结束点",
+        "lat": 38.12457170534894,
+        "lng": 116.54819006611041
+    }
+}, paramsData=, contentType=null, expectResult=null, createTime=2018-12-17 14:54:08.253, updateTime=2018-12-17 14:54:08.253, apiId=null, note=车辆为冀TE9T49，用于创建C01,C02,C04告警, available=true)
+[2018-12-17 14:54:08] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:121) - 返回结果: ServerResponse(status=1, message=修改用例成功, data=null)
+[2018-12-17 14:54:08] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.modifyCaseService(CaseService.java:122) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 53,线程状态: RUNNABLE
+[2018-12-17 14:54:08] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 3 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:54:08] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 54,线程状态: RUNNABLE
+[2018-12-17 14:57:36] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:72) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Optional[Cases(id=86, jsonData={
+    "cnum": "冀TE9T49",
+    "driver": {
+        "name": "测试司机",
+        "mobile": "16602811927"
+    },
+    "start_time": 1544976000,
+    "start_point": {
+        "name": "起始点",
+        "lat": 37.50022678586189,
+        "lng": 116.265875167579
+    },
+    "end_point": {
+        "name": "结束点",
+        "lat": 38.12457170534894,
+        "lng": 116.54819006611041
+    }
+}, paramsData=, contentType=, expectResult=null, createTime=2018-12-11 10:36:25.0, updateTime=2018-12-17 14:54:08.0, apiId=65, note=车辆为冀TE9T49，用于创建C01,C02,C04告警, available=true)])
+[2018-12-17 14:57:36] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.CaseService.queryOneCaseService(CaseService.java:73) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 55,线程状态: RUNNABLE
+[2018-12-17 14:57:42] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 3 containing com.apitest.entity.Cases instances)
+[2018-12-17 14:57:42] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 56,线程状态: RUNNABLE

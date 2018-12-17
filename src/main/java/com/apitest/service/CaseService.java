@@ -104,9 +104,11 @@ public class CaseService implements CaseServiceInf {
                 }else {
                     Cases cs = caseRepository.findById(id).get();
                     cs.setJsonData(cases.getJsonData());
+                    cs.setParamsData(cases.getParamsData());
                     cs.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                     cs.setNote(cases.getNote());
                     cs.setExpectResult(cases.getExpectResult());
+                    cs.setAvailable(cases.getAvailable());
                     caseRepository.saveAndFlush(cs);
                     serverResponse = new ServerResponse(ErrorEnum.MODIFY_CASE_SUCCESS.getStatus(), ErrorEnum.MODIFY_CASE_SUCCESS.getMessage());
                 }
