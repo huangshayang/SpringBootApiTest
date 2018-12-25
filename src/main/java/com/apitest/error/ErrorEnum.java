@@ -24,6 +24,15 @@ public enum ErrorEnum {
     LOG_QUERY_SUCCESS(1, "日志查询成功"),
     LOG_DELETE_SUCCESS(1, "删除日志成功"),
     LOGOUT_SUCCESS(1, "退出成功"),
+    ENV_ADD_SUCCESS(1, "创建环境成功"),
+    ENV_QUERY_SUCCESS(1, "查询环境成功"),
+    ENV_DELETE_SUCCESS(1, "删除环境成功"),
+    TASK_QUERY_SUCCESS(1, "查询任务成功"),
+    TASK_ADD_SUCCESS(1, "添加任务成功"),
+    TASK_DELETE_SUCCESS(1, "删除任务成功"),
+    TASK_START_SUCCESS(1, "任务开始"),
+    TASK_CANCEL_SUCCESS(1, "任务取消成功"),
+
     //接口id不存在
     API_IS_NULL(10001, "接口id不存在"),
     TOKEN_IS_ERROR(10002, "token错误"),
@@ -44,7 +53,25 @@ public enum ErrorEnum {
     EMAIL_IS_ERROR(10017, "邮箱错误，请检查"),
     REQUEST_NUM_FULL(10018, "请求次数过多，请明天再试"),
     CASE_NOTE_IS_EMPTY(10019, "用例名不能为空"),
-    CASE_AVAILABLE_IS_EMPTY(10020, "用例是否可用不能为空");
+    CASE_AVAILABLE_IS_EMPTY(10020, "用例是否可用不能为空"),
+    ENV_NAME_IS_EMPTY(10021, "环境的名字不能为空"),
+    ENV_DOMAIN_IS_EMPTY(10022, "环境的域名参数不能为空"),
+    ENV_USERNAME_IS_EMPTY(10023, "环境的用户名参数不能为空"),
+    ENV_PASSWORD_IS_EMPTY(10024, "环境的密码参数不能为空"),
+    ENV_NAME_IS_EXIST(10025, "环境名已经存在"),
+    ENV_IS_NULL(10026, "环境id不存在"),
+    TASK_IS_NULL(10027, "任务id不存在"),
+    TASK_NAME_IS_EMPTY(10028, "任务名不能为空"),
+    TASK_NAME_IS_EXIST(10029, "任务已经存在"),
+    TASK_IsMultiThread_IS_EMPTY(10030, "是否使用多线程不能为空"),
+    TASK_STATUS_IS_EMPTY(10031, "任务状态不能为空"),
+    TASK_APIS_IS_EMPTY(10032, "任务关联的api不能为空"),
+    TASK_TIME_IS_EMPTY(10033, "任务的时间不能为空"),
+    TASK_TIME_IS_INVALID(10034, "任务的时间格式不正确"),
+    TASK_FUTURE_IS_CANCELLED(10035, "future已经取消"),
+    TASK_FUTURE_IS_DONE(10036, "future已经完成"),
+    TASK_FUTURE_NULL(10037, "future为空"),
+    TASK_ThreadPoolTaskScheduler_IS_DAEMON(10038, "threadPoolTaskScheduler已经结束");
 
     @Getter
     private int status;

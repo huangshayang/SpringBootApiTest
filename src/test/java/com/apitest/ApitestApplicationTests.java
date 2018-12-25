@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,6 +35,14 @@ public class ApitestApplicationTests {
 //        String content = "Jerome的文本邮件的正文部分";
 //        String toUser = "shayang888@qq.com";
 //        mailSendService.sendTextMail(toUser, subject, content);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("1",2);
+        map.put("1",3);
+        System.out.println(map);
+        HashSet<String> set = new HashSet<>();
+        set.add("1");
+        set.add("1");
+        System.out.println(set);
     }
 
 //    @Autowired

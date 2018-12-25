@@ -7,6 +7,8 @@ import com.apitest.util.ServerResponse;
 public interface CaseServiceInf {
     ServerResponse queryCaseByApiIdService(int apiId, int page, int size);
 
+    ServerResponse queryAllCaseService(int page, int size);
+
     ServerResponse queryOneCaseService(int id);
 
     ServerResponse deleteAllCaseByApiIdService(int apiId);

@@ -1,0 +1,43 @@
+[2018-12-25 13:04:06] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m35s271ms).
+[2018-12-25 13:14:12] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m36s274ms).
+[2018-12-25 13:28:19] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m37s270ms).
+[2018-12-25 13:34:24] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m35s282ms).
+[2018-12-25 13:35:33] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m8s129ms).
+[2018-12-25 13:38:08] - [Thread-2] - org.springframework.data.redis.listener.RedisMessageListenerContainer$SubscriptionTask.cancel(RedisMessageListenerContainer.java:868) - Unable to unsubscribe from subscriptions
+io.lettuce.core.RedisException: java.io.IOException: Connection reset by peer
+	at io.lettuce.core.LettuceFutures.awaitOrCancel(LettuceFutures.java:129) ~[lettuce-core-5.1.3.RELEASE.jar:?]
+	at io.lettuce.core.FutureSyncInvocationHandler.handleInvocation(FutureSyncInvocationHandler.java:69) ~[lettuce-core-5.1.3.RELEASE.jar:?]
+	at io.lettuce.core.internal.AbstractInvocationHandler.invoke(AbstractInvocationHandler.java:80) ~[lettuce-core-5.1.3.RELEASE.jar:?]
+	at com.sun.proxy.$Proxy137.unsubscribe(Unknown Source) ~[?:?]
+	at org.springframework.data.redis.connection.lettuce.LettuceSubscription.doClose(LettuceSubscription.java:62) ~[spring-data-redis-2.1.3.RELEASE.jar:2.1.3.RELEASE]
+	at org.springframework.data.redis.connection.util.AbstractSubscription.close(AbstractSubscription.java:106) ~[spring-data-redis-2.1.3.RELEASE.jar:2.1.3.RELEASE]
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer$SubscriptionTask.cancel(RedisMessageListenerContainer.java:866) [spring-data-redis-2.1.3.RELEASE.jar:2.1.3.RELEASE]
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.stop(RedisMessageListenerContainer.java:225) [spring-data-redis-2.1.3.RELEASE.jar:2.1.3.RELEASE]
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.stop(RedisMessageListenerContainer.java:183) [spring-data-redis-2.1.3.RELEASE.jar:2.1.3.RELEASE]
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStop(DefaultLifecycleProcessor.java:238) [spring-context-5.1.3.RELEASE.jar:5.1.3.RELEASE]
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$300(DefaultLifecycleProcessor.java:53) [spring-context-5.1.3.RELEASE.jar:5.1.3.RELEASE]
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.stop(DefaultLifecycleProcessor.java:377) [spring-context-5.1.3.RELEASE.jar:5.1.3.RELEASE]
+	at org.springframework.context.support.DefaultLifecycleProcessor.stopBeans(DefaultLifecycleProcessor.java:210) [spring-context-5.1.3.RELEASE.jar:5.1.3.RELEASE]
+	at org.springframework.context.support.DefaultLifecycleProcessor.onClose(DefaultLifecycleProcessor.java:128) [spring-context-5.1.3.RELEASE.jar:5.1.3.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1003) [spring-context-5.1.3.RELEASE.jar:5.1.3.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext$1.run(AbstractApplicationContext.java:931) [spring-context-5.1.3.RELEASE.jar:5.1.3.RELEASE]
+Caused by: java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method) ~[?:?]
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39) ~[?:?]
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:276) ~[?:?]
+	at sun.nio.ch.IOUtil.read(IOUtil.java:233) ~[?:?]
+	at sun.nio.ch.IOUtil.read(IOUtil.java:223) ~[?:?]
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:358) ~[?:?]
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:288) ~[netty-buffer-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132) ~[netty-buffer-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:347) ~[netty-transport-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:148) ~[netty-transport-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:648) ~[netty-transport-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:583) ~[netty-transport-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:500) ~[netty-transport-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:462) ~[netty-transport-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:897) ~[netty-common-4.1.31.Final.jar:4.1.31.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.31.Final.jar:4.1.31.Final]
+	at java.lang.Thread.run(Thread.java:834) ~[?:?]
+[2018-12-25 13:38:21] - [main] - org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.openEntityManagerInViewInterceptor(JpaBaseConfiguration.java:234) - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2018-12-25 13:39:51] - [main] - org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.openEntityManagerInViewInterceptor(JpaBaseConfiguration.java:234) - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning

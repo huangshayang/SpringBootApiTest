@@ -46,7 +46,7 @@ public class LoginService implements LoginServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.USER_OR_PASSWORD_ERROR.getStatus(), ErrorEnum.USER_OR_PASSWORD_ERROR.getMessage());
             }else {
                 String session = new BCryptPasswordEncoder().encode(String.valueOf(u));
-                httpSession.setAttribute(USERSESSION_KEY, session);
+                httpSession.setAttribute(session, u);
                 Cookie resCookie = new Cookie(USERSESSION_KEY, session);
                 resCookie.setHttpOnly(true);
                 resCookie.setMaxAge(httpSession.getMaxInactiveInterval());

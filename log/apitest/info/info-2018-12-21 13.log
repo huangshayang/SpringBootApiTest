@@ -1,0 +1,30 @@
+[2018-12-21 13:34:31] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.LoginService.loginService(LoginService.java:38) - 用户名: admin
+[2018-12-21 13:34:31] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 密码: 123456
+[2018-12-21 13:34:31] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.LoginService.loginService(LoginService.java:61) - 返回结果: ServerResponse(status=1, message=登录成功, data=null)
+[2018-12-21 13:34:31] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 70,线程状态: RUNNABLE
+[2018-12-21 13:34:31] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:106) - Reconnecting, last destination was /192.168.3.132:6379
+[2018-12-21 13:34:31] - [lettuce-nioEventLoop-4-1] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:111) - Reconnected to 192.168.3.132:6379, Channel channel=0x8b831ba7, /192.168.3.109:52317 -> /192.168.3.132:6379
+[2018-12-21 13:34:34] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:38) - 用户名: admin
+[2018-12-21 13:34:34] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 密码: 123456
+[2018-12-21 13:34:34] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:61) - 返回结果: ServerResponse(status=1, message=登录成功, data=null)
+[2018-12-21 13:34:34] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 61,线程状态: RUNNABLE
+[2018-12-21 13:34:38] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:34:38] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 62,线程状态: RUNNABLE
+[2018-12-21 13:43:45] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:43:45] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 63,线程状态: RUNNABLE
+[2018-12-21 13:56:50] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:56:50] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 64,线程状态: RUNNABLE
+[2018-12-21 13:57:05] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.LoginService.loginService(LoginService.java:38) - 用户名: admin
+[2018-12-21 13:57:05] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 密码: 123456
+[2018-12-21 13:57:05] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.LoginService.loginService(LoginService.java:61) - 返回结果: ServerResponse(status=1, message=登录成功, data=null)
+[2018-12-21 13:57:05] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 65,线程状态: RUNNABLE
+[2018-12-21 13:57:08] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:57:08] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 66,线程状态: RUNNABLE
+[2018-12-21 13:57:11] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:57:11] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 67,线程状态: RUNNABLE
+[2018-12-21 13:57:14] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:57:14] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 68,线程状态: RUNNABLE
+[2018-12-21 13:58:03] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:58:03] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-9,线程id: 69,线程状态: RUNNABLE
+[2018-12-21 13:58:04] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 13:58:04] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 70,线程状态: RUNNABLE

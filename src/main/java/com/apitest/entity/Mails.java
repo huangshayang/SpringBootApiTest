@@ -1,6 +1,5 @@
 package com.apitest.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -17,7 +16,6 @@ public class Mails {
 
     @Column
     @JsonIgnore
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp createTime;
 
     @Column(nullable = false)

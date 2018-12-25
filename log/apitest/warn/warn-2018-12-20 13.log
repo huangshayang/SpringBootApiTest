@@ -1,0 +1,2 @@
+[2018-12-20 13:05:56] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m33s400ms).
+[2018-12-20 13:33:12] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=27m16s299ms).

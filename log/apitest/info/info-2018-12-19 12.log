@@ -1,0 +1,2 @@
+[2018-12-19 12:51:31] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:106) - Reconnecting, last destination was /192.168.3.132:6379
+[2018-12-19 12:51:31] - [lettuce-nioEventLoop-4-3] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:111) - Reconnected to 192.168.3.132:6379, Channel channel=0x51e61927, /192.168.3.113:61010 -> /192.168.3.132:6379

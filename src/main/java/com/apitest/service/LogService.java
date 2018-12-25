@@ -30,13 +30,13 @@ public class LogService implements LogServiceInf {
     }
 
     @Override
-    public ServerResponse queryPageLogByApiIdService(int apiId, int page, int size){
+    public ServerResponse queryAllLogService(int page, int size){
         try {
             if (page <0 || size <= 0) {
                 serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
             }else {
                 Sort sort = new Sort(Sort.Direction.ASC, "id");
-                Page<Logs> logs = logRepository.findAllByApiId(apiId, PageRequest.of(page, size, sort));
+                Page<Logs> logs = logRepository.findAll(PageRequest.of(page, size, sort));
                 serverResponse = new ServerResponse<>(ErrorEnum.LOG_QUERY_SUCCESS.getStatus(), ErrorEnum.LOG_QUERY_SUCCESS.getMessage(), logs);
             }
         }catch (Exception e){
@@ -67,11 +67,48 @@ public class LogService implements LogServiceInf {
     }
 
     @Override
+    public ServerResponse deleteAllLogService() {
+        try {
+            logRepository.deleteAll();
+            serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
+        }catch (Exception e){
+            new ExceptionUtil(e);
+            return null;
+        }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return serverResponse;
+    }
+
+    @Override
     public ServerResponse deleteAllLogByApiIdService(int apiId) {
         try {
             if (apiRepository.findById(apiId).isPresent()) {
                 logRepository.deleteByApiId(apiId);
                 serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
+            }else {
+                serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
+            }
+        }catch (Exception e){
+            new ExceptionUtil(e);
+            return null;
+        }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return serverResponse;
+    }
+
+    @Override
+    public ServerResponse queryAllLogByApiIdService(int apiId, int page, int size) {
+        try {
+            if (apiRepository.findById(apiId).isPresent()) {
+                if (page <0 || size <= 0) {
+                    serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
+                }else {
+                    Sort sort = new Sort(Sort.Direction.ASC, "id");
+                    Page<Logs> logs = logRepository.findAllByApiId(apiId, PageRequest.of(page, size, sort));
+                    serverResponse = new ServerResponse<>(ErrorEnum.LOG_QUERY_SUCCESS.getStatus(), ErrorEnum.LOG_QUERY_SUCCESS.getMessage(), logs);
+                }
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }

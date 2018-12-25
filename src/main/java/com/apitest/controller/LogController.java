@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author HSY
  */
 @RestController
-@RequestMapping(value = "/api", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/log", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Auth
 public class LogController {
 
@@ -24,17 +24,27 @@ public class LogController {
         this.logService = logService;
     }
 
-    @GetMapping(value = "/{apiId}/log")
-    public ServerResponse queryPageLogController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
-        return logService.queryPageLogByApiIdService(apiId, page, size);
+    @GetMapping(value = "/all")
+    public ServerResponse queryAllLogController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+        return logService.queryAllLogService(page, size);
     }
 
-    @DeleteMapping(value = "/{apiId}/log")
+    @GetMapping(value = "/api/{apiId}/all")
+    public ServerResponse queryAllLogByApiIdController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+        return logService.queryAllLogByApiIdService(apiId, page, size);
+    }
+
+    @DeleteMapping(value = "/")
+    public ServerResponse deleteAllLogController(){
+        return logService.deleteAllLogService();
+    }
+
+    @DeleteMapping(value = "/api/{apiId}")
     public ServerResponse deleteAllLogByApiIdController(@PathVariable(name = "apiId") int apiId){
         return logService.deleteAllLogByApiIdService(apiId);
     }
 
-    @DeleteMapping(value = "/log/{id}")
+    @DeleteMapping(value = "/{id}")
     public ServerResponse deleteOneLogController(@PathVariable(name = "id") int id){
         return logService.deleteOneLogService(id);
     }

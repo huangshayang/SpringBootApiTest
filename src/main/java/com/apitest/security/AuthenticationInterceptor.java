@@ -4,6 +4,7 @@ import com.apitest.annotation.Auth;
 import com.apitest.error.ErrorEnum;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
+import com.apitest.util.revertUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
@@ -14,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.*;
 
 import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
 import static org.apache.commons.lang.StringUtils.isBlank;
@@ -46,7 +46,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                     if (isBlank(reqCookie)) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
-                    }else if (!Objects.equals(cookieToMap(reqCookie), request.getSession().getAttribute(USERSESSION_KEY))) {
+                    }else if (request.getSession().getAttribute(revertUtil.cookieToMap(reqCookie)) == null) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
                     }
@@ -56,7 +56,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-        Cookie resCookie = new Cookie(USERSESSION_KEY, cookieToMap(reqCookie));
+        Cookie resCookie = new Cookie(USERSESSION_KEY, revertUtil.cookieToMap(reqCookie));
         resCookie.setMaxAge(request.getSession().getMaxInactiveInterval());
         resCookie.setHttpOnly(true);
         resCookie.setPath("/");
@@ -76,15 +76,5 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         } catch (Exception e) {
             new ExceptionUtil(e);
         }
-    }
-
-    private String cookieToMap(String reqCookie){
-        Map<String, String> map = new HashMap<>(8);
-        String[] str = reqCookie.split(";");
-        for (String s : str) {
-            String[] str2 = s.split("=");
-            map.put(str2[0].trim(), str2[1]);
-        }
-        return map.get("user_session");
     }
 }

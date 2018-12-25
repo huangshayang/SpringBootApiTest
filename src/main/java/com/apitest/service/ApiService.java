@@ -56,7 +56,7 @@ public class ApiService implements ApiServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
             }else if (isBlank(api.getCookie().toString())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
-            }else if (isBlank(api.getNote())) {
+            }else if (isBlank(api.getName())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
             }else if (apiRepository.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
@@ -112,16 +112,16 @@ public class ApiService implements ApiServiceInf {
         try {
             //根据传递的id查询是否存在api
             Optional<Apis> apisOptional = apiRepository.findById(id);
-            //根据传递的参数里的url和method，查找是否存在对应的api
-            Apis apisByUrlAndMethod = apiRepository.findByUrlAndMethod(api.getUrl(), api.getMethod());
             if (apisOptional.isPresent()) {
+                //根据传递的参数里的url和method，查找是否存在对应的api
+                Apis apisByUrlAndMethod = apiRepository.findByUrlAndMethod(api.getUrl(), api.getMethod());
                 if (isBlank(api.getUrl())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
                 }else if (isBlank(api.getMethod())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_METHOD_IS_EMPTY.getStatus(), ErrorEnum.API_METHOD_IS_EMPTY.getMessage());
                 }else if (isBlank(api.getCookie().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_COOKIE_IS_EMPTY.getStatus(), ErrorEnum.API_COOKIE_IS_EMPTY.getMessage());
-                }else if (isBlank(api.getNote())) {
+                }else if (isBlank(api.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
                 }else if (apisByUrlAndMethod != null && apisByUrlAndMethod.getId() != id) {
                     //如果能根据传递的参数里的url和method找到对应的api，且该api的id不等于传递的id，那么判断为该api重复，无法修改
@@ -131,7 +131,7 @@ public class ApiService implements ApiServiceInf {
                     apis.setUrl(api.getUrl());
                     apis.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                     apis.setMethod(api.getMethod());
-                    apis.setNote(api.getNote());
+                    apis.setName(api.getName());
                     apis.setCookie(api.getCookie());
                     apiRepository.saveAndFlush(apis);
                     serverResponse = new ServerResponse(ErrorEnum.API_MODIFY_SUCCESS.getStatus(), ErrorEnum.API_MODIFY_SUCCESS.getMessage());
@@ -153,7 +153,6 @@ public class ApiService implements ApiServiceInf {
         try {
             lock.lock();
             if (apiRepository.findById(id).isPresent()) {
-                logRepository.deleteByApiId(id);
                 caseRepository.deleteByApiId(id);
                 apiRepository.deleteById(id);
                 serverResponse = new ServerResponse(ErrorEnum.API_DELETE_SUCCESS.getStatus(), ErrorEnum.API_DELETE_SUCCESS.getMessage());
@@ -262,7 +261,7 @@ public class ApiService implements ApiServiceInf {
         logs.setResponseHeader(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
         logs.setResponseData(response.bodyToMono(String.class).block());
         logs.setApiId(apis.getId());
-        logs.setNote(aCasesList.getNote());
+        logs.setCaseName(aCasesList.getName());
         logRepository.save(logs);
     }
 

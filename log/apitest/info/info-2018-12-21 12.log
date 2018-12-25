@@ -1,0 +1,12 @@
+[2018-12-21 12:07:50] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.LoginService.loginService(LoginService.java:38) - 用户名: admin
+[2018-12-21 12:07:50] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 密码: 123456
+[2018-12-21 12:07:51] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.LoginService.loginService(LoginService.java:61) - 返回结果: ServerResponse(status=1, message=登录成功, data=null)
+[2018-12-21 12:07:51] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 66,线程状态: RUNNABLE
+[2018-12-21 12:07:55] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 12:07:55] - [http-nio-0.0.0.0-8080-exec-7] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-7,线程id: 67,线程状态: RUNNABLE
+[2018-12-21 12:07:58] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-21 12:07:58] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 68,线程状态: RUNNABLE
+[2018-12-21 12:59:10] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:106) - Reconnecting, last destination was /192.168.3.132:6379
+[2018-12-21 12:59:10] - [lettuce-nioEventLoop-4-3] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:111) - Reconnected to 192.168.3.132:6379, Channel channel=0x315a7fe1, /192.168.3.109:52275 -> /192.168.3.132:6379
+[2018-12-21 12:59:21] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:106) - Reconnecting, last destination was /192.168.3.132:6379
+[2018-12-21 12:59:21] - [lettuce-nioEventLoop-4-4] - io.netty.util.internal.logging.Slf4JLogger.info(Slf4JLogger.java:111) - Reconnected to 192.168.3.132:6379, Channel channel=0x3af3d5b3, /192.168.3.109:52276 -> /192.168.3.132:6379

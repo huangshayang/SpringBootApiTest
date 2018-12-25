@@ -61,6 +61,25 @@ public class CaseService implements CaseServiceInf {
     }
 
     @Override
+    public ServerResponse queryAllCaseService(int page, int size){
+        try {
+            if (page<0 || size<=0) {
+                serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
+            }else {
+                Sort sort = new Sort(Sort.Direction.ASC, "id");
+                Page<Cases> cases = caseRepository.findAll(PageRequest.of(page, size, sort));
+                serverResponse = new ServerResponse<>(ErrorEnum.CASE_QUERY_SUCCESS.getStatus(), ErrorEnum.CASE_QUERY_SUCCESS.getMessage(), cases);
+            }
+        }catch (Exception e){
+            new ExceptionUtil(e);
+            return null;
+        }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return serverResponse;
+    }
+
+    @Override
     public ServerResponse queryOneCaseService(int id) {
         try {
             Optional<Cases> cases = caseRepository.findById(id);
@@ -97,7 +116,7 @@ public class CaseService implements CaseServiceInf {
         try {
             log.info("参数: " + cases);
             if (caseRepository.findById(id).isPresent()){
-                if (isBlank(cases.getNote())) {
+                if (isBlank(cases.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
                 }else if (isBlank(cases.getAvailable().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
@@ -106,7 +125,7 @@ public class CaseService implements CaseServiceInf {
                     cs.setJsonData(cases.getJsonData());
                     cs.setParamsData(cases.getParamsData());
                     cs.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-                    cs.setNote(cases.getNote());
+                    cs.setName(cases.getName());
                     cs.setExpectResult(cases.getExpectResult());
                     cs.setAvailable(cases.getAvailable());
                     caseRepository.saveAndFlush(cs);
@@ -148,7 +167,7 @@ public class CaseService implements CaseServiceInf {
             log.info("参数: " + cases);
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
-                if (isBlank(cases.getNote())) {
+                if (isBlank(cases.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
                 }else if (isBlank(cases.getAvailable().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());

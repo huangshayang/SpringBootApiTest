@@ -1,7 +1,6 @@
 package com.apitest.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,7 +16,6 @@ public class Logs {
     private Integer id;
 
     @Column
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp requestTime;
 
     @Column(nullable = false)
@@ -45,7 +43,7 @@ public class Logs {
     private Integer apiId;
 
     @Column(nullable = false)
-    private String note;
+    private String caseName;
 
     public Logs(){
         if (jsonData == null) {

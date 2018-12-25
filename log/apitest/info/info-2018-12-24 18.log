@@ -1,0 +1,23 @@
+[2018-12-24 18:00:27] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-24 18:00:27] - [http-nio-0.0.0.0-8080-exec-8] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-8,线程id: 62,线程状态: RUNNABLE
+[2018-12-24 18:02:11] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-24 18:02:11] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-9,线程id: 63,线程状态: RUNNABLE
+[2018-12-24 18:02:40] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-24 18:02:40] - [http-nio-0.0.0.0-8080-exec-10] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-10,线程id: 64,线程状态: RUNNABLE
+[2018-12-24 18:03:22] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-24 18:03:22] - [http-nio-0.0.0.0-8080-exec-1] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-1,线程id: 55,线程状态: RUNNABLE
+[2018-12-24 18:05:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:38) - 用户名: admin
+[2018-12-24 18:05:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 密码: 123456
+[2018-12-24 18:05:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:61) - 返回结果: ServerResponse(status=1, message=登录成功, data=null)
+[2018-12-24 18:05:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 56,线程状态: RUNNABLE
+[2018-12-24 18:05:13] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
+[2018-12-24 18:05:13] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 57,线程状态: RUNNABLE
+[2018-12-24 18:05:47] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+[2018-12-24 18:05:47] - [Thread-2] - org.springframework.scheduling.quartz.SchedulerFactoryBean.destroy(SchedulerFactoryBean.java:844) - Shutting down Quartz Scheduler
+[2018-12-24 18:05:47] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:666) - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+[2018-12-24 18:05:47] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+[2018-12-24 18:05:47] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:740) - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+[2018-12-24 18:05:47] - [Thread-2] - org.springframework.scheduling.concurrent.ExecutorConfigurationSupport.shutdown(ExecutorConfigurationSupport.java:208) - Shutting down ExecutorService 'threadPoolTaskScheduler'
+[2018-12-24 18:05:47] - [Thread-2] - org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy(AbstractEntityManagerFactoryBean.java:597) - Closing JPA EntityManagerFactory for persistence unit 'default'
+[2018-12-24 18:05:47] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:350) - HikariPool-1 - Shutdown initiated...
+[2018-12-24 18:05:47] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:352) - HikariPool-1 - Shutdown completed.

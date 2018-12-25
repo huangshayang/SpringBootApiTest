@@ -1,0 +1,102 @@
+[2018-12-17 17:07:08] - [Thread-7] - com.apitest.util.ExceptionUtil.<init>(ExceptionUtil.java:14) - 错误信息: class java.lang.IllegalArgumentException 'uriVariables' must not be null
+	at org.springframework.util.Assert.notNull(Assert.java:198)
+	at org.springframework.web.util.UriComponents.expand(UriComponents.java:160)
+	at org.springframework.web.util.DefaultUriBuilderFactory$DefaultUriBuilder.build(DefaultUriBuilderFactory.java:371)
+	at org.springframework.web.util.DefaultUriBuilderFactory.expand(DefaultUriBuilderFactory.java:199)
+	at org.springframework.web.reactive.function.client.DefaultWebClient$DefaultRequestBodyUriSpec.uri(DefaultWebClient.java:184)
+	at org.springframework.web.reactive.function.client.DefaultWebClient$DefaultRequestBodyUriSpec.uri(DefaultWebClient.java:153)
+	at com.apitest.rest.RestRequest.doPost(RestRequest.java:56)
+	at com.apitest.service.ApiService.restHttp(ApiService.java:287)
+	at com.apitest.service.ApiService.apiCaseExecByLock(ApiService.java:229)
+	at com.apitest.service.ApiService.lambda$execApiService$0(ApiService.java:182)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+[2018-12-17 17:07:08] - [Thread-7] - com.apitest.util.ExceptionUtil.<init>(ExceptionUtil.java:15) - 线程名: Thread-7,线程id: 75,线程状态: RUNNABLE
+[2018-12-17 17:29:00] - [pool-2-thread-1] - org.springframework.scheduling.support.TaskUtils$LoggingErrorHandler.handleError(TaskUtils.java:96) - Unexpected error occurred in scheduled task.
+org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to 192.168.3.132:6379
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getNativeConnection(LettuceConnectionFactory.java:1092) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getConnection(LettuceConnectionFactory.java:1065) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getSharedConnection(LettuceConnectionFactory.java:865) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getConnection(LettuceConnectionFactory.java:340) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.RedisConnectionUtils.doGetConnection(RedisConnectionUtils.java:132) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.RedisConnectionUtils.getConnection(RedisConnectionUtils.java:95) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.RedisConnectionUtils.getConnection(RedisConnectionUtils.java:82) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:211) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:184) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:95) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.DefaultSetOperations.members(DefaultSetOperations.java:158) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.core.DefaultBoundSetOperations.members(DefaultBoundSetOperations.java:152) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.session.data.redis.RedisSessionExpirationPolicy.cleanExpiredSessions(RedisSessionExpirationPolicy.java:132) ~[spring-session-data-redis-2.1.1.RELEASE.jar:2.1.1.RELEASE]
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.cleanupExpiredSessions(RedisOperationsSessionRepository.java:430) ~[spring-session-data-redis-2.1.1.RELEASE.jar:2.1.1.RELEASE]
+	at org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration.lambda$configureTasks$0(RedisHttpSessionConfiguration.java:248) ~[spring-session-data-redis-2.1.1.RELEASE.jar:2.1.1.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) [spring-context-5.1.2.RELEASE.jar:5.1.2.RELEASE]
+	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:93) [spring-context-5.1.2.RELEASE.jar:5.1.2.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515) [?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:264) [?:?]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) [?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) [?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) [?:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+Caused by: io.lettuce.core.RedisConnectionException: Unable to connect to 192.168.3.132:6379
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:78) ~[lettuce-core-5.1.2.RELEASE.jar:?]
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:56) ~[lettuce-core-5.1.2.RELEASE.jar:?]
+	at io.lettuce.core.AbstractRedisClient.getConnection(AbstractRedisClient.java:234) ~[lettuce-core-5.1.2.RELEASE.jar:?]
+	at io.lettuce.core.RedisClient.connect(RedisClient.java:204) ~[lettuce-core-5.1.2.RELEASE.jar:?]
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.lambda$getConnection$1(StandaloneConnectionProvider.java:113) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at java.util.Optional.orElseGet(Optional.java:369) ~[?:?]
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.getConnection(StandaloneConnectionProvider.java:113) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getNativeConnection(LettuceConnectionFactory.java:1085) ~[spring-data-redis-2.1.2.RELEASE.jar:2.1.2.RELEASE]
+	... 22 more
+Caused by: java.lang.IllegalStateException: executor not accepting a task
+	at io.netty.resolver.AddressResolverGroup.getResolver(AddressResolverGroup.java:60) ~[netty-resolver-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.bootstrap.Bootstrap.doResolveAndConnect0(Bootstrap.java:200) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.bootstrap.Bootstrap.access$000(Bootstrap.java:49) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.bootstrap.Bootstrap$1.operationComplete(Bootstrap.java:188) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.bootstrap.Bootstrap$1.operationComplete(Bootstrap.java:174) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:511) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:485) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:424) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.DefaultPromise.trySuccess(DefaultPromise.java:103) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.channel.DefaultChannelPromise.trySuccess(DefaultChannelPromise.java:84) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.safeSetSuccess(AbstractChannel.java:978) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.register0(AbstractChannel.java:512) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.access$200(AbstractChannel.java:423) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.channel.AbstractChannel$AbstractUnsafe$1.run(AbstractChannel.java:482) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:404) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:446) ~[netty-transport-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:884) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.29.Final.jar:4.1.29.Final]
+	... 1 more
+[2018-12-17 17:29:22] - [Thread-7] - com.apitest.util.ExceptionUtil.<init>(ExceptionUtil.java:14) - 错误信息: class com.alibaba.fastjson.JSONException syntax error, expect [, actual EOF, pos 0, fieldName null
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:1135)
+	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.parseMap(MapDeserializer.java:84)
+	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:59)
+	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:41)
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:671)
+	at com.alibaba.fastjson.JSON.parseObject(JSON.java:368)
+	at com.alibaba.fastjson.JSON.parseObject(JSON.java:336)
+	at com.alibaba.fastjson.JSON.parseObject(JSON.java:250)
+	at com.apitest.rest.RestRequest.doPost(RestRequest.java:55)
+	at com.apitest.service.ApiService.restHttp(ApiService.java:287)
+	at com.apitest.service.ApiService.apiCaseExecByLock(ApiService.java:229)
+	at com.apitest.service.ApiService.lambda$execApiService$0(ApiService.java:182)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+[2018-12-17 17:29:22] - [Thread-7] - com.apitest.util.ExceptionUtil.<init>(ExceptionUtil.java:15) - 线程名: Thread-7,线程id: 73,线程状态: RUNNABLE
+[2018-12-17 17:30:47] - [Thread-7] - com.apitest.util.ExceptionUtil.<init>(ExceptionUtil.java:14) - 错误信息: class com.alibaba.fastjson.JSONException syntax error, expect [, actual EOF, pos 0, fieldName null
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:1135)
+	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.parseMap(MapDeserializer.java:84)
+	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:59)
+	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:41)
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:671)
+	at com.alibaba.fastjson.JSON.parseObject(JSON.java:368)
+	at com.alibaba.fastjson.JSON.parseObject(JSON.java:336)
+	at com.alibaba.fastjson.JSON.parseObject(JSON.java:250)
+	at com.apitest.rest.RestRequest.doPost(RestRequest.java:55)
+	at com.apitest.service.ApiService.restHttp(ApiService.java:287)
+	at com.apitest.service.ApiService.apiCaseExecByLock(ApiService.java:229)
+	at com.apitest.service.ApiService.lambda$execApiService$0(ApiService.java:182)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+[2018-12-17 17:30:47] - [Thread-7] - com.apitest.util.ExceptionUtil.<init>(ExceptionUtil.java:15) - 线程名: Thread-7,线程id: 72,线程状态: RUNNABLE
