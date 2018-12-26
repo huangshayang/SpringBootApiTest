@@ -16,7 +16,4 @@ public interface ApiServiceInf {
 
     ServerResponse deleteApiService(int id);
 
-    ServerResponse execApiService(int id);
-
-    ServerResponse execApiServiceOne(int id);
 }

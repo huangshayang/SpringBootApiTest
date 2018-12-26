@@ -1,10 +1,12 @@
-package com.apitest.util;
+package com.apitest.component;
 
 import com.apitest.entity.Mails;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.MailSendCompoentInf;
 import com.apitest.repository.MailRepository;
 import com.apitest.repository.UserRepository;
+import com.apitest.util.ExceptionUtil;
+import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Log4j2
-public class MailSendUtil implements MailSendCompoentInf {
+public class MailSendComponent implements MailSendCompoentInf {
 
     @Value("${spring.mail.username}")
     private String user;
@@ -34,7 +36,7 @@ public class MailSendUtil implements MailSendCompoentInf {
     private static ServerResponse serverResponse;
 
     @Autowired
-    public MailSendUtil(JavaMailSender javaMailSender, RedisTemplate<String, Object> redisTemplate, UserRepository userRepository, MailRepository mailRepository) {
+    public MailSendComponent(JavaMailSender javaMailSender, RedisTemplate<String, Object> redisTemplate, UserRepository userRepository, MailRepository mailRepository) {
         this.javaMailSender = javaMailSender;
         this.redisTemplate = redisTemplate;
         this.userRepository = userRepository;

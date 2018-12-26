@@ -17,9 +17,6 @@ public class Task {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column
-    private Integer thread;
-
     @Column(nullable = false)
     private Boolean isMultiThread;
 

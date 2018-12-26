@@ -1,8 +1,8 @@
 package com.apitest.service;
 
+import com.apitest.component.MailSendComponent;
 import com.apitest.configconsts.ConfigConsts;
 import com.apitest.inf.MailSendServiceInf;
-import com.apitest.util.MailSendUtil;
 import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,20 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class MailSendService implements MailSendServiceInf {
 
-    private final MailSendUtil mailSendUtil;
+    private final MailSendComponent mailSendComponent;
 
     @Autowired
-    public MailSendService(MailSendUtil mailSendUtil) {
-        this.mailSendUtil = mailSendUtil;
+    public MailSendService(MailSendComponent mailSendComponent) {
+        this.mailSendComponent = mailSendComponent;
     }
 
     @Override
     public ServerResponse resetPasswordMailService(HttpServletRequest request, String email){
-        return mailSendUtil.sendResetPasswordMailHandler(request, email, ConfigConsts.RESET_SUBJECT);
+        return mailSendComponent.sendResetPasswordMailHandler(request, email, ConfigConsts.RESET_SUBJECT);
     }
 
     @Override
     public ServerResponse registerMailService(HttpServletRequest request, String email){
-        return mailSendUtil.sendRegisterMailHandler(request, email, ConfigConsts.REGESTER_SUBJECT);
+        return mailSendComponent.sendRegisterMailHandler(request, email, ConfigConsts.REGESTER_SUBJECT);
     }
 }

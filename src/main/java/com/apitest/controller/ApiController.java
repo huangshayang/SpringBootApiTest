@@ -48,14 +48,4 @@ public class ApiController {
     public ServerResponse deleteApiController(@PathVariable(name = "id") int id){
         return apiService.deleteApiService(id);
     }
-
-    @PostMapping(value = "/exec/{id}")
-    public ServerResponse execApiController(@PathVariable(name = "id") int id){
-        return apiService.execApiService(id);
-    }
-
-    @PostMapping(value = "/exec/one/{id}")
-    public ServerResponse execApiOneController(@PathVariable int id){
-        return apiService.execApiServiceOne(id);
-    }
 }

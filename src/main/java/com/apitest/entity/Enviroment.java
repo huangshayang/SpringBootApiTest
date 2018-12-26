@@ -32,7 +32,7 @@ public class Enviroment {
     @JsonIgnore
     private Timestamp updateTime;
 
-    private Enviroment(){
+    public Enviroment(){
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }

@@ -69,7 +69,7 @@ public class LogService implements LogServiceInf {
     @Override
     public ServerResponse deleteAllLogService() {
         try {
-            logRepository.deleteAll();
+            logRepository.deleteAllInBatch();
             serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
         }catch (Exception e){
             new ExceptionUtil(e);

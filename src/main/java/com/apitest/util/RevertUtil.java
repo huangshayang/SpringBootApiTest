@@ -3,7 +3,7 @@ package com.apitest.util;
 import java.util.HashMap;
 import java.util.Map;
 
-public class revertUtil {
+public class RevertUtil {
 
     public static String cookieToMap(String reqCookie){
         Map<String, String> map = new HashMap<>(8);

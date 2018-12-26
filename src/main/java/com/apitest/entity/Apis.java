@@ -24,8 +24,10 @@ public class Apis {
     @Column(nullable = false)
     private String method;
 
+    @Column(nullable = false)
+    private Integer envId;
+
     @Column
-    @JsonIgnore
     private Timestamp updateTime;
 
     @Column(nullable = false)

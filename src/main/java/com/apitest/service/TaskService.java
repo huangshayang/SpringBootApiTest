@@ -1,9 +1,12 @@
 package com.apitest.service;
 
+import com.apitest.component.RestCompoent;
 import com.apitest.entity.Apis;
+import com.apitest.entity.Cases;
 import com.apitest.entity.Task;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.TaskServiceInf;
+import com.apitest.repository.CaseRepository;
 import com.apitest.repository.TaskRepository;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
@@ -22,11 +25,16 @@ import java.util.concurrent.ScheduledFuture;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 
+/**
+ * @author huangshayang
+ */
 @Service
 @Log4j2
 public class TaskService implements TaskServiceInf {
 
     private final TaskRepository taskRepository;
+    private final CaseRepository caseRepository;
+    private final RestCompoent restCompoent;
     private static ServerResponse serverResponse;
 
     @Autowired
@@ -40,8 +48,10 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Autowired
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, CaseRepository caseRepository, RestCompoent restCompoent) {
         this.taskRepository = taskRepository;
+        this.caseRepository = caseRepository;
+        this.restCompoent = restCompoent;
     }
 
     @Override
@@ -149,7 +159,6 @@ public class TaskService implements TaskServiceInf {
         return serverResponse;
     }
 
-
     @Override
     public ServerResponse taskStartService(int id){
         try {
@@ -164,9 +173,14 @@ public class TaskService implements TaskServiceInf {
                         serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_IS_DONE.getStatus(), ErrorEnum.TASK_FUTURE_IS_DONE.getMessage());
                     }else {
                         List<Apis> apisList = taskOptional.get().getApisList();
-                        for (Apis apis : apisList) {
-                            System.out.println(apis);
-                        }
+                        apisList.forEach(apis -> new Thread(() -> {
+                            List<Cases> casesList = caseRepository.findByApiId(apis.getId());
+                            casesList.forEach(cases -> new Thread(() -> {
+                                if (cases.getAvailable()) {
+                                    restCompoent.taskApiCaseExecByLock(apis, cases);
+                                }
+                            }).start());
+                        }).start());
                     }
                 }, triggerContext -> new CronTrigger(taskOptional.get().getTaskTime()).nextExecutionTime(triggerContext));
                 serverResponse = new ServerResponse(ErrorEnum.TASK_START_SUCCESS.getStatus(), ErrorEnum.TASK_START_SUCCESS.getMessage());

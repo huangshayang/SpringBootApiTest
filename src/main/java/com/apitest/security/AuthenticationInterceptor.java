@@ -3,8 +3,8 @@ package com.apitest.security;
 import com.apitest.annotation.Auth;
 import com.apitest.error.ErrorEnum;
 import com.apitest.util.ExceptionUtil;
+import com.apitest.util.RevertUtil;
 import com.apitest.util.ServerResponse;
-import com.apitest.util.revertUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
@@ -46,7 +46,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                     if (isBlank(reqCookie)) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
-                    }else if (request.getSession().getAttribute(revertUtil.cookieToMap(reqCookie)) == null) {
+                    }else if (request.getSession().getAttribute(RevertUtil.cookieToMap(reqCookie)) == null) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
                     }
@@ -56,7 +56,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-        Cookie resCookie = new Cookie(USERSESSION_KEY, revertUtil.cookieToMap(reqCookie));
+        Cookie resCookie = new Cookie(USERSESSION_KEY, RevertUtil.cookieToMap(reqCookie));
         resCookie.setMaxAge(request.getSession().getMaxInactiveInterval());
         resCookie.setHttpOnly(true);
         resCookie.setPath("/");
