@@ -1,6 +1,0 @@
-[2018-12-19 10:07:35] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:58) - 返回结果: ServerResponse(status=1, message=查询用例成功, data=Page 1 of 1 containing com.apitest.entity.Cases instances)
-[2018-12-19 10:07:35] - [http-nio-0.0.0.0-8080-exec-4] - com.apitest.service.CaseService.queryCaseByApiIdService(CaseService.java:59) - 线程名: http-nio-0.0.0.0-8080-exec-4,线程id: 66,线程状态: RUNNABLE
-[2018-12-19 10:07:37] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
-[2018-12-19 10:07:37] - [http-nio-0.0.0.0-8080-exec-5] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-5,线程id: 67,线程状态: RUNNABLE
-[2018-12-19 10:07:38] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.LogService.queryPageLogByApiIdService(LogService.java:46) - 返回结果: ServerResponse(status=1, message=日志查询成功, data=Page 1 of 1 containing com.apitest.entity.Logs instances)
-[2018-12-19 10:07:38] - [http-nio-0.0.0.0-8080-exec-6] - com.apitest.service.LogService.queryPageLogByApiIdService(LogService.java:47) - 线程名: http-nio-0.0.0.0-8080-exec-6,线程id: 68,线程状态: RUNNABLE

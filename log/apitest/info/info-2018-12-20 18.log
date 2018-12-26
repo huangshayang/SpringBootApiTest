@@ -1,8 +1,0 @@
-[2018-12-20 18:01:01] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
-[2018-12-20 18:01:01] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 52,线程状态: RUNNABLE
-[2018-12-20 18:02:49] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:90) - 返回结果: ServerResponse(status=1, message=查询接口成功, data=Page 1 of 5 containing com.apitest.entity.Apis instances)
-[2018-12-20 18:02:49] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.ApiService.queryPageApiService(ApiService.java:91) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 53,线程状态: RUNNABLE
-[2018-12-20 18:12:40] - [Thread-6] - org.springframework.scheduling.concurrent.ExecutorConfigurationSupport.shutdown(ExecutorConfigurationSupport.java:208) - Shutting down ExecutorService 'applicationTaskExecutor'
-[2018-12-20 18:12:40] - [Thread-6] - org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy(AbstractEntityManagerFactoryBean.java:597) - Closing JPA EntityManagerFactory for persistence unit 'default'
-[2018-12-20 18:12:40] - [Thread-6] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:350) - HikariPool-1 - Shutdown initiated...
-[2018-12-20 18:12:40] - [Thread-6] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:352) - HikariPool-1 - Shutdown completed.
