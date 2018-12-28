@@ -80,10 +80,10 @@ public class RestCompoent {
         WebClient.RequestHeadersSpec<?> body = null;
         switch (method){
             case "get":
-                body = RestRequest.doGet(url, jsonData, paramsData, cookie);
+                body = RestRequest.doGet(url, jsonData, paramsData, cookie, envId);
                 break;
             case "post":
-                body = RestRequest.doPost(url, jsonData, paramsData, cookie);
+                body = RestRequest.doPost(url, jsonData, paramsData, cookie, envId);
                 break;
             case "put":
                 body = RestRequest.doPut(url, jsonData, paramsData);

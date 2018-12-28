@@ -1,6 +1,5 @@
 package com.apitest.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -34,7 +33,6 @@ public class Task {
     private Timestamp createTime;
 
     @Column
-    @JsonIgnore
     private Timestamp updateTime;
 
     private Task(){

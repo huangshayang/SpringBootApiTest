@@ -1,7 +1,6 @@
 package com.apitest.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -34,7 +33,6 @@ public class Cases {
     private Timestamp createTime;
 
     @Column
-    @JsonIgnore
     private Timestamp updateTime;
 
     @Column(nullable = false)

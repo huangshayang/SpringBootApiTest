@@ -2,7 +2,6 @@ package com.apitest.service;
 
 import com.apitest.component.RestCompoent;
 import com.apitest.entity.Apis;
-import com.apitest.entity.Cases;
 import com.apitest.entity.Task;
 import com.apitest.error.ErrorEnum;
 import com.apitest.inf.TaskServiceInf;
@@ -14,14 +13,16 @@ import lombok.extern.log4j.Log4j2;
 import org.quartz.CronScheduleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.*;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 
@@ -40,11 +41,13 @@ public class TaskService implements TaskServiceInf {
     @Autowired
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
-    private ScheduledFuture<?> future;
+    private static Map<Integer, ScheduledFuture<?>> threadMap = new ConcurrentHashMap<>();
 
     @Bean
     public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
-        return new ThreadPoolTaskScheduler();
+        threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+        threadPoolTaskScheduler.setPoolSize(10);
+        return threadPoolTaskScheduler;
     }
 
     @Autowired
@@ -78,7 +81,7 @@ public class TaskService implements TaskServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_STATUS_IS_EMPTY.getStatus(), ErrorEnum.TASK_STATUS_IS_EMPTY.getMessage());
             }else if (isBlank(task.getIsMultiThread().toString())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getStatus(), ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getMessage());
-            }else if (task.getApisList().size() <= 0) {
+            }else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
             }else if (checkCron(task.getTaskTime())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_INVALID.getStatus(), ErrorEnum.TASK_TIME_IS_INVALID.getMessage());
@@ -110,7 +113,7 @@ public class TaskService implements TaskServiceInf {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_STATUS_IS_EMPTY.getStatus(), ErrorEnum.TASK_STATUS_IS_EMPTY.getMessage());
                 }else if (isBlank(task.getIsMultiThread().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getStatus(), ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getMessage());
-                }else if (task.getApisList().size() <= 0) {
+                }else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
                 }else if (isBlank(task.getTaskTime())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_EMPTY.getStatus(), ErrorEnum.TASK_TIME_IS_EMPTY.getMessage());
@@ -164,54 +167,66 @@ public class TaskService implements TaskServiceInf {
         try {
             Optional<Task> taskOptional = taskRepository.findById(id);
             if (taskOptional.isPresent()) {
-                future = threadPoolTaskScheduler.schedule(() -> {
-                    if (future == null) {
-                        serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_NULL.getStatus(), ErrorEnum.TASK_FUTURE_NULL.getMessage());
-                    }else if (future.isCancelled()) {
-                        serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_IS_CANCELLED.getStatus(), ErrorEnum.TASK_FUTURE_IS_CANCELLED.getMessage());
-                    }else if (future.isDone()) {
-                        serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_IS_DONE.getStatus(), ErrorEnum.TASK_FUTURE_IS_DONE.getMessage());
+                List<Apis> apisList = taskOptional.get().getApisList();
+                if (threadMap.containsKey(id)) {
+                    serverResponse = new ServerResponse(-1, "任务已经存在");
+                }else {
+                    if (threadMap.get(id) != null) {
+                        serverResponse = new ServerResponse(-1, "future已经存在");
                     }else {
-                        List<Apis> apisList = taskOptional.get().getApisList();
-                        apisList.forEach(apis -> new Thread(() -> {
-                            List<Cases> casesList = caseRepository.findByApiId(apis.getId());
-                            casesList.forEach(cases -> new Thread(() -> {
-                                if (cases.getAvailable()) {
-                                    restCompoent.taskApiCaseExecByLock(apis, cases);
-                                }
-                            }).start());
-                        }).start());
+                        ScheduledFuture<?> future = threadPoolTaskScheduler.schedule(() -> {
+                            System.out.println("测试");
+//                        apisList.forEach(apis -> new Thread(() -> {
+//                            List<Cases> casesList = caseRepository.findByApiId(apis.getId());
+//                            casesList.forEach(cases -> new Thread(() -> {
+//                                if (cases.getAvailable()) {
+//                                    restCompoent.taskApiCaseExecByLock(apis, cases);
+//                                }
+//                            }).start());
+//                        }).start());
+                        }, new CronTrigger(taskOptional.get().getTaskTime()));
+                        threadMap.putIfAbsent(id, future);
+                        taskOptional.get().setTaskStatus("启动");
+                        serverResponse = new ServerResponse(ErrorEnum.TASK_START_SUCCESS.getStatus(), ErrorEnum.TASK_START_SUCCESS.getMessage());
                     }
-                }, triggerContext -> new CronTrigger(taskOptional.get().getTaskTime()).nextExecutionTime(triggerContext));
-                serverResponse = new ServerResponse(ErrorEnum.TASK_START_SUCCESS.getStatus(), ErrorEnum.TASK_START_SUCCESS.getMessage());
+                }
             }else {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
         }catch (Exception e){
             new ExceptionUtil(e);
         }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return serverResponse;
     }
 
     @Override
     public ServerResponse taskStopService(int id){
-        if (taskRepository.findById(id).isPresent()) {
-            if (future == null) {
-                serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_NULL.getStatus(), ErrorEnum.TASK_FUTURE_NULL.getMessage());
-            }else if (future.isDone()) {
-                serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_IS_DONE.getStatus(), ErrorEnum.TASK_FUTURE_IS_DONE.getMessage());
-            }else if (future.isCancelled()) {
-                serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_IS_CANCELLED.getStatus(), ErrorEnum.TASK_FUTURE_IS_CANCELLED.getMessage());
-            }else if (threadPoolTaskScheduler.isDaemon()) {
-                serverResponse = new ServerResponse(ErrorEnum.TASK_ThreadPoolTaskScheduler_IS_DAEMON.getStatus(), ErrorEnum.TASK_ThreadPoolTaskScheduler_IS_DAEMON.getMessage());
-            } else {
-                future.cancel(true);
-                threadPoolTaskScheduler.shutdown();
+        try {
+            Optional<Task> taskOptional = taskRepository.findById(id);
+            if (taskOptional.isPresent()) {
+                if (threadMap.get(id) != null) {
+                    if (threadMap.get(id).isCancelled()) {
+                        serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_IS_CANCELLED.getStatus(), ErrorEnum.TASK_FUTURE_IS_CANCELLED.getMessage());
+                    }else {
+                        threadMap.get(id).cancel(true);
+                        threadMap.remove(id);
+                        taskOptional.get().setTaskStatus("停止");
+                        serverResponse = new ServerResponse(ErrorEnum.TASK_CANCEL_SUCCESS.getStatus(), ErrorEnum.TASK_CANCEL_SUCCESS.getMessage());
+                    }
+                }else {
+                    serverResponse = new ServerResponse(ErrorEnum.TASK_FUTURE_NULL.getStatus(), ErrorEnum.TASK_FUTURE_NULL.getMessage());
+                }
+            }else {
+                serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
-            serverResponse = new ServerResponse(ErrorEnum.TASK_CANCEL_SUCCESS.getStatus(), ErrorEnum.TASK_CANCEL_SUCCESS.getMessage());
-        }else {
-            serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
+        }catch (Exception e){
+            new ExceptionUtil(e);
+            return null;
         }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return serverResponse;
     }
 

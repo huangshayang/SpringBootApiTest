@@ -3,9 +3,11 @@ package com.apitest.rest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.apitest.component.EnvComponent;
 import com.apitest.configconsts.ConfigConsts;
 import com.apitest.util.ExceptionUtil;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -22,16 +24,23 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author huangshayang
  */
-@Component
 @Log4j2
+@Component
 public class RestRequest {
 
-    private static final String COOKIE = getCookie();
+//    private static final String COOKIE = getCookie();
     private static WebClient client = WebClient.create(ConfigConsts.URL);
     private static WebClient.RequestHeadersSpec<?> requestHeadersSpec;
     private static Map<String, Object> map;
 
-    public static WebClient.RequestHeadersSpec<?> doGet(String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
+    private static EnvComponent envComponent;
+
+    @Autowired
+    public RestRequest(EnvComponent envComponent){
+        RestRequest.envComponent = envComponent;
+    }
+
+    public static WebClient.RequestHeadersSpec<?> doGet(String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie, int envId) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -41,9 +50,9 @@ public class RestRequest {
             }catch (Exception e){
                 map = new HashMap<>(1);
             }
-            requestHeadersSpec = client.get().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
+            requestHeadersSpec = WebClient.create(envComponent.getDomain(envId)).get().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
             if (cookie) {
-                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, COOKIE);
+                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, getCookie(envId));
             }
         }catch (Exception e){
             new ExceptionUtil(e);
@@ -52,7 +61,7 @@ public class RestRequest {
         return requestHeadersSpec;
     }
 
-    public static WebClient.RequestHeadersSpec<?> doPost(String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
+    public static WebClient.RequestHeadersSpec<?> doPost(String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie, int envId) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -64,7 +73,7 @@ public class RestRequest {
             }
             requestHeadersSpec = client.post().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(jsonData);
             if (cookie) {
-                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, COOKIE);
+                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, getCookie(envId));
             }
         }catch (Exception e){
             new ExceptionUtil(e);
@@ -83,7 +92,7 @@ public class RestRequest {
             }catch (Exception e){
                 map = new HashMap<>(1);
             }
-            return client.put().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSION_KEY, COOKIE).syncBody(jsonData);
+            return client.put().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSION_KEY, "").syncBody(jsonData);
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;
@@ -100,21 +109,22 @@ public class RestRequest {
             }catch (Exception e){
                 map = new HashMap<>(1);
             }
-            return client.delete().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).cookie(ConfigConsts.SESSION_KEY, COOKIE);
+            return client.delete().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).cookie(ConfigConsts.SESSION_KEY, "");
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;
         }
     }
 
-    private static String getCookie() {
+    private static String getCookie(int envId) {
         try {
             String url = "http://alpha.smart-iov.net/api/v1/login";
             ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(8);
-            map.putIfAbsent("username", ConfigConsts.USERNAME);
-            map.putIfAbsent("password", ConfigConsts.PASSWORD);
-            Mono<ClientResponse> webClient = WebClient.create(url)
+            map.putIfAbsent("username", envComponent.getUsername(envId));
+            map.putIfAbsent("password", envComponent.getPassword(envId));
+            Mono<ClientResponse> webClient = WebClient.create(envComponent.getDomain(envId))
                     .post()
+                    .uri("/login")
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .syncBody(map)
                     .exchange();
