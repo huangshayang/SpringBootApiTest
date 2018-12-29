@@ -45,8 +45,18 @@ public class TaskController {
         return taskService.taskStartService(id);
     }
 
-    @PostMapping(value = "/stop/{id}")
-    public ServerResponse taskStopController(@PathVariable(name = "id") int id){
-        return taskService.taskStopService(id);
+    @PostMapping(value = "/test/{id}")
+    public void testTask(@PathVariable(name = "id") int id){
+        taskService.testTask(id);
     }
+
+//    @PostMapping(value = "/pause/{id}")
+//    public ServerResponse taskPauseController(@PathVariable(name = "id") int id){
+//        return taskService.taskPauseService(id);
+//    }
+//
+//    @PostMapping(value = "/stop/{id}")
+//    public ServerResponse taskStopController(@PathVariable(name = "id") int id){
+//        return taskService.taskStopService(id);
+//    }
 }

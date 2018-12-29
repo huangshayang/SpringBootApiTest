@@ -20,7 +20,6 @@ public enum ErrorEnum {
     CASE_QUERY_SUCCESS(1, "查询用例成功"),
     CASE_DELETE_SUCCESS(1, "删除用例成功"),
     ADD_CASE_SUCCESS(1, "添加用例成功"),
-    HTTP_EXEC_SUCCESS(1, "http请求执行成功"),
     LOG_QUERY_SUCCESS(1, "日志查询成功"),
     LOG_DELETE_SUCCESS(1, "删除日志成功"),
     LOGOUT_SUCCESS(1, "退出成功"),
@@ -30,8 +29,9 @@ public enum ErrorEnum {
     TASK_QUERY_SUCCESS(1, "查询任务成功"),
     TASK_ADD_SUCCESS(1, "添加任务成功"),
     TASK_DELETE_SUCCESS(1, "删除任务成功"),
-    TASK_START_SUCCESS(1, "任务开始"),
-    TASK_CANCEL_SUCCESS(1, "任务取消成功"),
+    TASK_FUTURE_START_SUCCESS(1, "future开始成功"),
+    TASK_FUTURE_PAUSING_SUCCESS(1, "future暂停成功"),
+    TASK_FUTURE_STOPPED_SUCCESS(1, "future停止成功"),
 
     //接口id不存在
     API_IS_NULL(10001, "接口id不存在"),
@@ -68,10 +68,9 @@ public enum ErrorEnum {
     TASK_APIS_IS_EMPTY(10032, "任务关联的api不能为空"),
     TASK_TIME_IS_EMPTY(10033, "任务的时间不能为空"),
     TASK_TIME_IS_INVALID(10034, "任务的时间格式不正确"),
-    TASK_FUTURE_IS_CANCELLED(10035, "future已经取消"),
-    TASK_FUTURE_IS_DONE(10036, "future已经完成"),
-    TASK_FUTURE_NULL(10037, "future为空"),
-    TASK_ThreadPoolTaskScheduler_IS_DAEMON(10038, "threadPoolTaskScheduler已经结束");
+    TASK_FUTURE_IS_PAUSED(10035, "future已经暂停"),
+    TASK_FUTURE_IS_RUNNING(10036, "future已经在运行中"),
+    TASK_FUTURE_IS_NULL(10037, "future为空");
 
     @Getter
     private int status;
