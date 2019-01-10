@@ -4,6 +4,7 @@ import com.apitest.annotation.Auth;
 import com.apitest.entity.Task;
 import com.apitest.service.TaskService;
 import com.apitest.util.ServerResponse;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -41,22 +42,17 @@ public class TaskController {
     }
 
     @PostMapping(value = "/start/{id}")
-    public ServerResponse taskStartController(@PathVariable(name = "id") int id){
+    public ServerResponse taskStartController(@PathVariable(name = "id") int id) throws SchedulerException {
         return taskService.taskStartService(id);
     }
 
-    @PostMapping(value = "/test/{id}")
-    public void testTask(@PathVariable(name = "id") int id){
-        taskService.testTask(id);
+    @PostMapping(value = "/pause/{id}")
+    public ServerResponse taskPauseController(@PathVariable(name = "id") int id){
+        return taskService.taskPauseService(id);
     }
 
-//    @PostMapping(value = "/pause/{id}")
-//    public ServerResponse taskPauseController(@PathVariable(name = "id") int id){
-//        return taskService.taskPauseService(id);
-//    }
-//
-//    @PostMapping(value = "/stop/{id}")
-//    public ServerResponse taskStopController(@PathVariable(name = "id") int id){
-//        return taskService.taskStopService(id);
-//    }
+    @PostMapping(value = "/stop/{id}")
+    public ServerResponse taskStopController(@PathVariable(name = "id") int id){
+        return taskService.taskStopService(id);
+    }
 }

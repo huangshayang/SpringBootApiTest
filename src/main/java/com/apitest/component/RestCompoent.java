@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Timestamp;
 import java.util.Objects;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author huangshayang
@@ -22,24 +21,18 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class RestCompoent {
 
-    private ReentrantLock lock = new ReentrantLock();
-
-    private final LogRepository logRepository;
+    private static LogRepository logRepository;
+    private static WebClient.RequestHeadersSpec<?> body;
 
     @Autowired
     public RestCompoent(LogRepository logRepository) {
-        this.logRepository = logRepository;
+        RestCompoent.logRepository = logRepository;
     }
 
-    public void taskApiCaseExecByLock(Apis apis, Cases cases) {
+    public static void taskApiCaseExecByLock(Apis apis, Cases cases) {
         //向外部发送http请求
-        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程进入");
         Timestamp requestTime = new Timestamp(System.currentTimeMillis());
-        lock.lock();
-        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",加锁成功");
         ClientResponse response = restHttp(apis, cases).exchange().block();
-        lock.unlock();
-        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",释放锁完成");
         //把请求的结果保存到响应日志里
         responseWriteToLog(apis, cases, response, requestTime);
     }
@@ -51,7 +44,7 @@ public class RestCompoent {
      * @param response
      * @param requestTime
      */
-    private void responseWriteToLog(Apis apis, Cases aCasesList, ClientResponse response, Timestamp requestTime) {
+    private static void responseWriteToLog(Apis apis, Cases aCasesList, ClientResponse response, Timestamp requestTime) {
         Logs logs = new Logs();
         logs.setJsonData(aCasesList.getJsonData());
         logs.setParamsData(aCasesList.getParamsData());
@@ -70,26 +63,26 @@ public class RestCompoent {
      * @param cases
      * @return
      */
-    private WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
+    private static WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
         String method = api.getMethod();
         String url =  api.getUrl();
         String jsonData = cases.getJsonData();
         String paramsData = cases.getParamsData();
         int envId = api.getEnvId();
+        String baseUrl = EnvComponent.getDomain(envId);
         boolean cookie = api.getCookie();
-        WebClient.RequestHeadersSpec<?> body = null;
         switch (method){
             case "get":
-                body = RestRequest.doGet(url, jsonData, paramsData, cookie, envId);
+                body = RestRequest.doGet(baseUrl, url, jsonData, paramsData, cookie, envId);
                 break;
             case "post":
-                body = RestRequest.doPost(url, jsonData, paramsData, cookie, envId);
+                body = RestRequest.doPost(baseUrl, url, jsonData, paramsData, cookie, envId);
                 break;
             case "put":
-                body = RestRequest.doPut(url, jsonData, paramsData);
+                body = RestRequest.doPut(baseUrl, url, jsonData, paramsData);
                 break;
             case "delete":
-                body = RestRequest.doDelete(url, jsonData, paramsData);
+                body = RestRequest.doDelete(baseUrl, url, jsonData, paramsData);
                 break;
             default:
         }

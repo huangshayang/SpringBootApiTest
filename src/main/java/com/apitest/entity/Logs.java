@@ -30,9 +30,6 @@ public class Logs {
     private String paramsData;
 
     @Column(nullable = false)
-    private String contentType;
-
-    @Column(nullable = false)
     @Lob
     private String responseHeader;
 

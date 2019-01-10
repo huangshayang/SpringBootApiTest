@@ -17,4 +17,6 @@ public interface TaskServiceInf {
     ServerResponse taskPauseService(int id);
 
     ServerResponse taskStopService(int id);
+
+    ServerResponse taskResumeService(int id);
 }
