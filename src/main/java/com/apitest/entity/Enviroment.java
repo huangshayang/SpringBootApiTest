@@ -29,7 +29,6 @@ public class Enviroment {
     private Timestamp createTime;
 
     @Column
-    @JsonIgnore
     private Timestamp updateTime;
 
     public Enviroment(){

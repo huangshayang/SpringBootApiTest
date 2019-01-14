@@ -15,22 +15,25 @@ public class QuartzTask extends QuartzJobBean {
     private static ReentrantLock lock = new ReentrantLock();
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void executeInternal(JobExecutionContext jobExecutionContext) {
         List<Apis> apisList = (List<Apis>) jobExecutionContext.getMergedJobDataMap().getWrappedMap().get("apisList");
         CaseRepository caseRepository = (CaseRepository) jobExecutionContext.getMergedJobDataMap().getWrappedMap().get("caseRepository");
-//        apisList.forEach(apis -> new Thread(() -> {
-//            lock.lock();
-            List<Cases> casesList = caseRepository.findByApiId(3);
+        apisList.forEach(apis -> new Thread(() -> {
+            lock.lock();
+            List<Cases> casesList = caseRepository.findByApiId(apis.getId());
             for (Cases cases : casesList) {
                 new Thread(() -> {
                     //这里需要加锁，不然会报错
                     lock.lock();
-                    RestCompoent.taskApiCaseExecByLock(apisList.get(1), cases);
+                    if (cases.getAvailable()) {
+                        RestCompoent.taskApiCaseExecByLock(apis, cases);
+                    }
                     lock.unlock();
                 }).start();
             }
-//            lock.unlock();
-//        }).start());
+            lock.unlock();
+        }).start());
 
     }
 }
