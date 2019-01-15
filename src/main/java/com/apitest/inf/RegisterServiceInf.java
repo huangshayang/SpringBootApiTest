@@ -4,6 +4,6 @@ import com.apitest.util.ServerResponse;
 
 
 public interface RegisterServiceInf {
-    ServerResponse registerService(String username, String password, String captcha);
+    ServerResponse registerService(String username, String password, String token);
 
 }

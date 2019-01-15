@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Data
-public class Task {
+public class Task implements Serializable {
 
     public enum TaskStatusEnum{
         //任务刚创建

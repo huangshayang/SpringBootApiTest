@@ -3,7 +3,6 @@ package com.apitest.repository;
 import com.apitest.entity.Apis;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
 public interface ApiRepository extends JpaRepository<Apis, Integer> {
 
     /**

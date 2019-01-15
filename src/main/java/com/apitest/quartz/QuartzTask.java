@@ -15,7 +15,6 @@ public class QuartzTask extends QuartzJobBean {
     private static ReentrantLock lock = new ReentrantLock();
 
     @Override
-    @SuppressWarnings("unchecked")
     protected void executeInternal(JobExecutionContext jobExecutionContext) {
         List<Apis> apisList = (List<Apis>) jobExecutionContext.getMergedJobDataMap().getWrappedMap().get("apisList");
         CaseRepository caseRepository = (CaseRepository) jobExecutionContext.getMergedJobDataMap().getWrappedMap().get("caseRepository");

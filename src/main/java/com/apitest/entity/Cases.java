@@ -4,12 +4,13 @@ package com.apitest.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Data
 @Table(indexes = @Index(name = "index_api_id", columnList = "apiId"))
-public class Cases {
+public class Cases implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

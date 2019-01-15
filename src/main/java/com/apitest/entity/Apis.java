@@ -1,15 +1,15 @@
 package com.apitest.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Data
-public class Apis {
+public class Apis implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

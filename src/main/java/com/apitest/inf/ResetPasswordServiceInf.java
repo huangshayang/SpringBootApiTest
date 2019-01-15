@@ -8,5 +8,5 @@ import com.apitest.util.ServerResponse;
  */
 public interface ResetPasswordServiceInf {
 
-    ServerResponse resetPasswordService(String newPassword, String captcha);
+    ServerResponse resetPasswordService(String newPassword, String token);
 }

@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 public interface CaseRepository extends JpaRepository<Cases, Integer> {
 
     List<Cases> findByApiId(Integer id);

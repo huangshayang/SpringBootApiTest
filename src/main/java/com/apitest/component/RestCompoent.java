@@ -5,7 +5,6 @@ import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
 import com.apitest.repository.LogRepository;
 import com.apitest.rest.RestRequest;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -17,7 +16,6 @@ import java.util.Objects;
 /**
  * @author huangshayang
  */
-@Log4j2
 @Component
 public class RestCompoent {
 
@@ -69,7 +67,7 @@ public class RestCompoent {
         String jsonData = cases.getJsonData();
         String paramsData = cases.getParamsData();
         int envId = api.getEnvId();
-        String baseUrl = EnvComponent.getDomain(envId);
+        String baseUrl = EnvComponent.getEnviroment(envId).getDomain();
         boolean cookie = api.getCookie();
         switch (method){
             case "get":
@@ -79,10 +77,10 @@ public class RestCompoent {
                 body = RestRequest.doPost(baseUrl, url, jsonData, paramsData, cookie, envId);
                 break;
             case "put":
-                body = RestRequest.doPut(baseUrl, url, jsonData, paramsData);
+                body = RestRequest.doPut(baseUrl, url, jsonData, paramsData, envId);
                 break;
             case "delete":
-                body = RestRequest.doDelete(baseUrl, url, jsonData, paramsData);
+                body = RestRequest.doDelete(baseUrl, url, jsonData, paramsData, envId);
                 break;
             default:
         }

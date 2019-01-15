@@ -1,5 +1,7 @@
 package com.apitest.util;
 
+import com.apitest.configconsts.ConfigConsts;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +14,6 @@ public class RevertUtil {
             String[] str2 = s.split("=");
             map.put(str2[0].trim(), str2[1]);
         }
-        return map.get("user_session");
+        return map.get(ConfigConsts.USERSESSION_KEY);
     }
 }
