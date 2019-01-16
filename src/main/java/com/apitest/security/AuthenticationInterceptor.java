@@ -35,9 +35,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String reqCookie = request.getHeader("cookie");
-        String referer = request.getHeader("referer");
-        //获取访问地址
-        String sitePart = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
         if (object instanceof HandlerMethod){
             HandlerMethod handlerMethod=(HandlerMethod)object;
             Class type = handlerMethod.getBeanType();

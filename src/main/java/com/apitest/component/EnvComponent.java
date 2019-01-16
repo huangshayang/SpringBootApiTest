@@ -5,11 +5,14 @@ import com.apitest.repository.EnvRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 
 @Component
 public class EnvComponent {
 
     private static EnvRepository envRepository;
+    private static Enviroment enviroment;
 
     @Autowired
     public EnvComponent(EnvRepository envRepository) {
@@ -17,7 +20,9 @@ public class EnvComponent {
     }
 
     public static Enviroment getEnviroment(int envId){
-        return envRepository.findAll().get(envId - 1);
+        Optional<Enviroment> envOptional = envRepository.findById(envId);
+        envOptional.ifPresent(env -> enviroment = env);
+        return enviroment;
     }
 
 }

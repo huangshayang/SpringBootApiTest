@@ -21,6 +21,7 @@ public class RestCompoent {
 
     private static LogRepository logRepository;
     private static WebClient.RequestHeadersSpec<?> body;
+    private static int envId;
 
     @Autowired
     public RestCompoent(LogRepository logRepository) {
@@ -66,12 +67,12 @@ public class RestCompoent {
         String url =  api.getUrl();
         String jsonData = cases.getJsonData();
         String paramsData = cases.getParamsData();
-        int envId = api.getEnvId();
+        envId = api.getEnvId();
         String baseUrl = EnvComponent.getEnviroment(envId).getDomain();
         boolean cookie = api.getCookie();
         switch (method){
             case "get":
-                body = RestRequest.doGet(baseUrl, url, jsonData, paramsData, cookie, envId);
+                body = RestRequest.doGet(baseUrl, url, jsonData, paramsData, cookie);
                 break;
             case "post":
                 body = RestRequest.doPost(baseUrl, url, jsonData, paramsData, cookie, envId);
@@ -80,10 +81,14 @@ public class RestCompoent {
                 body = RestRequest.doPut(baseUrl, url, jsonData, paramsData, envId);
                 break;
             case "delete":
-                body = RestRequest.doDelete(baseUrl, url, jsonData, paramsData, envId);
+                body = RestRequest.doDelete(baseUrl, url, paramsData, envId);
                 break;
             default:
         }
         return body;
+    }
+
+    public static int getEnvId(){
+        return envId;
     }
 }

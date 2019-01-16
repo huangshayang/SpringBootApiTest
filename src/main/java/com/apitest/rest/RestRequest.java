@@ -4,6 +4,7 @@ package com.apitest.rest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.apitest.component.EnvComponent;
+import com.apitest.component.RestCompoent;
 import com.apitest.configconsts.ConfigConsts;
 import com.apitest.entity.Enviroment;
 import com.apitest.util.ExceptionUtil;
@@ -28,12 +29,14 @@ public class RestRequest {
     private static WebClient.RequestHeadersSpec<?> requestHeadersSpec;
     private static Map<String, Object> map;
     private static WebClient.Builder webClient = WebClient.builder();
+    private static String cookies;
 
     static {
-
+        int envId = RestCompoent.getEnvId();
+        cookies = getCookie(envId);
     }
 
-    public static WebClient.RequestHeadersSpec<?> doGet(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie, int envId) {
+    public static WebClient.RequestHeadersSpec<?> doGet(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -43,10 +46,9 @@ public class RestRequest {
             }catch (Exception e){
                 map = new HashMap<>(1);
             }
-
             requestHeadersSpec = webClient.baseUrl(baseUrl).build().get().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
             if (cookie) {
-                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, getCookie(envId));
+                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, cookies);
             }
         }catch (Exception e){
             new ExceptionUtil(e);
@@ -93,10 +95,9 @@ public class RestRequest {
         }
     }
 
-    public static WebClient.RequestHeadersSpec<?> doDelete(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, int envId) {
+    public static WebClient.RequestHeadersSpec<?> doDelete(String baseUrl, String url, @Nullable String paramsData, int envId) {
         try {
             log.info("uri: " + url);
-            log.info("jsonData: " + jsonData);
             log.info("paramsData: " + paramsData);
             try {
                 map = JSON.parseObject(paramsData, new TypeReference<>() {});
