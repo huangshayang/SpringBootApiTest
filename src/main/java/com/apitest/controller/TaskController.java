@@ -4,7 +4,6 @@ import com.apitest.annotation.Auth;
 import com.apitest.entity.Task;
 import com.apitest.service.TaskService;
 import com.apitest.util.ServerResponse;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -41,17 +40,17 @@ public class TaskController {
         return taskService.deleteTaskService(id);
     }
 
-    @PostMapping(value = "/start/{id}")
-    public ServerResponse taskStartController(@PathVariable(name = "id") int id) throws SchedulerException {
+    @PostMapping(value = "/quartz/start/{id}")
+    public ServerResponse taskStartController(@PathVariable(name = "id") int id){
         return taskService.taskStartService(id);
     }
 
-    @PostMapping(value = "/pause/{id}")
+    @PostMapping(value = "/quartz/pause/{id}")
     public ServerResponse taskPauseController(@PathVariable(name = "id") int id){
         return taskService.taskPauseService(id);
     }
 
-    @PostMapping(value = "/stop/{id}")
+    @PostMapping(value = "/quartz/stop/{id}")
     public ServerResponse taskStopController(@PathVariable(name = "id") int id){
         return taskService.taskStopService(id);
     }

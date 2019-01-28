@@ -30,10 +30,7 @@ public enum ErrorEnum {
     TASK_ADD_SUCCESS(1, "添加任务成功"),
     TASK_DELETE_SUCCESS(1, "删除任务成功"),
     QUARTZ_START_SUCCESS(1, "调度任务开始成功"),
-    QUARTZ_PAUSING_SUCCESS(1, "调度任务暂停成功"),
     QUARTZ_STOPPED_SUCCESS(1, "调度任务停止成功"),
-    TASK_FUTURE_START_SUCCESS(1, "future开始成功"),
-    TASK_FUTURE_PAUSING_SUCCESS(1, "future暂停成功"),
     TASK_FUTURE_STOPPED_SUCCESS(1, "future停止成功"),
 
     //接口id不存在
@@ -72,10 +69,11 @@ public enum ErrorEnum {
     TASK_TIME_IS_EMPTY(10033, "任务的时间不能为空"),
     TASK_TIME_IS_INVALID(10034, "任务的时间格式不正确"),
     TASK_FUTURE_IS_PAUSED(10035, "future已经暂停"),
-    TASK_FUTURE_IS_RUNNING(10036, "future已经在运行中"),
-    QUARTZ_IS_PAUSED(10035, "调度任务已经暂停"),
-    QUATZ_IS_RUNNING(10036, "调度任务已经在运行中"),
-    TASK_FUTURE_IS_NULL(10037, "future为空");
+    QUARTZ_IS_NONE(10036, "调度任务不存在"),
+    QUARTZ_IS_PAUSED(10037, "调度任务已经暂停"),
+    QUATZ_IS_RUNNING(10038, "调度任务已经在运行中"),
+    TASK_FUTURE_IS_NULL(10039, "future为空"),
+    QUARTZ_UNKNOWN_ERROR(10040, "quartz未知错误");
 
     @Getter
     private int status;

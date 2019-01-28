@@ -4,13 +4,11 @@ import com.apitest.entity.User;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import com.apitest.util.RevertUtil;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Service
-@Log4j2
 public class UserService {
 
     public ServerResponse userInfoService(HttpServletRequest request){

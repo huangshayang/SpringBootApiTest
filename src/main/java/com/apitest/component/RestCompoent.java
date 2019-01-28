@@ -75,13 +75,13 @@ public class RestCompoent {
                 body = RestRequest.doGet(baseUrl, url, jsonData, paramsData, cookie);
                 break;
             case "post":
-                body = RestRequest.doPost(baseUrl, url, jsonData, paramsData, cookie, envId);
+                body = RestRequest.doPost(baseUrl, url, jsonData, paramsData, cookie);
                 break;
             case "put":
-                body = RestRequest.doPut(baseUrl, url, jsonData, paramsData, envId);
+                body = RestRequest.doPut(baseUrl, url, jsonData, paramsData);
                 break;
             case "delete":
-                body = RestRequest.doDelete(baseUrl, url, paramsData, envId);
+                body = RestRequest.doDelete(baseUrl, url, paramsData);
                 break;
             default:
         }

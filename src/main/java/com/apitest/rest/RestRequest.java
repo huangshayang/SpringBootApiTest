@@ -57,7 +57,7 @@ public class RestRequest {
         return requestHeadersSpec;
     }
 
-    public static WebClient.RequestHeadersSpec<?> doPost(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie, int envId) {
+    public static WebClient.RequestHeadersSpec<?> doPost(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -69,7 +69,7 @@ public class RestRequest {
             }
             requestHeadersSpec = webClient.baseUrl(baseUrl).build().post().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(jsonData);
             if (cookie) {
-                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, getCookie(envId));
+                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, cookies);
             }
         }catch (Exception e){
             new ExceptionUtil(e);
@@ -78,7 +78,7 @@ public class RestRequest {
         return requestHeadersSpec;
     }
 
-    public static WebClient.RequestHeadersSpec<?> doPut(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, int envId) {
+    public static WebClient.RequestHeadersSpec<?> doPut(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -88,14 +88,14 @@ public class RestRequest {
             }catch (Exception e){
                 map = new HashMap<>(1);
             }
-            return webClient.baseUrl(baseUrl).build().put().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSION_KEY, getCookie(envId)).syncBody(jsonData);
+            return webClient.baseUrl(baseUrl).build().put().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSION_KEY, cookies).syncBody(jsonData);
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;
         }
     }
 
-    public static WebClient.RequestHeadersSpec<?> doDelete(String baseUrl, String url, @Nullable String paramsData, int envId) {
+    public static WebClient.RequestHeadersSpec<?> doDelete(String baseUrl, String url, @Nullable String paramsData) {
         try {
             log.info("uri: " + url);
             log.info("paramsData: " + paramsData);
@@ -104,7 +104,7 @@ public class RestRequest {
             }catch (Exception e){
                 map = new HashMap<>(1);
             }
-            return webClient.baseUrl(baseUrl).build().delete().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).cookie(ConfigConsts.SESSION_KEY, getCookie(envId));
+            return webClient.baseUrl(baseUrl).build().delete().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).cookie(ConfigConsts.SESSION_KEY, cookies);
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;

@@ -1,0 +1,84 @@
+[2019-01-22 20:00:00] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:00:40] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:01:20] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:02:00] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:02:40] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:03:20] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:04:01] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:04:41] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:05:21] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:06:01] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:06:41] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:07:21] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:08:01] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:08:41] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:09:21] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:10:01] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:10:42] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:11:22] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:12:02] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:12:42] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:13:22] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:14:02] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:14:42] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:15:22] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:16:02] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:16:42] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:17:23] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:18:03] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:18:43] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:19:23] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:20:03] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:20:43] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:21:23] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:22:03] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:22:43] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:23:23] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:24:04] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:24:44] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:25:24] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:26:04] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:26:44] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:27:24] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:28:04] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:28:44] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:29:24] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:30:04] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:30:45] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:31:25] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:32:05] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:32:45] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:33:25] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:34:05] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:34:45] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:35:25] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:36:05] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:36:45] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:37:26] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:38:06] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:38:46] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:39:26] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:40:06] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:40:46] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:41:26] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:42:06] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:42:46] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:43:26] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:44:07] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:44:47] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:45:27] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:46:07] - [lettuce-eventExecutorLoop-1-2] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:46:47] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:47:27] - [lettuce-eventExecutorLoop-1-1] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:48:07] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:48:47] - [lettuce-eventExecutorLoop-1-4] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:49:21] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+[2019-01-22 20:49:21] - [Thread-2] - org.springframework.scheduling.quartz.SchedulerFactoryBean.destroy(SchedulerFactoryBean.java:844) - Shutting down Quartz Scheduler
+[2019-01-22 20:49:21] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:666) - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+[2019-01-22 20:49:21] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+[2019-01-22 20:49:21] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:740) - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+[2019-01-22 20:49:21] - [Thread-2] - org.springframework.scheduling.concurrent.ExecutorConfigurationSupport.shutdown(ExecutorConfigurationSupport.java:208) - Shutting down ExecutorService 'applicationTaskExecutor'
+[2019-01-22 20:49:21] - [Thread-2] - org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy(AbstractEntityManagerFactoryBean.java:597) - Closing JPA EntityManagerFactory for persistence unit 'default'
+[2019-01-22 20:49:21] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:350) - HikariPool-1 - Shutdown initiated...
+[2019-01-22 20:49:27] - [lettuce-eventExecutorLoop-1-3] - io.netty.util.internal.logging.AbstractInternalLogger.log(AbstractInternalLogger.java:173) - Reconnecting, last destination was 192.168.3.132:6379
+[2019-01-22 20:49:51] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:352) - HikariPool-1 - Shutdown completed.
