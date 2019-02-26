@@ -1,0 +1,50 @@
+<nz-layout class="layout">
+  <nz-header>
+    <ul nz-menu [nzSelectable]="false" [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 50px;">
+      <li nz-menu-item><span title><i nz-icon type="cloud" theme="outline"></i>接口测试</span></li>
+      <li nz-menu-item style="float:right;">
+        <nz-dropdown>
+          <a nz-dropdown>
+            <span title><i nz-icon type="user" theme="outline"></i>{{userInfo}}</span>
+          </a>
+          <ul nz-menu>
+            <li nz-menu-item (click)="changePassword()" style="text-align: center">修改密码</li>
+            <li nz-menu-item (click)="logout()" style="text-align: center">退 出</li>
+          </ul>
+        </nz-dropdown>
+      </li>
+    </ul>
+  </nz-header>
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-menu-item [routerLink]="['./index']" routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="home" theme="outline"></i>首页</span>
+        </li>
+        <li nz-menu-item [routerLink]="['./api']" routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="api" theme="outline"></i>接口管理</span>
+        </li>
+        <li nz-menu-item [routerLink]="['./case']" routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="ordered-list" theme="outline"></i>用例管理</span>
+        </li>
+        <li nz-menu-item [routerLink]="['./environment']" routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="laptop"></i>环境管理</span>
+        </li>
+        <li nz-menu-item [routerLink]="['./task']" routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="schedule" theme="outline"></i>定时任务</span>
+        </li>
+        <li nz-menu-item [routerLink]="['./report']" routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="pie-chart" theme="outline"></i>测试报告</span>
+        </li>
+        <li nz-menu-item [routerLink]="['./log']" routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="file-done" theme="outline"></i>请求日志</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout style="padding-left: 20px;">
+      <nz-content style="background:#fff; padding: 10px 0 20px 0; min-height: 280px;">
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,11 @@
+form{
+  margin: 0 auto;
+}
+
+.forget-form {
+  max-width: 300px;
+}
+
+.forget-form-button {
+  width: 100%;
+}

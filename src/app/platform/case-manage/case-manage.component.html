@@ -1,0 +1,39 @@
+<button nz-button class="login-form-button" [nzType]="'primary'" (click)="addCase()" style="margin-left: 20px">添加用例</button>
+<nz-table #basicTable
+          [nzData]="content"
+          nzShowSizeChanger
+          [nzFrontPagination]="false"
+          [nzTotal]="total"
+          [nzLoading]="loading"
+          [(nzPageIndex)]="pageIndex"
+          [(nzPageSize)]="pageSize"
+          (nzPageIndexChange)="searchData()"
+          (nzPageSizeChange)="searchData(true)">
+  <thead>
+  <tr>
+    <th scope="col" [nzWidth]="'5%'">Id</th>
+    <th scope="col" [nzWidth]="'10%'">Name</th>
+    <th scope="col" [nzWidth]="'20%'">JsonData</th>
+    <th scope="col" [nzWidth]="'10%'">ParamsData</th>
+    <th scope="col" [nzWidth]="'20%'">AssertResult</th>
+    <th scope="col" [nzWidth]="'10%'">CreateTime</th>
+    <th scope="col" [nzWidth]="'10%'">UpdateTime</th>
+    <th scope="col" [nzWidth]="'10%'">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of basicTable.data">
+    <td>{{item.id}}</td>
+    <td>{{item.name}}</td>
+    <td>{{item.jsonData}}</td>
+    <td>{{item.paramsData}}</td>
+    <td>{{item.expectResult}}</td>
+    <td>{{item.createTime}}</td>
+    <td>{{item.updateTime}}</td>
+    <td scope="col">
+      <button nz-button class="login-form-button" [nzType]="'primary'" (click)="editCase(item.id)">编辑</button>
+      <button nz-button class="login-form-button" [nzType]="'danger'" (click)="deleteOne(item.id)">删除</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

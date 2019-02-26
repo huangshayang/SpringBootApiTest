@@ -1,0 +1,21 @@
+.ant-layout-header{
+  background: #1890ff;
+  line-height: 50px;
+  height: 50px;
+}
+.ant-layout-header ul{
+  background-color: #1890ff;
+}
+.layout{
+  height: 100%;
+}
+.ant-layout{
+  height: 100%;
+}
+nz-content{
+  overflow: auto;
+}
+.ant-menu-dark.ant-menu-horizontal>.ant-menu-item{
+  color: #fff;
+  background: transparent;
+}

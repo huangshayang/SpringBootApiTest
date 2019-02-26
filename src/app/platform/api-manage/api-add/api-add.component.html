@@ -1,0 +1,45 @@
+<form nz-form [formGroup]="apiForm" (ngSubmit)="add()" autocomplete="off">
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="url">接口URL</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="url" nz-input formControlName="url" placeholder="Url">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">接口名</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="name" placeholder="Name">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="cookie">Cookie</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <label nz-checkbox formControlName="cookie"></label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="method">请求方法</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <nz-radio-group formControlName="method">
+        <label nz-radio [ngStyle]="style" nzValue="get">GET</label>
+        <label nz-radio [ngStyle]="style" nzValue="post">POST</label>
+        <label nz-radio [ngStyle]="style" nzValue="put">PUT</label>
+        <label nz-radio [ngStyle]="style" nzValue="delete">DELETE</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="envName" nzRequired>所属环境</nz-form-label>
+    <nz-form-control [nzSpan]="18">
+      <nz-select id="envId" formControlName="envId" nzPlaceHolder="Select a environment">
+        <nz-option *ngFor="let data of envData" [nzValue]="data.id" [nzLabel]="data.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="mt-lg-5">
+    <nz-form-control [nzOffset]="15" [nzSm]="8" [nzXs]="24">
+      <button nz-button class="login-form-button" [nzType]="'primary'" style="margin-right: 10px">Save</button>
+      <button type="button" nz-button class="login-form-button" [nzType]="'cancel'" (click)="closeModal()">Cancel</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

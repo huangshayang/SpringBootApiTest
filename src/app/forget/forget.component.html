@@ -1,0 +1,18 @@
+<form nz-form [formGroup]="validateForm" class="forget-form" (ngSubmit)="forget()">
+  <nz-form-item>
+    <label>Email</label>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixUser">
+        <input type="email" nz-input formControlName="email" placeholder="Email">
+      </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">Please input your email!</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button class="forget-form-button" [nzType]="'primary'">Send Email</button>
+      <a (click)="login_forward()">Login now!</a>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<ng-template #prefixUser><i nz-icon type="user"></i></ng-template>

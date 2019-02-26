@@ -1,0 +1,40 @@
+<button nz-button class="login-form-button" [nzType]="'danger'" (click)="deleteAll()">删除所有日志</button>
+<nz-table #basicTable
+          [nzData]="content"
+          nzShowSizeChanger
+          [nzFrontPagination]="false"
+          [nzTotal]="total"
+          [nzLoading]="loading"
+          [(nzPageIndex)]="pageIndex"
+          [(nzPageSize)]="pageSize"
+          (nzPageIndexChange)="searchData()"
+          (nzPageSizeChange)="searchData(true)">
+  <thead>
+  <tr>
+    <th scope="col" [nzWidth]="'5%'">Id</th>
+    <th scope="col" [nzWidth]="'9%'">CaseName</th>
+    <th scope="col" [nzWidth]="'6%'">Code</th>
+    <th scope="col" [nzWidth]="'20%'">JsonData</th>
+    <th scope="col" [nzWidth]="'10%'">ParamsData</th>
+    <th scope="col" [nzWidth]="'11%'">RequestTime</th>
+    <th scope="col" [nzWidth]="'20%'">ResponseData</th>
+    <th scope="col" [nzWidth]="'16%'">ResponseHeader</th>
+    <th scope="col" [nzWidth]="'5%'">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of basicTable.data">
+    <td>{{item.id}}</td>
+    <td>{{item.caseName}}</td>
+    <td>{{item.code}}</td>
+    <td>{{item.jsonData}}</td>
+    <td>{{item.paramsData}}</td>
+    <td>{{item.requestTime}}</td>
+    <td>{{item.responseData}}</td>
+    <td>{{item.responseHeader}}</td>
+    <td>
+      <button nz-button class="login-form-button" [nzType]="'danger'" (click)="deleteOne(item.id)">删除</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
