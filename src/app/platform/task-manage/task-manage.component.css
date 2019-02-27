@@ -1,0 +1,35 @@
+.ant-btn-primary {
+  color: #ffffff;
+  background-color: #60D827;
+  border-color: #60D827;
+}
+
+.ant-btn-primary:hover, .ant-btn-primary:focus, .ant-btn-primary:active, .ant-btn-primary:link, .ant-btn-primary:visited {
+  color: #ffffff;
+  background-color: #3DF152;
+  border-color: #3DF152;
+}
+
+.ant-btn-dashed {
+  color: #ffffff;
+  background-color: #FFEA16;
+  border-color: #FFEA16;
+}
+
+.ant-btn-dashed:hover, .ant-btn-dashed:focus, .ant-btn-dashed:active, .ant-btn-dashed:link, .ant-btn-dashed:visited {
+  color: #ffffff;
+  background-color: #FFE800;
+  border-color: #FFE800;
+}
+
+.task-button {
+  color: #ffffff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
+
+.task-button:hover, .task-button:focus, .task-button:active, .task-button:link, .task-button:visited {
+  color: #ffffff;
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}

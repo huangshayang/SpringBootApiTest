@@ -32,7 +32,7 @@
     <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="envName" nzRequired>所属环境</nz-form-label>
     <nz-form-control [nzSpan]="18">
       <nz-select id="envId" formControlName="envId" nzPlaceHolder="Select a environment">
-        <nz-option *ngFor="let data of envData" [nzValue]="data.id" [nzLabel]="data.name"></nz-option>
+        <nz-option *ngFor="let data of env" [nzValue]="data.id" [nzLabel]="data.name"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

@@ -30,3 +30,11 @@
 th, td{
   text-align: center !important;
 }
+
+.ant-dropdown-link {
+  color: #ffffff;
+}
+
+.ant-dropdown-link:hover {
+  color: #ffffff;
+}

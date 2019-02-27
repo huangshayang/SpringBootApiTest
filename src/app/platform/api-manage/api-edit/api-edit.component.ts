@@ -20,6 +20,16 @@ export class ApiEditComponent implements OnInit {
     lineHeight: '30px'
   };
   envData: any;
+  env = [
+    {
+      id: 1,
+      name: '测试网'
+    },
+    {
+      id: 2,
+      name: '现网'
+    }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -38,25 +48,6 @@ export class ApiEditComponent implements OnInit {
       cookie: '',
       name: '',
       envId: ''
-    });
-    this.getEnv();
-  }
-
-  private getEnv() {
-    return this.http.get('/env/all', {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    }).subscribe(res => {
-      this.status = res['status'];
-      if (this.status === 1) {
-        this.envData = res['data'];
-      } else if (this.status === 10008) {
-        this.router.navigate(['login']);
-        this.createErrorMessage(res['message']);
-      } else {
-        this.createErrorMessage(res['message']);
-      }
     });
   }
 
