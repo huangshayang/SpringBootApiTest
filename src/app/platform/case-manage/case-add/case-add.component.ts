@@ -20,7 +20,6 @@ export class CaseAddComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private message: NzMessageService,
-    private activeRouter: ActivatedRoute,
     private modalRef: NzModalRef
   ) { }
 
@@ -47,8 +46,8 @@ export class CaseAddComponent implements OnInit {
         (res => {
           this.status = res['status'];
           if (this.status === 1) {
-            this.closeModal();
             this.createSuccessMessage(res['message']);
+            this.closeModal();
           } else if (this.status === 10008) {
             this.router.navigate(['login']);
             this.createErrorMessage(res['message']);
@@ -67,7 +66,7 @@ export class CaseAddComponent implements OnInit {
     this.message.error(error, { nzDuration: 3000 });
   }
 
-  private closeModal() {
+  closeModal() {
     this.modalRef.close();
   }
 

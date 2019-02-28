@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {ApiAddComponent} from '../api-manage/api-add/api-add.component';
 import {EnvironmentAddComponent} from './environment-add/environment-add.component';
+import {EnvironmentEditComponent} from './environment-edit/environment-edit.component';
 
 @Component({
   selector: 'app-environment-manage',
@@ -63,9 +63,12 @@ export class EnvironmentManageComponent implements OnInit {
 
   editEnv(id: number) {
     this.modal.create({
-      nzTitle: '添加环境',
-      nzContent: EnvironmentAddComponent,
+      nzTitle: '编辑环境',
+      nzContent: EnvironmentEditComponent,
       nzWidth: 550,
+      nzComponentParams: {
+        id
+      },
       nzFooter: null
     });
   }

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NzMessageService} from 'ng-zorro-antd';
+import {Router} from '@angular/router';
+import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
@@ -14,28 +14,27 @@ export class CaseEditComponent implements OnInit {
 
   caseForm: FormGroup;
   status: number;
-  caseId: string | null;
-  jsonData: string;
-  paramsData: string;
-  expectResult: string;
+  // jsonData: string;
+  // paramsData: string;
+  // expectResult: string;
   apiId: string | null;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private activeRouter: ActivatedRoute,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private modalRef: NzModalRef
   ) { }
 
   ngOnInit() {
-    this.caseId = this.activeRouter.snapshot.parent.paramMap.get('id');
-    this.apiId = this.activeRouter.snapshot.parent.parent.parent.paramMap.get('id');
-    this.get();
+    // this.caseId = this.activeRouter.snapshot.parent.paramMap.get('id');
+    // this.apiId = this.activeRouter.snapshot.parent.parent.parent.paramMap.get('id');
+    this.get(this.id);
     this.caseForm = this.fb.group({
       jsonData: '',
       paramsData: '',
-      note: '',
+      name: '',
       expectResult: '',
       available: ''
     });
@@ -48,13 +47,13 @@ export class CaseEditComponent implements OnInit {
         'Content-Type':  'application/json'
       })
     };
-    this.http.put('/api/case/' + this.caseId, formModel, httpOptions)
+    this.http.put('/case/' + this.id, formModel, httpOptions)
       .subscribe(
         (res => {
           this.status = res['status'];
           if (this.status === 1) {
             this.createSuccessMessage(res['message']);
-            this.router.navigate(['api-view/' + this.apiId + '/case-view']);
+            this.closeModal();
           } else if (this.status === 10008) {
             this.router.navigate(['login']);
             this.createErrorMessage(res['message']);
@@ -65,13 +64,13 @@ export class CaseEditComponent implements OnInit {
       );
   }
 
-  get() {
+  private get(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
-    this.http.get('/api/case/' + this.caseId, httpOptions)
+    this.http.get('/case/' + id, httpOptions)
       .subscribe(
         (res => {
           this.status = res['status'];
@@ -93,6 +92,10 @@ export class CaseEditComponent implements OnInit {
 
   private createErrorMessage(error: string): void {
     this.message.error(error, { nzDuration: 3000 });
+  }
+
+  closeModal() {
+    this.modalRef.close();
   }
 
 }

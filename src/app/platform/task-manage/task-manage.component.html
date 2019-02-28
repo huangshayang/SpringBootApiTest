@@ -9,11 +9,11 @@
     <th scope="col" [nzWidth]="'15%'">Name</th>
     <!--<th scope="col" [nzWidth]="'20%'">Apis</th>-->
     <th scope="col" [nzWidth]="'15%'">TaskTime</th>
-    <th scope="col" [nzWidth]="'15%'">TaskStatus</th>
+    <!--<th scope="col" [nzWidth]="'15%'">TaskStatus</th>-->
     <th scope="col" [nzWidth]="'15%'">CreateTime</th>
     <th scope="col" [nzWidth]="'15%'">UpdateTime</th>
     <th scope="col" [nzWidth]="'15%'">Schedule</th>
-    <th scope="col" [nzWidth]="'15%'">Actions</th>
+    <th scope="col" [nzWidth]="'12%'">Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -22,7 +22,7 @@
     <td>{{item.name}}</td>
     <!--<td><span *ngFor="let api of item.apisList; let isLast = last">{{api.url}}<span *ngIf="!isLast">,</span></span></td>-->
     <td>{{item.taskTime}}</td>
-    <td>{{item.taskStatus}}</td>
+    <!--<td>{{item.taskStatus}}</td>-->
     <td>{{item.createTime}}</td>
     <td>{{item.updateTime}}</td>
     <td scope="col">

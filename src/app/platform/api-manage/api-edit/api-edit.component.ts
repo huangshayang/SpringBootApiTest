@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import {ResponseValues} from '../../../model/model';
 
 @Component({
   selector: 'app-api-edit',
@@ -20,27 +21,17 @@ export class ApiEditComponent implements OnInit {
     lineHeight: '30px'
   };
   envData: any;
-  env = [
-    {
-      id: 1,
-      name: '测试网'
-    },
-    {
-      id: 2,
-      name: '现网'
-    }
-  ];
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private activeRouter: ActivatedRoute,
     private message: NzMessageService,
     private modalRef: NzModalRef
   ) { }
 
   ngOnInit() {
+    this.getEnv();
     this.get(this.id);
     this.apiForm = this.fb.group({
       url: '',
@@ -60,16 +51,16 @@ export class ApiEditComponent implements OnInit {
     };
     this.http.put('/api/' + this.id, formModel, httpOptions)
       .subscribe(
-        (res => {
-          this.status = res['status'];
+        ((res: ResponseValues) => {
+          this.status = res.status;
           if (this.status === 1) {
+            this.createSuccessMessage(res.message);
             this.closeModal();
-            this.createSuccessMessage(res['message']);
           } else if (this.status === 10008) {
             this.router.navigate(['login']);
-            this.createErrorMessage(res['message']);
+            this.createErrorMessage(res.message);
           } else {
-            this.createErrorMessage(res['message']);
+            this.createErrorMessage(res.message);
           }
         })
       );
@@ -83,18 +74,36 @@ export class ApiEditComponent implements OnInit {
     };
     this.http.get('/api/' + id, httpOptions)
       .subscribe(
-        (res => {
-          this.status = res['status'];
+        ((res: ResponseValues) => {
+          this.status = res.status;
           if (this.status === 1) {
-            this.envData = this.apiForm.patchValue(res['data']);
-          } else if (res['status'] === 10008) {
+            this.apiForm.patchValue(res.data);
+          } else if (res.status === 10008) {
             this.router.navigate(['login']);
-            this.createErrorMessage(res['message']);
+            this.createErrorMessage(res.message);
           } else {
-            this.createErrorMessage(res['message']);
+            this.createErrorMessage(res.message);
           }
         })
       );
+  }
+
+  private getEnv() {
+    return this.http.get('/env/all', {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    }).subscribe((res: ResponseValues) => {
+      this.status = res.status;
+      if (this.status === 1) {
+        this.envData = res.data;
+      } else if (this.status === 10008) {
+        this.router.navigate(['login']);
+        this.createErrorMessage(res.message);
+      } else {
+        this.createErrorMessage(res.message);
+      }
+    });
   }
 
   private createSuccessMessage(success: string): void {

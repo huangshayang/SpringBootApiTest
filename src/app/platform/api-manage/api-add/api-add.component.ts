@@ -13,7 +13,6 @@ export class ApiAddComponent implements OnInit {
 
   apiForm: FormGroup;
   status: number;
-  validateForm: FormGroup;
   style = {
     display   : 'block',
     height    : '30px',
@@ -30,6 +29,7 @@ export class ApiAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getEnv();
     this.apiForm = this.fb.group({
       url: '',
       method: ['get'],
@@ -37,7 +37,6 @@ export class ApiAddComponent implements OnInit {
       name: '',
       envId: 1
     });
-    this.getEnv();
   }
 
   private getEnv() {
@@ -70,8 +69,8 @@ export class ApiAddComponent implements OnInit {
         (res => {
           this.status = res['status'];
           if (this.status === 1) {
-            this.closeModal();
             this.createSuccessMessage(res['message']);
+            this.closeModal();
           } else if (this.status === 10008) {
             this.createErrorMessage(res['message']);
             this.router.navigate(['login']);
@@ -90,7 +89,7 @@ export class ApiAddComponent implements OnInit {
     this.message.error(error, { nzDuration: 3000 });
   }
 
-  private closeModal() {
+  closeModal() {
     this.modalRef.close();
   }
 }

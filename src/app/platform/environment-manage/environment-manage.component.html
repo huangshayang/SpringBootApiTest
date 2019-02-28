@@ -1,16 +1,17 @@
-<button nz-button class="login-form-button" [nzType]="'primary'" (click)="addEnv()" style="margin-left: 20px">添加环境</button>
+<button nz-button [nzType]="'primary'" (click)="addEnv()" style="margin-left: 20px">添加环境</button>
 <nz-table #basicTable
           [nzData]="content"
           [nzShowPagination]="false"
           [nzLoading]="loading">
   <thead>
   <tr>
-    <th scope="col" [nzWidth]="'5%'">Id</th>
-    <th scope="col" [nzWidth]="'10%'">Name</th>
-    <th scope="col" [nzWidth]="'20%'">Domain</th>
-    <th scope="col" [nzWidth]="'15%'">Username</th>
-    <th scope="col" [nzWidth]="'15%'">Password</th>
-    <th scope="col" [nzWidth]="'15%'">CreateTime</th>
+    <th scope="col">Id</th>
+    <th scope="col">Name</th>
+    <th scope="col">Domain</th>
+    <th scope="col">Username</th>
+    <th scope="col">Password</th>
+    <th scope="col">CreateTime</th>
+    <th scope="col">UpdateTime</th>
     <th scope="col">Actions</th>
   </tr>
   </thead>
@@ -20,11 +21,12 @@
     <td>{{item.name}}</td>
     <td>{{item.domain}}</td>
     <td>{{item.username}}</td>
-    <td>{{item.password}}</td>
+    <td style="word-break: break-all">{{item.password}}</td>
     <td>{{item.createTime}}</td>
+    <td>{{item.updateTime}}</td>
     <td scope="col">
-      <button nz-button class="login-form-button" [nzType]="'primary'">编辑</button>
-      <button nz-button class="login-form-button" [nzType]="'danger'" (click)="delete(item.id)">删除</button>
+      <button nz-button [nzType]="'primary'" (click)="editEnv(item.id)">编辑</button>
+      <button nz-button [nzType]="'danger'" (click)="delete(item.id)">删除</button>
     </td>
   </tr>
   </tbody>

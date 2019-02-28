@@ -1,3 +1,32 @@
-<p>
-  environment-add works!
-</p>
+<form [formGroup]="envForm" (ngSubmit)="add()" autocomplete="off">
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">环境名</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="name" placeholder="name">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="domain">Domain</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" formControlName="domain" nz-input placeholder="domain">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="username">Username</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="username" placeholder="username">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="password">Password</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="password" nz-input formControlName="password" placeholder="password">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="mt-lg-5">
+    <nz-form-control [nzOffset]="15" [nzSm]="8" [nzXs]="24">
+      <button nz-button [nzType]="'primary'" style="margin-right: 10px">Save</button>
+      <button type="button" nz-button [nzType]="'cancel'" (click)="closeModal()">Cancel</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

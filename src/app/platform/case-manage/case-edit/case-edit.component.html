@@ -1,44 +1,38 @@
 <form [formGroup]="caseForm" (ngSubmit)="edit()" autocomplete="off">
-  <div class="form-group row">
-    <label for="inputText1" class="col-sm-2 col-form-label">Json Data</label>
-    <div class="col-sm-10">
-      <textarea formControlName="jsonData" class="form-control" id="inputText1" placeholder="Json Data"></textarea>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputText2" class="col-sm-2 col-form-label">Params Data</label>
-    <div class="col-sm-10">
-      <input type="text" formControlName="paramsData" class="form-control" id="inputText2" placeholder="Params Data">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputNote1" class="col-sm-2 col-form-label">备注</label>
-    <div class="col-sm-10">
-      <input type="text" formControlName="note" class="form-control" id="inputNote1" placeholder="note">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputExpect1" class="col-sm-2 col-form-label">预期结果</label>
-    <div class="col-sm-10">
-      <input type="text" formControlName="expectResult" class="form-control" id="inputExpect1" placeholder="expect result">
-    </div>
-  </div>
-  <div class="form-group row">
-    <div class="col-sm-2">是否可用</div>
-    <div class="col-sm-10">
-      <div class="form-check">
-        <nz-form-item>
-          <nz-form-control>
-            <nz-switch formControlName="available"></nz-switch>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <div class="col-sm-10">
-      <button type="submit" class="btn btn-primary">保存</button>
-      <button type="button" class="btn btn-primary" [routerLink]="['/api-view/' + apiId + '/case-view']">返回</button>
-    </div>
-  </div>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">用例名</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="name" placeholder="name">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="jsonData">Json Data</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <textarea formControlName="jsonData" nz-input rows="4" placeholder="jsonData"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="paramsData">Params Data</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="paramsData" placeholder="paramsData">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="expectResult">预期结果</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="expectResult" placeholder="expectResult">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="available">是否可用</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <nz-switch formControlName="available"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="mt-lg-5">
+    <nz-form-control [nzOffset]="15" [nzSm]="8" [nzXs]="24">
+      <button nz-button [nzType]="'primary'" style="margin-right: 10px">Save</button>
+      <button type="button" nz-button [nzType]="'cancel'" (click)="closeModal()">Cancel</button>
+    </nz-form-control>
+  </nz-form-item>
 </form>
