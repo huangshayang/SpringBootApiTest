@@ -45,7 +45,7 @@ public class Cases implements Serializable {
     @Column(nullable = false)
     private Boolean available;
 
-    private Cases(){
+    private Cases() {
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }

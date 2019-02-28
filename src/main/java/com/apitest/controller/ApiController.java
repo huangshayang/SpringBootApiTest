@@ -25,27 +25,27 @@ public class ApiController {
     }
 
     @PostMapping(value = "/add")
-    public ServerResponse addApiController(@RequestBody Apis api){
+    public ServerResponse addApiController(@RequestBody Apis api) {
         return apiService.addApiService(api);
     }
 
     @GetMapping(value = "/{id}")
-    public ServerResponse querySingleApiController(@PathVariable(name = "id") int id){
+    public ServerResponse queryOneApiController(@PathVariable(name = "id") int id) {
         return apiService.queryOneApiService(id);
     }
 
     @GetMapping(value = "/all")
-    public ServerResponse queryPageApiController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+    public ServerResponse queryPageApiController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return apiService.queryPageApiService(page, size);
     }
 
     @PutMapping(value = "/{id}")
-    public ServerResponse modifyApiController(@PathVariable(name = "id") int id, @RequestBody Apis api){
+    public ServerResponse modifyApiController(@PathVariable(name = "id") int id, @RequestBody Apis api) {
         return apiService.modifyApiService(id, api);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ServerResponse deleteApiController(@PathVariable(name = "id") int id){
+    public ServerResponse deleteApiController(@PathVariable(name = "id") int id) {
         return apiService.deleteApiService(id);
     }
 }

@@ -24,7 +24,7 @@ public class Mails {
     @Column(nullable = false)
     private String subject;
 
-    public Mails(){
+    public Mails() {
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }

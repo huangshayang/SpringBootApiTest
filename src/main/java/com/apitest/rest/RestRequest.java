@@ -40,17 +40,12 @@ public class RestRequest {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
-            log.info("paramsData: " + paramsData);
-            try {
-                map = JSON.parseObject(paramsData, new TypeReference<>() {});
-            }catch (Exception e){
-                map = new HashMap<>(1);
-            }
+            tt(paramsData);
             requestHeadersSpec = webClient.baseUrl(baseUrl).build().get().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
             if (cookie) {
                 requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, cookies);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -61,17 +56,12 @@ public class RestRequest {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
-            log.info("paramsData: " + paramsData);
-            try {
-                map = JSON.parseObject(paramsData, new TypeReference<>() {});
-            }catch (Exception e){
-                map = new HashMap<>(1);
-            }
+            tt(paramsData);
             requestHeadersSpec = webClient.baseUrl(baseUrl).build().post().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(jsonData);
             if (cookie) {
                 requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, cookies);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -82,14 +72,9 @@ public class RestRequest {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
-            log.info("paramsData: " + paramsData);
-            try {
-                map = JSON.parseObject(paramsData, new TypeReference<>() {});
-            }catch (Exception e){
-                map = new HashMap<>(1);
-            }
+            tt(paramsData);
             return webClient.baseUrl(baseUrl).build().put().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSION_KEY, cookies).syncBody(jsonData);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -99,15 +84,21 @@ public class RestRequest {
         try {
             log.info("uri: " + url);
             log.info("paramsData: " + paramsData);
-            try {
-                map = JSON.parseObject(paramsData, new TypeReference<>() {});
-            }catch (Exception e){
-                map = new HashMap<>(1);
-            }
+            tt(paramsData);
             return webClient.baseUrl(baseUrl).build().delete().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).cookie(ConfigConsts.SESSION_KEY, cookies);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
+        }
+    }
+
+    private static void tt(@Nullable String paramsData) {
+        log.info("paramsData: " + paramsData);
+        try {
+            map = JSON.parseObject(paramsData, new TypeReference<>() {
+            });
+        } catch (Exception e) {
+            map = new HashMap<>(0);
         }
     }
 
@@ -124,7 +115,7 @@ public class RestRequest {
                     .syncBody(map)
                     .exchange();
             return Objects.requireNonNull(Objects.requireNonNull(clientResponseMono.block()).cookies().getFirst(ConfigConsts.SESSION_KEY)).getValue();
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }

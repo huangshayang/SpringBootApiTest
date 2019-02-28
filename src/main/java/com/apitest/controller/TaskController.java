@@ -21,37 +21,37 @@ public class TaskController {
     }
 
     @GetMapping(value = "/all")
-    public ServerResponse queryAllTaskController(){
+    public ServerResponse queryAllTaskController() {
         return taskService.queryAllTaskService();
     }
 
     @PostMapping(value = "/add")
-    public ServerResponse addTaskController(@RequestBody Task task){
+    public ServerResponse addTaskController(@RequestBody Task task) {
         return taskService.addTaskService(task);
     }
 
     @PutMapping(value = "/{id}")
-    public ServerResponse modifyTaskController(@RequestBody Task task, @PathVariable(name = "id") int id){
+    public ServerResponse modifyTaskController(@RequestBody Task task, @PathVariable(name = "id") int id) {
         return taskService.modifyTaskService(task, id);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ServerResponse deleteTaskController(@PathVariable(name = "id") int id){
+    public ServerResponse deleteTaskController(@PathVariable(name = "id") int id) {
         return taskService.deleteTaskService(id);
     }
 
     @PostMapping(value = "/quartz/start/{id}")
-    public ServerResponse taskStartController(@PathVariable(name = "id") int id){
+    public ServerResponse taskStartController(@PathVariable(name = "id") int id) {
         return taskService.taskStartService(id);
     }
 
     @PostMapping(value = "/quartz/pause/{id}")
-    public ServerResponse taskPauseController(@PathVariable(name = "id") int id){
+    public ServerResponse taskPauseController(@PathVariable(name = "id") int id) {
         return taskService.taskPauseService(id);
     }
 
     @PostMapping(value = "/quartz/stop/{id}")
-    public ServerResponse taskStopController(@PathVariable(name = "id") int id){
+    public ServerResponse taskStopController(@PathVariable(name = "id") int id) {
         return taskService.taskStopService(id);
     }
 }

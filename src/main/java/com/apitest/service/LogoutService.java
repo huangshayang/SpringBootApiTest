@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 @Service
 public class LogoutService {
 
-    public ServerResponse logoutService(HttpSession httpSession){
+    public ServerResponse logoutService(HttpSession httpSession) {
         httpSession.invalidate();
         return new ServerResponse(ErrorEnum.LOGOUT_SUCCESS.getStatus(), ErrorEnum.LOGOUT_SUCCESS.getMessage());
     }

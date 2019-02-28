@@ -21,22 +21,27 @@ public class EnvController {
     }
 
     @PostMapping(value = "/add")
-    public ServerResponse addEnvController(@RequestBody Enviroment env){
+    public ServerResponse addEnvController(@RequestBody Enviroment env) {
         return envService.addEnvService(env);
     }
 
     @PutMapping(value = "/{id}")
-    public ServerResponse modifyEnvController(@RequestBody Enviroment env, @PathVariable(name = "id") int id){
+    public ServerResponse modifyEnvController(@RequestBody Enviroment env, @PathVariable(name = "id") int id) {
         return envService.modifyEnvService(env, id);
     }
 
+    @GetMapping(path = "/{id}")
+    public ServerResponse queryOneEnvController(@PathVariable(name = "id") int id){
+        return envService.queryOneEnvService(id);
+    }
+
     @GetMapping(value = "/all")
-    public ServerResponse queryAllEnvController(){
+    public ServerResponse queryAllEnvController() {
         return envService.queryAllEnvService();
     }
 
     @DeleteMapping(value = "/{id}")
-    public ServerResponse deleteEnvController(@PathVariable(name = "id") int id){
+    public ServerResponse deleteEnvController(@PathVariable(name = "id") int id) {
         return envService.deleteEnvService(id);
     }
 }

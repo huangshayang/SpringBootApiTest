@@ -13,6 +13,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 
@@ -24,7 +26,8 @@ import static org.apache.commons.lang.StringUtils.isBlank;
 public class RegisterService implements RegisterServiceInf {
 
     private final UserRepository userRepository;
-    private final RedisTemplate<String, Object> redisTemplate;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     public RegisterService(UserRepository userRepository, RedisTemplate<String, Object> redisTemplate) {
@@ -39,13 +42,13 @@ public class RegisterService implements RegisterServiceInf {
         try {
             log.info("用户名: " + username);
             log.info("密码: " + password);
-            if (isBlank(username) || isBlank(password)){
+            if (isBlank(username) || isBlank(password)) {
                 serverResponse = new ServerResponse(ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.USERNAME_OR_PASSWORD_IS_EMPTY.getMessage());
-            }else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
+            } else if (userRepository.findUserByUsernameOrEmail(username, username) != null) {
                 serverResponse = new ServerResponse(ErrorEnum.USER_IS_EXIST.getStatus(), ErrorEnum.USER_IS_EXIST.getMessage());
-            }else if (redisTemplate.opsForValue().get(token) == null) {
+            } else if (redisTemplate.opsForValue().get(token) == null) {
                 serverResponse = new ServerResponse(ErrorEnum.TOKEN_IS_ERROR.getStatus(), ErrorEnum.TOKEN_IS_ERROR.getMessage());
-            }else {
+            } else {
                 user.setUsername(username);
                 user.setEmail(String.valueOf(redisTemplate.opsForValue().get(token)));
                 user.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -55,7 +58,7 @@ public class RegisterService implements RegisterServiceInf {
             }
             log.info("返回结果: " + serverResponse);
             log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }

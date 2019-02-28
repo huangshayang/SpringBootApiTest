@@ -34,6 +34,7 @@ public class TaskService implements TaskServiceInf {
     private static SchedulerFactory schedulerFactory = new StdSchedulerFactory();
     private static Scheduler scheduler;
     private static JobDataMap jobDataMap;
+
     static {
         try {
             scheduler = schedulerFactory.getScheduler();
@@ -53,11 +54,11 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse queryAllTaskService(){
+    public ServerResponse queryAllTaskService() {
         try {
             List<Task> tasks = taskRepository.findAll();
             serverResponse = new ServerResponse<>(ErrorEnum.TASK_QUERY_SUCCESS.getStatus(), ErrorEnum.TASK_QUERY_SUCCESS.getMessage(), tasks);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -67,25 +68,25 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse addTaskService(Task task){
+    public ServerResponse addTaskService(Task task) {
         log.info("参数: " + task);
         try {
             if (isBlank(task.getName())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EMPTY.getStatus(), ErrorEnum.TASK_NAME_IS_EMPTY.getMessage());
-            }else if (isBlank(task.getIsMultiThread().toString())) {
+            } else if (isBlank(task.getIsMultiThread().toString())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getStatus(), ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getMessage());
-            }else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
+            } else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
-            }else if (checkCron(task.getTaskTime())) {
+            } else if (checkCron(task.getTaskTime())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_INVALID.getStatus(), ErrorEnum.TASK_TIME_IS_INVALID.getMessage());
-            }else if (taskRepository.findByName(task.getName()) != null) {
+            } else if (taskRepository.findByName(task.getName()) != null) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EXIST.getStatus(), ErrorEnum.TASK_NAME_IS_EXIST.getMessage());
-            }else {
+            } else {
                 task.setTaskStatus(Task.TaskStatusEnum.CREATED);
                 taskRepository.save(task);
                 serverResponse = new ServerResponse(ErrorEnum.TASK_ADD_SUCCESS.getStatus(), ErrorEnum.TASK_ADD_SUCCESS.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -95,7 +96,7 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse modifyTaskService(Task task, int id){
+    public ServerResponse modifyTaskService(Task task, int id) {
         log.info("参数: " + task);
         try {
             Optional<Task> taskOptional = taskRepository.findById(id);
@@ -103,19 +104,19 @@ public class TaskService implements TaskServiceInf {
                 Task taskByName = taskRepository.findByName(task.getName());
                 if (isBlank(task.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EMPTY.getStatus(), ErrorEnum.TASK_NAME_IS_EMPTY.getMessage());
-                }else if (isBlank(task.getTaskStatus().getStatus())) {
+                } else if (isBlank(task.getTaskStatus().getStatus())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_STATUS_IS_EMPTY.getStatus(), ErrorEnum.TASK_STATUS_IS_EMPTY.getMessage());
-                }else if (isBlank(task.getIsMultiThread().toString())) {
+                } else if (isBlank(task.getIsMultiThread().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getStatus(), ErrorEnum.TASK_IsMultiThread_IS_EMPTY.getMessage());
-                }else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
+                } else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
-                }else if (isBlank(task.getTaskTime())) {
+                } else if (isBlank(task.getTaskTime())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_EMPTY.getStatus(), ErrorEnum.TASK_TIME_IS_EMPTY.getMessage());
-                }else if (checkCron(task.getTaskTime())) {
+                } else if (checkCron(task.getTaskTime())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_INVALID.getStatus(), ErrorEnum.TASK_TIME_IS_INVALID.getMessage());
-                }else if (taskByName != null && taskByName.getId() != id) {
+                } else if (taskByName != null && taskByName.getId() != id) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EXIST.getStatus(), ErrorEnum.TASK_NAME_IS_EXIST.getMessage());
-                }else {
+                } else {
                     Task task1 = taskOptional.get();
                     task1.setApisList(task.getApisList());
                     task1.setIsMultiThread(task.getIsMultiThread());
@@ -126,10 +127,10 @@ public class TaskService implements TaskServiceInf {
                     taskRepository.saveAndFlush(task1);
                     serverResponse = new ServerResponse(ErrorEnum.TASK_ADD_SUCCESS.getStatus(), ErrorEnum.TASK_ADD_SUCCESS.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -139,15 +140,15 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse deleteTaskService(int id){
+    public ServerResponse deleteTaskService(int id) {
         try {
             if (taskRepository.findById(id).isPresent()) {
                 taskRepository.deleteById(id);
                 serverResponse = new ServerResponse(ErrorEnum.TASK_DELETE_SUCCESS.getStatus(), ErrorEnum.TASK_DELETE_SUCCESS.getMessage());
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -157,19 +158,17 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse taskStartService(int id){
+    public ServerResponse taskStartService(int id) {
         try {
             Optional<Task> taskOptional = taskRepository.findById(id);
             if (taskOptional.isPresent()) {
                 boolean key = jobMap.containsKey(id);
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
-                if (key && triggerState == Trigger.TriggerState.NORMAL) {
+//                Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
+                if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NORMAL) {
                     serverResponse = new ServerResponse(ErrorEnum.QUATZ_IS_RUNNING.getStatus(), ErrorEnum.QUATZ_IS_RUNNING.getMessage());
-                }else if (key && triggerState == Trigger.TriggerState.PAUSED) {
+                } else if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.PAUSED) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_PAUSED.getStatus(), ErrorEnum.QUARTZ_IS_PAUSED.getMessage());
-                }else if (!key && triggerState == Trigger.TriggerState.NORMAL) {
-                    serverResponse = new ServerResponse(ErrorEnum.QUATZ_IS_RUNNING.getStatus(), ErrorEnum.QUATZ_IS_RUNNING.getMessage());
-                }else {
+                } else {
                     List<Apis> apisList = taskOptional.get().getApisList();
                     jobDataMap.putIfAbsent("apisList", apisList);
                     jobDataMap.putIfAbsent("caseRepository", caseRepository);
@@ -183,10 +182,10 @@ public class TaskService implements TaskServiceInf {
                     jobMap.putIfAbsent(id, Map.entry(jobDetail, trigger));
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_START_SUCCESS.getStatus(), ErrorEnum.QUARTZ_START_SUCCESS.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
         }
         log.info("返回结果: " + serverResponse);
@@ -201,7 +200,7 @@ public class TaskService implements TaskServiceInf {
             CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobMap.get(id).getValue().getCronExpression()).withMisfireHandlingInstructionDoNothing();
             oldTrigger = oldTrigger.getTriggerBuilder().startAt(DateBuilder.evenSecondDate(new Date())).withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();
             scheduler.rescheduleJob(triggerKey, oldTrigger);
-        }else {
+        } else {
             CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobMap.get(id).getValue().getCronExpression()).withMisfireHandlingInstructionDoNothing();
             CronTrigger cronTrigger = TriggerBuilder.newTrigger().startAt(DateBuilder.evenSecondDate(new Date())).withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();
             JobDetail jobDetail = JobBuilder.newJob(QuartzTask.class).withIdentity(jobMap.get(id).getKey().getKey()).build();
@@ -212,7 +211,7 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse taskPauseService(int id){
+    public ServerResponse taskPauseService(int id) {
         try {
             Optional<Task> taskOptional = taskRepository.findById(id);
             if (taskOptional.isPresent()) {
@@ -221,17 +220,17 @@ public class TaskService implements TaskServiceInf {
                 if (key && triggerState == Trigger.TriggerState.NORMAL) {
                     scheduler.pauseTrigger(jobMap.get(id).getValue().getKey());
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_STOPPED_SUCCESS.getStatus(), ErrorEnum.QUARTZ_STOPPED_SUCCESS.getMessage());
-                }else if (key && triggerState == Trigger.TriggerState.PAUSED) {
+                } else if (key && triggerState == Trigger.TriggerState.PAUSED) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_PAUSED.getStatus(), ErrorEnum.QUARTZ_IS_PAUSED.getMessage());
-                }else if (key && triggerState == Trigger.TriggerState.NONE) {
+                } else if (key && triggerState == Trigger.TriggerState.NONE) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
-                }else {
+                } else {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_UNKNOWN_ERROR.getStatus(), ErrorEnum.QUARTZ_UNKNOWN_ERROR.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -241,7 +240,7 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse taskStopService(int id){
+    public ServerResponse taskStopService(int id) {
         try {
             Optional<Task> taskOptional = taskRepository.findById(id);
             if (taskOptional.isPresent()) {
@@ -249,17 +248,17 @@ public class TaskService implements TaskServiceInf {
                 Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
                 if (key && triggerState == Trigger.TriggerState.NONE) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
-                }else if (key && (triggerState == Trigger.TriggerState.NORMAL || triggerState == Trigger.TriggerState.PAUSED)) {
+                } else if (key && (triggerState == Trigger.TriggerState.NORMAL || triggerState == Trigger.TriggerState.PAUSED)) {
                     scheduler.unscheduleJob(jobMap.get(id).getValue().getKey());
                     scheduler.deleteJob(jobMap.get(id).getKey().getKey());
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_STOPPED_SUCCESS.getStatus(), ErrorEnum.QUARTZ_STOPPED_SUCCESS.getMessage());
-                }else {
+                } else {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_UNKNOWN_ERROR.getStatus(), ErrorEnum.QUARTZ_UNKNOWN_ERROR.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -269,7 +268,7 @@ public class TaskService implements TaskServiceInf {
     }
 
     @Override
-    public ServerResponse taskResumeService(int id){
+    public ServerResponse taskResumeService(int id) {
         try {
             Optional<Task> taskOptional = taskRepository.findById(id);
             if (taskOptional.isPresent()) {
@@ -277,9 +276,9 @@ public class TaskService implements TaskServiceInf {
                 Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
                 if (key && triggerState == Trigger.TriggerState.NORMAL) {
                     serverResponse = new ServerResponse(ErrorEnum.QUATZ_IS_RUNNING.getStatus(), ErrorEnum.QUATZ_IS_RUNNING.getMessage());
-                }else if (key && triggerState == Trigger.TriggerState.NONE) {
+                } else if (key && triggerState == Trigger.TriggerState.NONE) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
-                }else if (key && triggerState == Trigger.TriggerState.PAUSED) {
+                } else if (key && triggerState == Trigger.TriggerState.PAUSED) {
                     TriggerKey triggerKey = TriggerKey.triggerKey(jobMap.get(id).getKey().getKey().getName());
                     CronTrigger oldTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
                     String jobName = jobMap.get(id).getKey().getKey().getName();
@@ -288,7 +287,7 @@ public class TaskService implements TaskServiceInf {
                         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cron).withMisfireHandlingInstructionDoNothing();
                         oldTrigger = oldTrigger.getTriggerBuilder().startAt(DateBuilder.evenSecondDate(new Date())).withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();
                         scheduler.rescheduleJob(triggerKey, oldTrigger);
-                    }else {
+                    } else {
                         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cron).withMisfireHandlingInstructionDoNothing();
                         CronTrigger cronTrigger = TriggerBuilder.newTrigger().startAt(DateBuilder.evenSecondDate(new Date())).withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();
                         JobKey jobKey = new JobKey(jobName);
@@ -297,13 +296,13 @@ public class TaskService implements TaskServiceInf {
                         triggerSet.add(cronTrigger);
                         scheduler.scheduleJob(jobDetail, triggerSet, true);
                     }
-                }else {
+                } else {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_UNKNOWN_ERROR.getStatus(), ErrorEnum.QUARTZ_UNKNOWN_ERROR.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_IS_NULL.getStatus(), ErrorEnum.TASK_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -312,10 +311,10 @@ public class TaskService implements TaskServiceInf {
         return serverResponse;
     }
 
-    private static boolean checkCron(String expression){
+    private static boolean checkCron(String expression) {
         try {
             CronScheduleBuilder.cronSchedule(expression);
-        }catch (Exception e){
+        } catch (Exception e) {
             return true;
         }
         return false;

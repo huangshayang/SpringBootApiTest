@@ -24,12 +24,12 @@ public class MailSendService implements MailSendServiceInf {
     }
 
     @Override
-    public ServerResponse resetPasswordMailService(HttpServletRequest request, String email){
+    public ServerResponse resetPasswordMailService(HttpServletRequest request, String email) {
         return mailSendComponent.sendResetPasswordMailHandler(request, email, ConfigConsts.RESET_SUBJECT);
     }
 
     @Override
-    public ServerResponse registerMailService(HttpServletRequest request, String email){
+    public ServerResponse registerMailService(HttpServletRequest request, String email) {
         return mailSendComponent.sendRegisterMailHandler(request, email, ConfigConsts.REGESTER_SUBJECT);
     }
 }

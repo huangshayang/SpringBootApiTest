@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
@@ -52,15 +53,16 @@ public class MailSendComponent implements MailSendCompoentInf {
             message.setSubject(subject);
             message.setText(String.valueOf(content));
             javaMailSender.send(message);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
         }
     }
 
     /**
      * 发送重置密码邮件
+     *
      * @param request 请求
-     * @param email 要发送到的邮箱
+     * @param email   要发送到的邮箱
      * @param subject 邮件主题
      * @return 返回响应对象
      */
@@ -69,12 +71,12 @@ public class MailSendComponent implements MailSendCompoentInf {
             log.info("email: " + email);
             if (userRepository.findUserByUsernameOrEmail(email, email) != null) {
                 String token = new BCryptPasswordEncoder().encode(email);
-                String path = request.getScheme()+"://" + request.getServerName() + "/reset-password?token="+token;
+                String path = request.getScheme() + "://" + request.getServerName() + "/reset-password?token=" + token;
                 mailHandler(request, email, subject, path, token);
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.EMAIL_IS_ERROR.getStatus(), ErrorEnum.EMAIL_IS_ERROR.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -85,8 +87,9 @@ public class MailSendComponent implements MailSendCompoentInf {
 
     /**
      * 发送注册邮件
+     *
      * @param request 请求
-     * @param email 要发送到的邮箱
+     * @param email   要发送到的邮箱
      * @param subject 邮件主题
      * @return 返回响应对象
      */
@@ -95,12 +98,12 @@ public class MailSendComponent implements MailSendCompoentInf {
             log.info("email: " + email);
             if (userRepository.findUserByUsernameOrEmail(email, email) == null) {
                 String token = new BCryptPasswordEncoder().encode(email);
-                String path = request.getScheme()+"://" + request.getServerName() + "/register-password?token="+token;
+                String path = request.getScheme() + "://" + request.getServerName() + "/register-password?token=" + token;
                 mailHandler(request, email, subject, path, token);
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.EMAIL_IS_ERROR.getStatus(), ErrorEnum.EMAIL_IS_ERROR.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -111,8 +114,9 @@ public class MailSendComponent implements MailSendCompoentInf {
 
     /**
      * 邮件发送设置
+     *
      * @param request 请求
-     * @param email 要发送到的邮箱
+     * @param email   要发送到的邮箱
      * @param subject 邮件主题
      */
     private void mailHandler(HttpServletRequest request, String email, String subject, String path, String token) {
@@ -132,26 +136,27 @@ public class MailSendComponent implements MailSendCompoentInf {
                 redisTemplate.expire(ip, 24, TimeUnit.HOURS);
                 redisTemplate.expire(uri, 24, TimeUnit.HOURS);
                 serverResponse = new ServerResponse(ErrorEnum.EMAIL_SEND_SUCCESS.getStatus(), ErrorEnum.EMAIL_SEND_SUCCESS.getMessage());
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.REQUEST_NUM_FULL.getStatus(), ErrorEnum.REQUEST_NUM_FULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
         }
     }
 
     /**
      * 把邮件存到数据库
+     *
      * @param subject 邮件主题
-     * @param path 邮件链接
+     * @param path    邮件链接
      */
-    private void saveMail(String subject, String path){
+    private void saveMail(String subject, String path) {
         try {
             Mails mails = new Mails();
             mails.setSubject(subject);
             mails.setContent(path);
             mailRepository.save(mails);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
         }
     }

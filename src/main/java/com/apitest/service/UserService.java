@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class UserService {
 
-    public ServerResponse userInfoService(HttpServletRequest request){
+    public ServerResponse userInfoService(HttpServletRequest request) {
         ServerResponse serverResponse;
         try {
             String cookie = RevertUtil.cookieToMap(request.getHeader("cookie"));
             User user = (User) request.getSession().getAttribute(cookie);
             serverResponse = new ServerResponse<>(1, "获取用户信息成功", user);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }

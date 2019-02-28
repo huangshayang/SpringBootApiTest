@@ -31,7 +31,7 @@ public class Enviroment implements Serializable {
     @Column
     private Timestamp updateTime;
 
-    public Enviroment(){
+    public Enviroment() {
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }

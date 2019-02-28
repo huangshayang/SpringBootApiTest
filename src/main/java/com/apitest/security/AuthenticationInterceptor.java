@@ -27,27 +27,28 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
     /**
      * 表示是否要将当前的请求拦截下来，如果返货false请求被终止，如果为true请求会继续运行
-     * @param request 请求
+     *
+     * @param request  请求
      * @param response 响应
-     * @param object 表示的是被拦截的请求的目标对象
+     * @param object   表示的是被拦截的请求的目标对象
      * @return true or false
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String reqCookie = request.getHeader("cookie");
-        if (object instanceof HandlerMethod){
-            HandlerMethod handlerMethod=(HandlerMethod)object;
+        if (object instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) object;
             Class type = handlerMethod.getBeanType();
             if (type.isAnnotationPresent(Auth.class)) {
                 try {
                     if (isBlank(reqCookie)) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
-                    }else if (request.getSession().getAttribute(RevertUtil.cookieToMap(reqCookie)) == null) {
+                    } else if (request.getSession().getAttribute(RevertUtil.cookieToMap(reqCookie)) == null) {
                         resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     new ExceptionUtil(e);
                     return false;
                 }

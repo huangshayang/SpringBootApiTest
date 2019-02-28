@@ -27,7 +27,7 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
-    public ResetPasswordService(UserRepository userRepository, RedisTemplate<String, Object> redisTemplate){
+    public ResetPasswordService(UserRepository userRepository, RedisTemplate<String, Object> redisTemplate) {
         this.userRepository = userRepository;
         this.redisTemplate = redisTemplate;
     }
@@ -39,9 +39,9 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
             log.info("参数: " + newPassword);
             if (isBlank(newPassword)) {
                 serverResponse = new ServerResponse(ErrorEnum.PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.PASSWORD_IS_EMPTY.getMessage());
-            }else if (redisTemplate.opsForValue().get(token) == null) {
+            } else if (redisTemplate.opsForValue().get(token) == null) {
                 serverResponse = new ServerResponse(ErrorEnum.TOKEN_IS_ERROR.getStatus(), ErrorEnum.TOKEN_IS_ERROR.getMessage());
-            }else {
+            } else {
                 String username = String.valueOf(redisTemplate.opsForValue().get(token));
                 User user = userRepository.findUserByUsernameOrEmail(username, username);
                 user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
@@ -50,7 +50,7 @@ public class ResetPasswordService implements ResetPasswordServiceInf {
                 serverResponse = new ServerResponse(ErrorEnum.RESET_PASSWORD_SUCCESS.getStatus(), ErrorEnum.RESET_PASSWORD_SUCCESS.getMessage());
                 redisTemplate.delete(token);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }

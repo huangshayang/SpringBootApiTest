@@ -26,7 +26,7 @@ public class LogoutController {
     }
 
     @DeleteMapping(value = "/logout")
-    public ServerResponse logoutController(HttpSession httpSession){
+    public ServerResponse logoutController(HttpSession httpSession) {
         return logoutService.logoutService(httpSession);
     }
 

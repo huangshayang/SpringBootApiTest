@@ -26,32 +26,37 @@ public class CaseController {
     }
 
     @GetMapping(value = "/api/{apiId}/all")
-    public ServerResponse queryCaseByApiIdController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+    public ServerResponse queryCaseByApiIdController(@PathVariable(name = "apiId") int apiId, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return caseService.queryCaseByApiIdService(apiId, page, size);
     }
 
     @GetMapping(value = "/all")
-    public ServerResponse queryAllCase(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+    public ServerResponse queryAllCaseController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return caseService.queryAllCaseService(page, size);
     }
 
+    @GetMapping(value = "/{id}")
+    public ServerResponse queryOneCaseController(@PathVariable(name = "id") int id) {
+        return caseService.queryOneCaseService(id);
+    }
+
     @PostMapping(value = "/api/{apiId}/add")
-    public ServerResponse addCaseByApiIdController(@RequestBody Cases cases, @PathVariable(name = "apiId") int apiId){
+    public ServerResponse addCaseByApiIdController(@RequestBody Cases cases, @PathVariable(name = "apiId") int apiId) {
         return caseService.addCaseByApiIdService(cases, apiId);
     }
 
     @DeleteMapping(value = "/api/{apiId}")
-    public ServerResponse deleteAllCaseByApiIdController(@PathVariable(name = "apiId") int apiId){
+    public ServerResponse deleteAllCaseByApiIdController(@PathVariable(name = "apiId") int apiId) {
         return caseService.deleteAllCaseByApiIdService(apiId);
     }
 
     @PutMapping(value = "/{id}")
-    public ServerResponse modifyCaseController(@PathVariable(name = "id") int id, @RequestBody Cases cases){
+    public ServerResponse modifyCaseController(@PathVariable(name = "id") int id, @RequestBody Cases cases) {
         return caseService.modifyCaseService(id, cases);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ServerResponse deleteOneCaseController(@PathVariable(name = "id") int id){
+    public ServerResponse deleteOneCaseController(@PathVariable(name = "id") int id) {
         return caseService.deleteOneCaseService(id);
     }
 }

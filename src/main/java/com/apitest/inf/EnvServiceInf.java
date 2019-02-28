@@ -9,6 +9,8 @@ public interface EnvServiceInf {
 
     ServerResponse modifyEnvService(Enviroment env, int id);
 
+    ServerResponse queryOneEnvService(int id);
+
     ServerResponse queryAllEnvService();
 
     ServerResponse deleteEnvService(int id);

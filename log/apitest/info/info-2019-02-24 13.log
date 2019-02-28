@@ -1,0 +1,20 @@
+[2019-02-24 13:00:08] - [http-nio-0.0.0.0-8080-exec-2] - org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2019-02-24 13:00:08] - [http-nio-0.0.0.0-8080-exec-2] - org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:524) - Initializing Servlet 'dispatcherServlet'
+[2019-02-24 13:00:08] - [http-nio-0.0.0.0-8080-exec-2] - org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:546) - Completed initialization in 12 ms
+[2019-02-24 13:00:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 用户名: admin
+[2019-02-24 13:00:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:40) - 密码: 123456
+[2019-02-24 13:00:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 返回结果: ServerResponse(status=10014, message=用户不存在，请先注册, data=null)
+[2019-02-24 13:00:08] - [http-nio-0.0.0.0-8080-exec-2] - com.apitest.service.LoginService.loginService(LoginService.java:63) - 线程名: http-nio-0.0.0.0-8080-exec-2,线程id: 75,线程状态: RUNNABLE
+[2019-02-24 13:00:17] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.LoginService.loginService(LoginService.java:39) - 用户名: admin
+[2019-02-24 13:00:17] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.LoginService.loginService(LoginService.java:40) - 密码: 123456
+[2019-02-24 13:00:17] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.LoginService.loginService(LoginService.java:62) - 返回结果: ServerResponse(status=10014, message=用户不存在，请先注册, data=null)
+[2019-02-24 13:00:17] - [http-nio-0.0.0.0-8080-exec-3] - com.apitest.service.LoginService.loginService(LoginService.java:63) - 线程名: http-nio-0.0.0.0-8080-exec-3,线程id: 76,线程状态: RUNNABLE
+[2019-02-24 13:00:54] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+[2019-02-24 13:00:54] - [Thread-2] - org.springframework.scheduling.quartz.SchedulerFactoryBean.destroy(SchedulerFactoryBean.java:844) - Shutting down Quartz Scheduler
+[2019-02-24 13:00:54] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:666) - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+[2019-02-24 13:00:54] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+[2019-02-24 13:00:54] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:740) - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+[2019-02-24 13:00:54] - [Thread-2] - org.springframework.scheduling.concurrent.ExecutorConfigurationSupport.shutdown(ExecutorConfigurationSupport.java:208) - Shutting down ExecutorService 'applicationTaskExecutor'
+[2019-02-24 13:00:54] - [Thread-2] - org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy(AbstractEntityManagerFactoryBean.java:597) - Closing JPA EntityManagerFactory for persistence unit 'default'
+[2019-02-24 13:00:54] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:350) - HikariPool-1 - Shutdown initiated...
+[2019-02-24 13:00:54] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:352) - HikariPool-1 - Shutdown completed.

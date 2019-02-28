@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class RevertUtil {
 
-    public static String cookieToMap(String reqCookie){
+    public static String cookieToMap(String reqCookie) {
         Map<String, String> map = new HashMap<>(8);
         String[] str = reqCookie.split(";");
         for (String s : str) {

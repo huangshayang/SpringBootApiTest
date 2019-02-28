@@ -23,7 +23,7 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public ServerResponse registerController(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, @RequestParam(name = "token") String token){
+    public ServerResponse registerController(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, @RequestParam(name = "token") String token) {
         return registerService.registerService(username, password, token);
     }
 }

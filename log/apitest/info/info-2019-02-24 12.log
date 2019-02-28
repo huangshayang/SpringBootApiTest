@@ -1,0 +1,71 @@
+[2019-02-24 12:59:23] - [main] - org.springframework.boot.StartupInfoLogger.logStarting(StartupInfoLogger.java:50) - Starting ApitestApplication on 192.168.1.4 with PID 9364 (/Users/huangshayang/IdeaProjects/SpringBootApiTest/target/classes started by huangshayang in /Users/huangshayang/IdeaProjects/SpringBootApiTest)
+[2019-02-24 12:59:23] - [main] - org.springframework.boot.SpringApplication.logStartupProfileInfo(SpringApplication.java:675) - No active profile set, falling back to default profiles: default
+[2019-02-24 12:59:24] - [main] - org.springframework.data.repository.config.RepositoryConfigurationDelegate.multipleStoresDetected(RepositoryConfigurationDelegate.java:244) - Multiple Spring Data modules found, entering strict repository configuration mode!
+[2019-02-24 12:59:24] - [main] - org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn(RepositoryConfigurationDelegate.java:126) - Bootstrapping Spring Data repositories in DEFAULT mode.
+[2019-02-24 12:59:24] - [main] - org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn(RepositoryConfigurationDelegate.java:182) - Finished Spring Data repository scanning in 142ms. Found 7 repository interfaces.
+[2019-02-24 12:59:24] - [main] - org.springframework.data.repository.config.RepositoryConfigurationDelegate.multipleStoresDetected(RepositoryConfigurationDelegate.java:244) - Multiple Spring Data modules found, entering strict repository configuration mode!
+[2019-02-24 12:59:24] - [main] - org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn(RepositoryConfigurationDelegate.java:126) - Bootstrapping Spring Data repositories in DEFAULT mode.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate(RepositoryConfigurationExtensionSupport.java:363) - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.apitest.repository.ApiRepository.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate(RepositoryConfigurationExtensionSupport.java:363) - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.apitest.repository.CaseRepository.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate(RepositoryConfigurationExtensionSupport.java:363) - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.apitest.repository.EnvRepository.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate(RepositoryConfigurationExtensionSupport.java:363) - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.apitest.repository.LogRepository.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate(RepositoryConfigurationExtensionSupport.java:363) - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.apitest.repository.MailRepository.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate(RepositoryConfigurationExtensionSupport.java:363) - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.apitest.repository.TaskRepository.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate(RepositoryConfigurationExtensionSupport.java:363) - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.apitest.repository.UserRepository.
+[2019-02-24 12:59:25] - [main] - org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn(RepositoryConfigurationDelegate.java:182) - Finished Spring Data repository scanning in 25ms. Found 0 repository interfaces.
+[2019-02-24 12:59:25] - [main] - org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization(PostProcessorRegistrationDelegate.java:330) - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$42437a1f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2019-02-24 12:59:25] - [main] - org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:90) - Tomcat initialized with port(s): 8080 (http)
+[2019-02-24 12:59:25] - [main] - org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) - Initializing ProtocolHandler ["http-nio-0.0.0.0-8080"]
+[2019-02-24 12:59:25] - [main] - org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) - Starting service [Tomcat]
+[2019-02-24 12:59:25] - [main] - org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) - Starting Servlet engine: [Apache Tomcat/9.0.14]
+[2019-02-24 12:59:25] - [main] - org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/huangshayang/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+[2019-02-24 12:59:26] - [main] - org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) - Initializing Spring embedded WebApplicationContext
+[2019-02-24 12:59:26] - [main] - org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext(ServletWebServerApplicationContext.java:296) - Root WebApplicationContext: initialization completed in 2799 ms
+[2019-02-24 12:59:26] - [main] - com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:110) - HikariPool-1 - Starting...
+[2019-02-24 12:59:27] - [main] - com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:123) - HikariPool-1 - Start completed.
+[2019-02-24 12:59:27] - [main] - org.hibernate.Version.logVersion(Version.java:46) - HHH000412: Hibernate Core {5.3.7.Final}
+[2019-02-24 12:59:27] - [main] - org.hibernate.cfg.Environment.<clinit>(Environment.java:213) - HHH000206: hibernate.properties not found
+[2019-02-24 12:59:27] - [main] - org.hibernate.annotations.common.reflection.java.JavaReflectionManager.<clinit>(JavaReflectionManager.java:49) - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+[2019-02-24 12:59:27] - [main] - org.hibernate.dialect.Dialect.<init>(Dialect.java:157) - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[2019-02-24 12:59:28] - [main] - org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:415) - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2019-02-24 12:59:29] - [main] - org.hibernate.hql.internal.QueryTranslatorFactoryInitiator.initiateService(QueryTranslatorFactoryInitiator.java:47) - HHH000397: Using ASTQueryTranslatorFactory
+[2019-02-24 12:59:29] - [main] - org.quartz.impl.StdSchedulerFactory.instantiate(StdSchedulerFactory.java:1208) - Using default implementation for ThreadExecutor
+[2019-02-24 12:59:29] - [main] - org.quartz.simpl.SimpleThreadPool.initialize(SimpleThreadPool.java:268) - Job execution threads will use class loader of thread: main
+[2019-02-24 12:59:29] - [main] - org.quartz.core.SchedulerSignalerImpl.<init>(SchedulerSignalerImpl.java:61) - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+[2019-02-24 12:59:29] - [main] - org.quartz.core.QuartzScheduler.<init>(QuartzScheduler.java:229) - Quartz Scheduler v.2.3.0 created.
+[2019-02-24 12:59:29] - [main] - org.quartz.simpl.RAMJobStore.initialize(RAMJobStore.java:155) - RAMJobStore initialized.
+[2019-02-24 12:59:29] - [main] - org.quartz.core.QuartzScheduler.initialize(QuartzScheduler.java:294) - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+[2019-02-24 12:59:29] - [main] - org.quartz.impl.StdSchedulerFactory.instantiate(StdSchedulerFactory.java:1362) - Quartz scheduler 'DefaultQuartzScheduler' initialized from default resource file in Quartz package: 'quartz.properties'
+[2019-02-24 12:59:29] - [main] - org.quartz.impl.StdSchedulerFactory.instantiate(StdSchedulerFactory.java:1366) - Quartz scheduler version: 2.3.0
+[2019-02-24 12:59:29] - [main] - org.quartz.core.QuartzScheduler.start(QuartzScheduler.java:547) - Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+[2019-02-24 12:59:29] - [main] - io.lettuce.core.EpollProvider.<clinit>(EpollProvider.java:68) - Starting without optional epoll library
+[2019-02-24 12:59:29] - [main] - io.lettuce.core.KqueueProvider.<clinit>(KqueueProvider.java:70) - Starting without optional kqueue library
+[2019-02-24 12:59:29] - [main] - org.springframework.scheduling.concurrent.ExecutorConfigurationSupport.initialize(ExecutorConfigurationSupport.java:171) - Initializing ExecutorService 'applicationTaskExecutor'
+[2019-02-24 12:59:30] - [main] - org.quartz.impl.StdSchedulerFactory.instantiate(StdSchedulerFactory.java:1208) - Using default implementation for ThreadExecutor
+[2019-02-24 12:59:30] - [main] - org.quartz.core.SchedulerSignalerImpl.<init>(SchedulerSignalerImpl.java:61) - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+[2019-02-24 12:59:30] - [main] - org.quartz.core.QuartzScheduler.<init>(QuartzScheduler.java:229) - Quartz Scheduler v.2.3.0 created.
+[2019-02-24 12:59:30] - [main] - org.quartz.simpl.RAMJobStore.initialize(RAMJobStore.java:155) - RAMJobStore initialized.
+[2019-02-24 12:59:30] - [main] - org.quartz.core.QuartzScheduler.initialize(QuartzScheduler.java:294) - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+[2019-02-24 12:59:30] - [main] - org.quartz.impl.StdSchedulerFactory.instantiate(StdSchedulerFactory.java:1362) - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+[2019-02-24 12:59:30] - [main] - org.quartz.impl.StdSchedulerFactory.instantiate(StdSchedulerFactory.java:1366) - Quartz scheduler version: 2.3.0
+[2019-02-24 12:59:30] - [main] - org.quartz.core.QuartzScheduler.setJobFactory(QuartzScheduler.java:2287) - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@7a553110
+[2019-02-24 12:59:30] - [main] - org.springframework.scheduling.quartz.SchedulerFactoryBean.startScheduler(SchedulerFactoryBean.java:726) - Starting Quartz Scheduler now
+[2019-02-24 12:59:30] - [main] - org.quartz.core.QuartzScheduler.start(QuartzScheduler.java:547) - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+[2019-02-24 12:59:30] - [main] - org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor.finishRegistration(ScheduledAnnotationBeanPostProcessor.java:295) - No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+[2019-02-24 12:59:30] - [main] - org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) - Starting ProtocolHandler ["http-nio-0.0.0.0-8080"]
+[2019-02-24 12:59:30] - [main] - org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:204) - Tomcat started on port(s): 8080 (http) with context path ''
+[2019-02-24 12:59:30] - [main] - org.springframework.boot.StartupInfoLogger.logStarted(StartupInfoLogger.java:59) - Started ApitestApplication in 8.23 seconds (JVM running for 10.531)

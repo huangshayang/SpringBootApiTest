@@ -24,22 +24,22 @@ public class LogService implements LogServiceInf {
     private static ServerResponse serverResponse;
 
     @Autowired
-    public LogService(LogRepository logRepository, ApiRepository apiRepository){
+    public LogService(LogRepository logRepository, ApiRepository apiRepository) {
         this.logRepository = logRepository;
         this.apiRepository = apiRepository;
     }
 
     @Override
-    public ServerResponse queryAllLogService(int page, int size){
+    public ServerResponse queryAllLogService(int page, int size) {
         try {
-            if (page <0 || size <= 0) {
+            if (page < 0 || size <= 0) {
                 serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
-            }else {
+            } else {
                 Sort sort = new Sort(Sort.Direction.ASC, "id");
                 Page<Logs> logs = logRepository.findAll(PageRequest.of(page, size, sort));
                 serverResponse = new ServerResponse<>(ErrorEnum.LOG_QUERY_SUCCESS.getStatus(), ErrorEnum.LOG_QUERY_SUCCESS.getMessage(), logs);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -49,15 +49,15 @@ public class LogService implements LogServiceInf {
     }
 
     @Override
-    public ServerResponse deleteOneLogService(int id){
+    public ServerResponse deleteOneLogService(int id) {
         try {
             if (logRepository.findById(id).isPresent()) {
                 logRepository.deleteById(id);
                 serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.LOG_IS_NULL.getStatus(), ErrorEnum.LOG_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -71,7 +71,7 @@ public class LogService implements LogServiceInf {
         try {
             logRepository.deleteAllInBatch();
             serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -86,10 +86,10 @@ public class LogService implements LogServiceInf {
             if (apiRepository.findById(apiId).isPresent()) {
                 logRepository.deleteByApiId(apiId);
                 serverResponse = new ServerResponse(ErrorEnum.LOG_DELETE_SUCCESS.getStatus(), ErrorEnum.LOG_DELETE_SUCCESS.getMessage());
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -102,17 +102,17 @@ public class LogService implements LogServiceInf {
     public ServerResponse queryAllLogByApiIdService(int apiId, int page, int size) {
         try {
             if (apiRepository.findById(apiId).isPresent()) {
-                if (page <0 || size <= 0) {
+                if (page < 0 || size <= 0) {
                     serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
-                }else {
+                } else {
                     Sort sort = new Sort(Sort.Direction.ASC, "id");
                     Page<Logs> logs = logRepository.findAllByApiId(apiId, PageRequest.of(page, size, sort));
                     serverResponse = new ServerResponse<>(ErrorEnum.LOG_QUERY_SUCCESS.getStatus(), ErrorEnum.LOG_QUERY_SUCCESS.getMessage(), logs);
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }

@@ -46,8 +46,10 @@ public class User implements Serializable {
     @JsonIgnore
     private String uid;
 
-    public User(){
-        this.setUid(UUID.randomUUID().toString().replace("-", ""));
+    public User() {
+        if (this.getUid() == null) {
+            this.setUid(UUID.randomUUID().toString().replace("-", ""));
+        }
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }

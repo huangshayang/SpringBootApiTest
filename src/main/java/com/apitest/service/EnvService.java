@@ -32,24 +32,24 @@ public class EnvService implements EnvServiceInf {
     }
 
     @Override
-    public ServerResponse addEnvService(Enviroment env){
+    public ServerResponse addEnvService(Enviroment env) {
         log.info("参数: " + env);
         try {
             if (isBlank(env.getName())) {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_NAME_IS_EMPTY.getStatus(), ErrorEnum.ENV_NAME_IS_EMPTY.getMessage());
-            }else if (isBlank(env.getDomain())) {
+            } else if (isBlank(env.getDomain())) {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_DOMAIN_IS_EMPTY.getStatus(), ErrorEnum.ENV_DOMAIN_IS_EMPTY.getMessage());
-            }else if (isBlank(env.getUsername())) {
+            } else if (isBlank(env.getUsername())) {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_USERNAME_IS_EMPTY.getStatus(), ErrorEnum.ENV_USERNAME_IS_EMPTY.getMessage());
-            }else if (isBlank(env.getPassword())) {
+            } else if (isBlank(env.getPassword())) {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.ENV_PASSWORD_IS_EMPTY.getMessage());
-            }else if (envRepository.findByName(env.getName()) != null) {
+            } else if (envRepository.findByName(env.getName()) != null) {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_NAME_IS_EXIST.getStatus(), ErrorEnum.ENV_NAME_IS_EXIST.getMessage());
-            }else {
+            } else {
                 envRepository.save(env);
                 serverResponse = new ServerResponse(ErrorEnum.ENV_ADD_SUCCESS.getStatus(), ErrorEnum.ENV_ADD_SUCCESS.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -59,7 +59,7 @@ public class EnvService implements EnvServiceInf {
     }
 
     @Override
-    public ServerResponse modifyEnvService(Enviroment env, int id){
+    public ServerResponse modifyEnvService(Enviroment env, int id) {
         log.info("参数: " + env);
         try {
             //根据id获取到Environment对象
@@ -70,26 +70,42 @@ public class EnvService implements EnvServiceInf {
                 Enviroment envByName = envRepository.findByName(env.getName());
                 if (isBlank(env.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.ENV_NAME_IS_EMPTY.getStatus(), ErrorEnum.ENV_NAME_IS_EMPTY.getMessage());
-                }else if (isBlank(env.getDomain())) {
+                } else if (isBlank(env.getDomain())) {
                     serverResponse = new ServerResponse(ErrorEnum.ENV_DOMAIN_IS_EMPTY.getStatus(), ErrorEnum.ENV_DOMAIN_IS_EMPTY.getMessage());
-                }else if (isBlank(env.getUsername())) {
+                } else if (isBlank(env.getUsername())) {
                     serverResponse = new ServerResponse(ErrorEnum.ENV_USERNAME_IS_EMPTY.getStatus(), ErrorEnum.ENV_USERNAME_IS_EMPTY.getMessage());
-                }else if (isBlank(env.getPassword())) {
+                } else if (isBlank(env.getPassword())) {
                     serverResponse = new ServerResponse(ErrorEnum.ENV_PASSWORD_IS_EMPTY.getStatus(), ErrorEnum.ENV_PASSWORD_IS_EMPTY.getMessage());
-                }else if (envByName != null && envByName.getId() != id) {
+                } else if (envByName != null && envByName.getId() != id) {
                     //判断name是否不为空，且如果不为空找到的对象的id是否不等于当前传入的id
                     serverResponse = new ServerResponse(ErrorEnum.ENV_NAME_IS_EXIST.getStatus(), ErrorEnum.ENV_NAME_IS_EXIST.getMessage());
-                }else {
+                } else {
                     Enviroment enviroment = envOptional.get();
                     enviroment.setName(env.getName());
                     enviroment.setDomain(env.getDomain());
                     enviroment.setUsername(env.getUsername());
                     enviroment.setPassword(env.getPassword());
                     enviroment.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    envRepository.saveAndFlush(enviroment);
+                    serverResponse = new ServerResponse(ErrorEnum.ENV_MODIFY_SUCCESS.getStatus(), ErrorEnum.ENV_MODIFY_SUCCESS.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_IS_NULL.getStatus(), ErrorEnum.ENV_IS_NULL.getMessage());
             }
+        } catch (Exception e) {
+            new ExceptionUtil(e);
+            return null;
+        }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return serverResponse;
+    }
+
+    @Override
+    public ServerResponse queryOneEnvService(int id) {
+        try {
+            Optional<Enviroment> enviroment = envRepository.findById(id);
+            serverResponse = enviroment.map(enviroment1 -> new ServerResponse<>(ErrorEnum.ENV_QUERY_SUCCESS.getStatus(), ErrorEnum.ENV_QUERY_SUCCESS.getMessage(), enviroment1)).orElseGet(() -> new ServerResponse<>(ErrorEnum.ENV_IS_NULL.getStatus(), ErrorEnum.ENV_IS_NULL.getMessage()));
         }catch (Exception e){
             new ExceptionUtil(e);
             return null;
@@ -100,11 +116,11 @@ public class EnvService implements EnvServiceInf {
     }
 
     @Override
-    public ServerResponse queryAllEnvService(){
+    public ServerResponse queryAllEnvService() {
         try {
             List<Enviroment> enviromentList = envRepository.findAll();
             serverResponse = new ServerResponse<>(ErrorEnum.ENV_QUERY_SUCCESS.getStatus(), ErrorEnum.ENV_QUERY_SUCCESS.getMessage(), enviromentList);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -119,10 +135,10 @@ public class EnvService implements EnvServiceInf {
             if (envRepository.findById(id).isPresent()) {
                 envRepository.deleteById(id);
                 serverResponse = new ServerResponse(ErrorEnum.ENV_DELETE_SUCCESS.getStatus(), ErrorEnum.ENV_DELETE_SUCCESS.getMessage());
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_IS_NULL.getStatus(), ErrorEnum.ENV_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }

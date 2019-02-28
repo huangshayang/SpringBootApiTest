@@ -37,21 +37,21 @@ public class CaseService implements CaseServiceInf {
     }
 
     @Override
-    public ServerResponse queryCaseByApiIdService(int apiId, int page, int size){
+    public ServerResponse queryCaseByApiIdService(int apiId, int page, int size) {
         try {
             //判断api是否存在
             if (apiRepository.findById(apiId).isPresent()) {
-                if (page <0 || size <= 0) {
+                if (page < 0 || size <= 0) {
                     serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
-                }else {
+                } else {
                     Sort sort = new Sort(Sort.Direction.ASC, "id");
                     Page<Cases> cases = caseRepository.findCasesByApiId(apiId, PageRequest.of(page, size, sort));
                     serverResponse = new ServerResponse<>(ErrorEnum.CASE_QUERY_SUCCESS.getStatus(), ErrorEnum.CASE_QUERY_SUCCESS.getMessage(), cases);
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -61,16 +61,16 @@ public class CaseService implements CaseServiceInf {
     }
 
     @Override
-    public ServerResponse queryAllCaseService(int page, int size){
+    public ServerResponse queryAllCaseService(int page, int size) {
         try {
-            if (page<0 || size<=0) {
+            if (page < 0 || size <= 0) {
                 serverResponse = new ServerResponse(ErrorEnum.PARAMETER_ERROR.getStatus(), ErrorEnum.PARAMETER_ERROR.getMessage());
-            }else {
+            } else {
                 Sort sort = new Sort(Sort.Direction.ASC, "id");
                 Page<Cases> cases = caseRepository.findAll(PageRequest.of(page, size, sort));
                 serverResponse = new ServerResponse<>(ErrorEnum.CASE_QUERY_SUCCESS.getStatus(), ErrorEnum.CASE_QUERY_SUCCESS.getMessage(), cases);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -83,8 +83,8 @@ public class CaseService implements CaseServiceInf {
     public ServerResponse queryOneCaseService(int id) {
         try {
             Optional<Cases> cases = caseRepository.findById(id);
-            serverResponse = new ServerResponse<>(ErrorEnum.CASE_QUERY_SUCCESS.getStatus(), ErrorEnum.CASE_QUERY_SUCCESS.getMessage(), cases);
-        }catch (Exception e){
+            serverResponse = cases.map(cases1 -> new ServerResponse<>(ErrorEnum.CASE_QUERY_SUCCESS.getStatus(), ErrorEnum.CASE_QUERY_SUCCESS.getMessage(), cases1)).orElseGet(() -> new ServerResponse<>(ErrorEnum.CASE_IS_NULL.getStatus(), ErrorEnum.CASE_IS_NULL.getMessage()));
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -94,15 +94,15 @@ public class CaseService implements CaseServiceInf {
     }
 
     @Override
-    public ServerResponse deleteAllCaseByApiIdService(int apiId){
+    public ServerResponse deleteAllCaseByApiIdService(int apiId) {
         try {
             if (apiRepository.findById(apiId).isPresent()) {
                 caseRepository.deleteByApiId(apiId);
                 serverResponse = new ServerResponse(ErrorEnum.CASE_DELETE_SUCCESS.getStatus(), ErrorEnum.CASE_DELETE_SUCCESS.getMessage());
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -115,13 +115,14 @@ public class CaseService implements CaseServiceInf {
     public ServerResponse modifyCaseService(int id, Cases cases) {
         try {
             log.info("参数: " + cases);
-            if (caseRepository.findById(id).isPresent()){
+            Optional<Cases> optionalCases = caseRepository.findById(id);
+            if (optionalCases.isPresent()) {
                 if (isBlank(cases.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
-                }else if (isBlank(cases.getAvailable().toString())) {
+                } else if (isBlank(cases.getAvailable().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
-                }else {
-                    Cases cs = caseRepository.findById(id).get();
+                } else {
+                    Cases cs = optionalCases.get();
                     cs.setJsonData(cases.getJsonData());
                     cs.setParamsData(cases.getParamsData());
                     cs.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -129,12 +130,12 @@ public class CaseService implements CaseServiceInf {
                     cs.setExpectResult(cases.getExpectResult());
                     cs.setAvailable(cases.getAvailable());
                     caseRepository.saveAndFlush(cs);
-                    serverResponse = new ServerResponse(ErrorEnum.MODIFY_CASE_SUCCESS.getStatus(), ErrorEnum.MODIFY_CASE_SUCCESS.getMessage());
+                    serverResponse = new ServerResponse(ErrorEnum.CASE_MODIFY_SUCCESS.getStatus(), ErrorEnum.CASE_MODIFY_SUCCESS.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.CASE_IS_NULL.getStatus(), ErrorEnum.CASE_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -146,13 +147,13 @@ public class CaseService implements CaseServiceInf {
     @Override
     public ServerResponse deleteOneCaseService(int id) {
         try {
-            if (caseRepository.findById(id).isPresent()){
+            if (caseRepository.findById(id).isPresent()) {
                 caseRepository.deleteById(id);
                 serverResponse = new ServerResponse(ErrorEnum.CASE_DELETE_SUCCESS.getStatus(), ErrorEnum.CASE_DELETE_SUCCESS.getMessage());
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.CASE_IS_NULL.getStatus(), ErrorEnum.CASE_IS_NULL.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
@@ -169,17 +170,17 @@ public class CaseService implements CaseServiceInf {
             if (apiRepository.findById(apiId).isPresent()) {
                 if (isBlank(cases.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
-                }else if (isBlank(cases.getAvailable().toString())) {
+                } else if (isBlank(cases.getAvailable().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
-                }else {
+                } else {
                     cases.setApiId(apiId);
                     caseRepository.save(cases);
                     serverResponse = new ServerResponse(ErrorEnum.ADD_CASE_SUCCESS.getStatus(), ErrorEnum.ADD_CASE_SUCCESS.getMessage());
                 }
-            }else {
+            } else {
                 serverResponse = new ServerResponse(ErrorEnum.ADD_CASE_SUCCESS.getStatus(), ErrorEnum.ADD_CASE_SUCCESS.getMessage());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }

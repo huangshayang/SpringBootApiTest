@@ -1,56 +1,37 @@
 package com.apitest;
 
-import com.apitest.service.MailSendService;
+import com.apitest.component.RestCompoent;
+import com.apitest.entity.User;
+import com.apitest.repository.UserRepository;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import javax.annotation.Resource;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 public class ApitestApplicationTests {
 
-//    @Autowired
-//    private MailSendService mailSendService;
-    private static AtomicInteger atomicInteger=new AtomicInteger(0);
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
-    public void contextLoads() {
-//        String subject = "Jerome的文本邮件";
-//        String content = "Jerome的文本邮件的正文部分";
-//        String toUser = "shayang888@qq.com";
-//        mailSendService.sendTextMail(toUser, subject, content);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("1",2);
-        map.put("1",3);
-        System.out.println(map);
-        HashSet<String> set = new HashSet<>();
-        set.add("1");
-        set.add("1");
-        System.out.println(set);
-    }
-
-//    @Autowired
-//    private RedisTemplate<String, Object> redisTemplate;
-
-
-    public static void add(){
-        System.out.println(atomicInteger.incrementAndGet());
+    @Transactional
+    public void testRollback(){
+        User user = new User();
+        user.setUsername("test");
+        user.setPassword("123");
+        user.setEmail("shayang888@qq.com");
+        userRepository.save(user);
+        Assert.assertEquals(1, user.getId().intValue());
     }
 
 }

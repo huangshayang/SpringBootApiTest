@@ -23,12 +23,12 @@ public class MailSendController {
     }
 
     @GetMapping(value = "/reset/mail")
-    public ServerResponse resetPasswordMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
+    public ServerResponse resetPasswordMailController(HttpServletRequest request, @RequestParam(name = "email") String email) {
         return mailSendService.resetPasswordMailService(request, email);
     }
 
     @GetMapping(value = "/register/mail")
-    public ServerResponse registerMailController(HttpServletRequest request, @RequestParam(name = "email") String email){
+    public ServerResponse registerMailController(HttpServletRequest request, @RequestParam(name = "email") String email) {
         return mailSendService.registerMailService(request, email);
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 
 /**
  * 错误种类
+ *
  * @author huangshayang
  */
 public enum ErrorEnum {
@@ -16,7 +17,7 @@ public enum ErrorEnum {
     EMAIL_SEND_SUCCESS(1, "邮件发送成功，请查收"),
     LOGIN_SUCCESS(1, "登录成功"),
     REGISTER_SUCCESS(1, "注册成功"),
-    MODIFY_CASE_SUCCESS(1, "修改用例成功"),
+    CASE_MODIFY_SUCCESS(1, "修改用例成功"),
     CASE_QUERY_SUCCESS(1, "查询用例成功"),
     CASE_DELETE_SUCCESS(1, "删除用例成功"),
     ADD_CASE_SUCCESS(1, "添加用例成功"),
@@ -26,6 +27,7 @@ public enum ErrorEnum {
     ENV_ADD_SUCCESS(1, "创建环境成功"),
     ENV_QUERY_SUCCESS(1, "查询环境成功"),
     ENV_DELETE_SUCCESS(1, "删除环境成功"),
+    ENV_MODIFY_SUCCESS(1, "修改环境成功"),
     TASK_QUERY_SUCCESS(1, "查询任务成功"),
     TASK_ADD_SUCCESS(1, "添加任务成功"),
     TASK_DELETE_SUCCESS(1, "删除任务成功"),

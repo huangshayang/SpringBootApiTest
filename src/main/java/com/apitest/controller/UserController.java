@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ServerResponse userInfoController(HttpServletRequest request){
+    public ServerResponse userInfoController(HttpServletRequest request) {
         return userService.userInfoService(request);
     }
 }

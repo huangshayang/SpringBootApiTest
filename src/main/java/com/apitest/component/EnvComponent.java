@@ -19,7 +19,7 @@ public class EnvComponent {
         EnvComponent.envRepository = envRepository;
     }
 
-    public static Enviroment getEnviroment(int envId){
+    public static Enviroment getEnviroment(int envId) {
         Optional<Enviroment> envOptional = envRepository.findById(envId);
         envOptional.ifPresent(env -> enviroment = env);
         return enviroment;

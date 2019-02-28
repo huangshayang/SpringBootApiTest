@@ -38,6 +38,7 @@ public class RestCompoent {
 
     /**
      * 响应结果存入Log表里
+     *
      * @param apis
      * @param aCasesList
      * @param response
@@ -58,19 +59,20 @@ public class RestCompoent {
 
     /**
      * 根据api的请求方法调用RestRequest类的对应请求方法
+     *
      * @param api
      * @param cases
      * @return
      */
     private static WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
         String method = api.getMethod();
-        String url =  api.getUrl();
+        String url = api.getUrl();
         String jsonData = cases.getJsonData();
         String paramsData = cases.getParamsData();
         envId = api.getEnvId();
         String baseUrl = EnvComponent.getEnviroment(envId).getDomain();
         boolean cookie = api.getCookie();
-        switch (method){
+        switch (method) {
             case "get":
                 body = RestRequest.doGet(baseUrl, url, jsonData, paramsData, cookie);
                 break;
@@ -88,7 +90,7 @@ public class RestCompoent {
         return body;
     }
 
-    public static int getEnvId(){
+    public static int getEnvId() {
         return envId;
     }
 }

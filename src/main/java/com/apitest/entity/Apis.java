@@ -33,10 +33,10 @@ public class Apis implements Serializable {
     @Column(nullable = false)
     private Boolean cookie;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    private Apis(){
+    private Apis() {
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }

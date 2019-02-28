@@ -43,7 +43,7 @@ public class Logs implements Serializable {
     @Column(nullable = false)
     private String caseName;
 
-    public Logs(){
+    public Logs() {
         if (jsonData == null) {
             this.jsonData = "";
         }

@@ -2,7 +2,6 @@ package com.apitest.entity;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +12,7 @@ import java.util.List;
 @Data
 public class Task implements Serializable {
 
-    public enum TaskStatusEnum{
+    public enum TaskStatusEnum {
         //任务刚创建
         CREATED("创建"),
         //任务运行中
@@ -26,7 +25,7 @@ public class Task implements Serializable {
         @Getter
         private String status;
 
-        TaskStatusEnum(String status){
+        TaskStatusEnum(String status) {
             this.status = status;
         }
     }
@@ -58,7 +57,7 @@ public class Task implements Serializable {
     @Column
     private Timestamp updateTime;
 
-    private Task(){
+    private Task() {
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }

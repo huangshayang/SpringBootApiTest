@@ -22,7 +22,8 @@
                 因为经过ThresholdFilter的时候，如果有匹配项，则直接打印日志了，所以需要把高等级的日志级别放在前面
                 并且，onMatch属性设置为DENY，过滤掉高等级的日志；onMismatch设置为NEUTRAL，把低等级的日志放行，
                 到我们想要的级别后，onMache设为ACCEPT，获取到日志，并onMismatch设置为DENY，丢弃低等级日志，并执行结束-->
-        <RollingFile name="RollingFileInfo" fileName="${basePath}/info/info.log" filePattern="${basePath}/info/info-%d{yyyy-MM-dd HH}.log">
+        <RollingFile name="RollingFileInfo" fileName="${basePath}/info/info.log"
+                     filePattern="${basePath}/info/info-%d{yyyy-MM-dd HH}.log">
             <Filters>
                 <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
                 <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -34,7 +35,8 @@
             </Policies>
         </RollingFile>
 
-        <RollingFile name="RollingFileWarn" fileName="${basePath}/warn/warn.log" filePattern="${basePath}/warn/warn-%d{yyyy-MM-dd HH}.log">
+        <RollingFile name="RollingFileWarn" fileName="${basePath}/warn/warn.log"
+                     filePattern="${basePath}/warn/warn-%d{yyyy-MM-dd HH}.log">
             <Filters>
                 <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
@@ -45,7 +47,8 @@
             </Policies>
         </RollingFile>
 
-        <RollingFile name="RollingFileError" fileName="${basePath}/error/error.log" filePattern="${basePath}/error/error-%d{yyyy-MM-dd HH}.log">
+        <RollingFile name="RollingFileError" fileName="${basePath}/error/error.log"
+                     filePattern="${basePath}/error/error-%d{yyyy-MM-dd HH}.log">
             <ThresholdFilter level="ERROR"/>
             <PatternLayout pattern="${pattern}"/>
             <Policies>
