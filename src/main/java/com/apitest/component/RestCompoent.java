@@ -3,13 +3,13 @@ package com.apitest.component;
 import com.apitest.entity.Apis;
 import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
-import com.apitest.repository.LogRepository;
+import com.apitest.mapper.LogMapper;
 import com.apitest.rest.RestRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -19,42 +19,37 @@ import java.util.Objects;
 @Component
 public class RestCompoent {
 
-    private static LogRepository logRepository;
     private static WebClient.RequestHeadersSpec<?> body;
     private static int envId;
+    private static RestCompoent restCompoent = new RestCompoent();
 
-    @Autowired
-    public RestCompoent(LogRepository logRepository) {
-        RestCompoent.logRepository = logRepository;
-    }
+    @Resource
+    private LogMapper logMapper;
 
     public static void taskApiCaseExecByLock(Apis apis, Cases cases) {
         //向外部发送http请求
         Timestamp requestTime = new Timestamp(System.currentTimeMillis());
         ClientResponse response = restHttp(apis, cases).exchange().block();
         //把请求的结果保存到响应日志里
-        responseWriteToLog(apis, cases, response, requestTime);
+        responseWriteToLog(cases, response, requestTime);
     }
 
     /**
      * 响应结果存入Log表里
      *
-     * @param apis
-     * @param aCasesList
+     * @param cases
      * @param response
      * @param requestTime
      */
-    private static void responseWriteToLog(Apis apis, Cases aCasesList, ClientResponse response, Timestamp requestTime) {
+    private static void responseWriteToLog(Cases cases, ClientResponse response, Timestamp requestTime) {
         Logs logs = new Logs();
-        logs.setJsonData(aCasesList.getJsonData());
-        logs.setParamsData(aCasesList.getParamsData());
         logs.setRequestTime(requestTime);
         logs.setCode(Objects.requireNonNull(response).statusCode().value());
         logs.setResponseHeader(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
         logs.setResponseData(response.bodyToMono(String.class).block());
-        logs.setApiId(apis.getId());
-        logs.setCaseName(aCasesList.getName());
-        logRepository.save(logs);
+        logs.setApiId(cases.getApiId());
+        logs.setCaseName(cases.getName());
+        restCompoent.logMapper.save(logs);
     }
 
     /**

@@ -2,9 +2,8 @@ package com.apitest.component;
 
 import com.apitest.entity.Mails;
 import com.apitest.error.ErrorEnum;
-import com.apitest.inf.MailSendCompoentInf;
-import com.apitest.repository.MailRepository;
-import com.apitest.repository.UserRepository;
+import com.apitest.mapper.MailMapper;
+import com.apitest.mapper.UserMapper;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
@@ -25,27 +24,28 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Log4j2
-public class MailSendComponent implements MailSendCompoentInf {
+public class MailSendComponent {
 
     @Value("${spring.mail.username}")
     private String user;
 
     private final JavaMailSender javaMailSender;
     private final RedisTemplate<String, Object> redisTemplate;
-    private final UserRepository userRepository;
-    private final MailRepository mailRepository;
     private static ServerResponse serverResponse;
 
     @Autowired
-    public MailSendComponent(JavaMailSender javaMailSender, RedisTemplate<String, Object> redisTemplate, UserRepository userRepository, MailRepository mailRepository) {
+    public MailSendComponent(JavaMailSender javaMailSender, RedisTemplate<String, Object> redisTemplate) {
         this.javaMailSender = javaMailSender;
         this.redisTemplate = redisTemplate;
-        this.userRepository = userRepository;
-        this.mailRepository = mailRepository;
     }
 
-    @Override
-    public void sendSimpleTextMail(String mail, String subject, Object content) {
+    @Resource
+    private UserMapper userMapper;
+
+    @Resource
+    private MailMapper mailMapper;
+
+    private void sendSimpleTextMail(String mail, String subject, Object content) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(user);
@@ -69,7 +69,7 @@ public class MailSendComponent implements MailSendCompoentInf {
     public ServerResponse sendResetPasswordMailHandler(HttpServletRequest request, String email, String subject) {
         try {
             log.info("email: " + email);
-            if (userRepository.findUserByUsernameOrEmail(email, email) != null) {
+            if (userMapper.findUserByUsernameOrEmail(email, email) != null) {
                 String token = new BCryptPasswordEncoder().encode(email);
                 String path = request.getScheme() + "://" + request.getServerName() + "/reset-password?token=" + token;
                 mailHandler(request, email, subject, path, token);
@@ -96,7 +96,7 @@ public class MailSendComponent implements MailSendCompoentInf {
     public ServerResponse sendRegisterMailHandler(HttpServletRequest request, String email, String subject) {
         try {
             log.info("email: " + email);
-            if (userRepository.findUserByUsernameOrEmail(email, email) == null) {
+            if (userMapper.findUserByUsernameOrEmail(email, email) == null) {
                 String token = new BCryptPasswordEncoder().encode(email);
                 String path = request.getScheme() + "://" + request.getServerName() + "/register-password?token=" + token;
                 mailHandler(request, email, subject, path, token);
@@ -155,7 +155,7 @@ public class MailSendComponent implements MailSendCompoentInf {
             Mails mails = new Mails();
             mails.setSubject(subject);
             mails.setContent(path);
-            mailRepository.save(mails);
+            mailMapper.save(mails);
         } catch (Exception e) {
             new ExceptionUtil(e);
         }

@@ -1,6 +1,6 @@
 package com.apitest.controller;
 
-import com.apitest.service.MailSendService;
+import com.apitest.api.MailSendService;
 import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

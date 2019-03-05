@@ -1,8 +1,8 @@
 package com.apitest.controller;
 
 import com.apitest.annotation.Auth;
+import com.apitest.api.ApiService;
 import com.apitest.entity.Apis;
-import com.apitest.service.ApiService;
 import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -35,8 +35,8 @@ public class ApiController {
     }
 
     @GetMapping(value = "/all")
-    public ServerResponse queryPageApiController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        return apiService.queryPageApiService(page, size);
+    public ServerResponse queryAllApiController(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+        return apiService.queryAllApiService(page, size);
     }
 
     @PutMapping(value = "/{id}")

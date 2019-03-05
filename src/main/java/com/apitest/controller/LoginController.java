@@ -1,6 +1,6 @@
 package com.apitest.controller;
 
-import com.apitest.inf.LoginServiceInf;
+import com.apitest.api.LoginService;
 import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,15 +15,15 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping(value = "/account", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 public class LoginController {
-    private LoginServiceInf loginServiceInf;
+    private LoginService loginService;
 
     @Autowired
-    public LoginController(LoginServiceInf loginServiceInf) {
-        this.loginServiceInf = loginServiceInf;
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     @PostMapping(value = "/login")
     public ServerResponse loginController(HttpServletResponse response, HttpSession httpSession, @RequestParam(name = "username") String username, @RequestParam(name = "password") String password) {
-        return loginServiceInf.loginService(response, httpSession, username, password);
+        return loginService.loginService(response, httpSession, username, password);
     }
 }

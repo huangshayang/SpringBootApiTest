@@ -1,26 +1,24 @@
 package com.apitest.component;
 
 import com.apitest.entity.Enviroment;
-import com.apitest.repository.EnvRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.apitest.mapper.EnvMapper;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Optional;
 
 
 @Component
 public class EnvComponent {
 
-    private static EnvRepository envRepository;
     private static Enviroment enviroment;
+    private static EnvComponent envComponent = new EnvComponent();
 
-    @Autowired
-    public EnvComponent(EnvRepository envRepository) {
-        EnvComponent.envRepository = envRepository;
-    }
+    @Resource
+    private EnvMapper envMapper;
 
     public static Enviroment getEnviroment(int envId) {
-        Optional<Enviroment> envOptional = envRepository.findById(envId);
+        Optional<Enviroment> envOptional = envComponent.envMapper.findById(envId);
         envOptional.ifPresent(env -> enviroment = env);
         return enviroment;
     }

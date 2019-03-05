@@ -1,8 +1,8 @@
 package com.apitest.controller;
 
 import com.apitest.annotation.Auth;
+import com.apitest.api.TaskService;
 import com.apitest.entity.Task;
-import com.apitest.service.TaskService;
 import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +23,11 @@ public class TaskController {
     @GetMapping(value = "/all")
     public ServerResponse queryAllTaskController() {
         return taskService.queryAllTaskService();
+    }
+
+    @GetMapping(value = "/{id}")
+    public ServerResponse queryOneTaskController(@PathVariable(name = "id") int id) {
+        return taskService.queryOneTaskService(id);
     }
 
     @PostMapping(value = "/add")
@@ -53,5 +58,10 @@ public class TaskController {
     @PostMapping(value = "/quartz/stop/{id}")
     public ServerResponse taskStopController(@PathVariable(name = "id") int id) {
         return taskService.taskStopService(id);
+    }
+
+    @PostMapping(value = "/quartz/resume/{id}")
+    public ServerResponse taskResumeController(@PathVariable(name = "id") int id) {
+        return taskService.taskResumeService(id);
     }
 }

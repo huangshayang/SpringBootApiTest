@@ -1,7 +1,7 @@
 package com.apitest.controller;
 
 
-import com.apitest.service.RegisterService;
+import com.apitest.api.RegisterService;
 import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

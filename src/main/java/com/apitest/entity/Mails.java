@@ -1,27 +1,19 @@
 package com.apitest.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-@Entity
 @Data
-public class Mails {
+public class Mails implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    @JsonIgnore
     private Timestamp createTime;
 
-    @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
     private String subject;
 
     public Mails() {
