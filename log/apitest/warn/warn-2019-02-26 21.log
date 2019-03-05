@@ -1,3 +1,0 @@
-[2019-02-26 21:45:13] - [redisMessageListenerContainer-56] - org.springframework.session.data.redis.RedisOperationsSessionRepository.onMessage(RedisOperationsSessionRepository.java:557) - Unable to publish SessionDestroyedEvent for session 5110c3bd-f3f7-4fd4-9bdd-14bee3c5f251
-[2019-02-26 21:45:21] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=45m56s245ms).
-[2019-02-26 21:49:11] - [HikariPool-1 housekeeper] - com.zaxxer.hikari.pool.HikariPool$HouseKeeper.run(HikariPool.java:766) - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m49s813ms).
