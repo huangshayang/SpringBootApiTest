@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MailMapper {
 
-    @Insert("insert into mails(content, subject, createTime) values(#{content}, #{subject}, #{createTime})")
+    @Insert("insert into mails(content, subject, create_time) values(#{content}, #{subject}, #{createTime})")
     void save(Mails mails);
 }

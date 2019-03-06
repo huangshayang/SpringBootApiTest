@@ -4,6 +4,7 @@ import com.apitest.api.TaskService;
 import com.apitest.entity.Apis;
 import com.apitest.entity.Task;
 import com.apitest.error.ErrorEnum;
+import com.apitest.mapper.ApiMapper;
 import com.apitest.mapper.CaseMapper;
 import com.apitest.mapper.TaskMapper;
 import com.apitest.quartz.QuartzTask;
@@ -48,6 +49,9 @@ public class TaskServiceImpl implements TaskService {
     @Resource
     private CaseMapper caseMapper;
 
+    @Resource
+    private ApiMapper apiMapper;
+
     @Override
     public ServerResponse queryAllTaskService() {
         try {
@@ -80,10 +84,12 @@ public class TaskServiceImpl implements TaskService {
     public ServerResponse addTaskService(Task task) {
         log.info("参数: " + task);
         try {
+            ServerResponse s = checkApiId(task);
+            if (s != null) {
+                return s;
+            }
             if (isBlank(task.getName())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EMPTY.getStatus(), ErrorEnum.TASK_NAME_IS_EMPTY.getMessage());
-            } else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
-                serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
             } else if (checkCron(task.getTaskTime())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_INVALID.getStatus(), ErrorEnum.TASK_TIME_IS_INVALID.getMessage());
             } else if (taskMapper.findByName(task.getName()) != null) {
@@ -107,11 +113,13 @@ public class TaskServiceImpl implements TaskService {
         try {
             Optional<Task> taskOptional = taskMapper.findById(id);
             if (taskOptional.isPresent()) {
+                ServerResponse s = checkApiId(task);
+                if (s != null) {
+                    return s;
+                }
                 Task taskByName = taskMapper.findByName(task.getName());
                 if (isBlank(task.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EMPTY.getStatus(), ErrorEnum.TASK_NAME_IS_EMPTY.getMessage());
-                } else if (task.getApisList().size() <= 0 || task.getApisList() == null) {
-                    serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
                 } else if (isBlank(task.getTaskTime())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_EMPTY.getStatus(), ErrorEnum.TASK_TIME_IS_EMPTY.getMessage());
                 } else if (checkCron(task.getTaskTime())) {
@@ -120,7 +128,6 @@ public class TaskServiceImpl implements TaskService {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EXIST.getStatus(), ErrorEnum.TASK_NAME_IS_EXIST.getMessage());
                 } else {
                     Task task1 = taskOptional.get();
-                    task1.setApisList(task.getApisList());
                     task1.setName(task.getName());
                     task1.setTaskTime(task.getTaskTime());
                     task1.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -169,7 +176,7 @@ public class TaskServiceImpl implements TaskService {
                 } else if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.PAUSED) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_PAUSED.getStatus(), ErrorEnum.QUARTZ_IS_PAUSED.getMessage());
                 } else {
-                    List<Apis> apisList = taskOptional.get().getApisList();
+                    List<Apis> apisList = apiMapper.findApiByIds(taskOptional.get().getApiIdList());
                     jobDataMap.putIfAbsent("apisList", apisList);
                     jobDataMap.putIfAbsent("caseMapper", caseMapper);
                     JobDetail jobDetail = JobBuilder.newJob(QuartzTask.class).setJobData(jobDataMap).withIdentity(taskOptional.get().getName()).build();
@@ -318,5 +325,16 @@ public class TaskServiceImpl implements TaskService {
             return true;
         }
         return false;
+    }
+
+    private ServerResponse checkApiId(Task task) {
+        String apiIdStr = task.getApiIdList();
+        String[] arr = apiIdStr.split(",");
+        for (String s : arr) {
+            if (apiMapper.findById(Integer.parseInt(s)).isEmpty()) {
+                return serverResponse = new ServerResponse<>(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage(), s);
+            }
+        }
+        return null;
     }
 }

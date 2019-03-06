@@ -5,6 +5,10 @@ angular前端代码在frontend分支下
 ---
 ### 更新历史：
 
+#### 2019-3-6:
+    1.修改Task的关联Api操作bug
+    2.修改EnvComponent的注入问题
+
 #### 2019-3-5:
     1.修改spring data jpa为mybatis
     2.更新springboot的版本为2.1.3

@@ -15,13 +15,13 @@ public interface CaseMapper {
     @Select("select * from cases where id = #{id}")
     Optional<Cases> findById(@Param("id") int id);
 
-    @Select("select * from cases where apiId = #{apiId}")
+    @Select("select * from cases where api_id = #{apiId}")
     List<Cases> findByApiId(@Param("apiId") int apiId);
 
-    @Insert("insert into cases(jsonData, paramsData, apiId, name, available, createTime, updateTime) values(#{jsonData}, #{paramsData}, #{expectResult}, #{apiId}, #{name}, #{apiId}, #{available}, #{createTime}, #{updateTime})")
+    @Insert("insert into cases(json_data, params_data, api_id, name, available, create_time, update_time) values(#{jsonData}, #{paramsData}, #{expectResult}, #{apiId}, #{name}, #{apiId}, #{available}, #{createTime}, #{updateTime})")
     void save(Cases cases);
 
-    @Update("update cases set jsonData=#{jsonData}, paramsData=#{paramsData}, apiId=#{apiId}, name=#{name}, available=#{available}, createTime=#{createTime}, updateTime=#{updateTime} where id = #{id}")
+    @Update("update cases set json_data=#{jsonData}, params_data=#{paramsData}, api_id=#{apiId}, name=#{name}, available=#{available}, update_time=#{updateTime} where id = #{id}")
     void update(Cases cases, @Param("id") int id);
 
     @Delete("delete from cases where id = #{id}")

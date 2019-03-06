@@ -5,7 +5,6 @@ import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
 import com.apitest.mapper.LogMapper;
 import com.apitest.rest.RestRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,7 +15,6 @@ import java.util.Objects;
 /**
  * @author huangshayang
  */
-@Component
 public class RestCompoent {
 
     private static WebClient.RequestHeadersSpec<?> body;

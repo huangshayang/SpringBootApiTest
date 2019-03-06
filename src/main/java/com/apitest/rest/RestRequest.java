@@ -95,8 +95,7 @@ public class RestRequest {
     private static void tt(@Nullable String paramsData) {
         log.info("paramsData: " + paramsData);
         try {
-            map = JSON.parseObject(paramsData, new TypeReference<>() {
-            });
+            map = JSON.parseObject(paramsData, new TypeReference<>() {});
         } catch (Exception e) {
             map = new HashMap<>(0);
         }

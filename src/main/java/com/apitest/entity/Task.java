@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 public class Task implements Serializable {
@@ -15,7 +14,7 @@ public class Task implements Serializable {
 
     private String taskTime;
 
-    private List<Apis> apisList;
+    private String apiIdList;
 
     private Timestamp createTime;
 

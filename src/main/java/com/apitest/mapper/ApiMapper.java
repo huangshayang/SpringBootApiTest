@@ -15,10 +15,10 @@ public interface ApiMapper {
     @Select("select * from apis where id = #{id}")
     Optional<Apis> findById(@Param("id") int id);
 
-    @Insert("insert into apis(url, method,  envId, cookie, name, createTime, updateTime values(#{url}, #{method}, #{envId}, #{cookie}, #{name})")
+    @Insert("insert into apis(url, method,  env_id, cookie, name, create_time, update_time values(#{url}, #{method}, #{envId}, #{cookie}, #{name})")
     void save(Apis apis);
 
-    @Update("update apis set url=#{url}, method=#{method}, envId=#{envId}, cookie=#{cookie}, name=#{name}, url=#{url}, createTime=#{createTime}, updateTime=#{updateTime} where id = #{id}")
+    @Update("update apis set url=#{url}, method=#{method}, env_id=#{envId}, cookie=#{cookie}, name=#{name}, url=#{url}, update_time=#{updateTime} where id = #{id}")
     void update(Apis apis, @Param("id") int id);
 
     @Delete("delete from apis where id = #{id}")
@@ -30,4 +30,7 @@ public interface ApiMapper {
 
     @Select("select * from apis where url = #{url} and method = #{method}")
     Apis findByUrlAndMethod(@Param("url") String url, @Param("method") String method);
+
+    @Select("select * from apis where id in (${ids})")
+    List<Apis> findApiByIds(@Param("ids") String ids);
 }

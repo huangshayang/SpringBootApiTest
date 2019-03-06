@@ -21,9 +21,12 @@ public interface TaskMapper {
     @Insert("insert into task(name, taskTime, createTime, updateTime) values(#{name}, #{taskTime}, #{createTime}, #{updateTime})")
     void save(Task task);
 
-    @Update("update task set name=#{name}, taskTime=#{taskTime}, createTime=#{createTime}, updateTime=#{updateTime} where id = #{id}")
+    @Update("update task set name=#{name}, taskTime=#{taskTime}, updateTime=#{updateTime} where id = #{id}")
     void update(Task task, @Param("id") int id);
 
     @Delete("delete from task where id = #{id}")
     void deleteById(@Param("id") int id);
+
+    @Select("select * from task where id = #{id}")
+    String findApiIdList(@Param("id") int id);
 }

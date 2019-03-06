@@ -126,18 +126,15 @@ public class CaseServiceImpl implements CaseService {
     public ServerResponse addCaseService(Cases cases) {
         try {
             log.info("参数: " + cases);
-            //判断api是否存在
-            if (apiMapper.findById(cases.getApiId()).isPresent()) {
-                if (isBlank(cases.getName())) {
-                    serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
-                } else if (isBlank(cases.getAvailable().toString())) {
-                    serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
-                } else {
-                    caseMapper.save(cases);
-                    serverResponse = new ServerResponse(ErrorEnum.ADD_CASE_SUCCESS.getStatus(), ErrorEnum.ADD_CASE_SUCCESS.getMessage());
-                }
-            } else {
+            if (isBlank(cases.getName())) {
+                serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
+            } else if (isBlank(cases.getAvailable().toString())) {
+                serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
+            } else if (apiMapper.findById(cases.getApiId()).isEmpty()) {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
+            } else {
+                caseMapper.save(cases);
+                serverResponse = new ServerResponse(ErrorEnum.ADD_CASE_SUCCESS.getStatus(), ErrorEnum.ADD_CASE_SUCCESS.getMessage());
             }
         } catch (Exception e) {
             new ExceptionUtil(e);
