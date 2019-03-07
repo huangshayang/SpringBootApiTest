@@ -5,6 +5,9 @@ angular前端代码在frontend分支下
 ---
 ### 更新历史：
 
+#### 2019-3-7:
+    1.修改mapper的update语句的bug
+
 #### 2019-3-6:
     1.修改Task的关联Api操作bug
     2.修改EnvComponent的注入问题

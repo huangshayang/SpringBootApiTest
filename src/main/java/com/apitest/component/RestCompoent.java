@@ -5,9 +5,11 @@ import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
 import com.apitest.mapper.LogMapper;
 import com.apitest.rest.RestRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -15,14 +17,21 @@ import java.util.Objects;
 /**
  * @author huangshayang
  */
+@Component
 public class RestCompoent {
 
     private static WebClient.RequestHeadersSpec<?> body;
     private static int envId;
-    private static RestCompoent restCompoent = new RestCompoent();
+    private static RestCompoent restCompoent;
 
     @Resource
     private LogMapper logMapper;
+
+    @PostConstruct
+    public void init() {
+        restCompoent = this;
+        restCompoent.logMapper = this.logMapper;
+    }
 
     public static void taskApiCaseExecByLock(Apis apis, Cases cases) {
         //向外部发送http请求

@@ -72,7 +72,7 @@ public class CaseServiceImpl implements CaseService {
     @Override
     public ServerResponse modifyCaseService(int id, Cases cases) {
         try {
-            log.info("参数: " + cases);
+            log.info("参数: " + cases + ", " + id);
             Optional<Cases> optionalCases = caseMapper.findById(id);
             if (optionalCases.isPresent()) {
                 if (isBlank(cases.getName())) {

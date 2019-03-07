@@ -12,6 +12,6 @@ public interface UserMapper {
     @Insert("insert into user(username, email, password, create_time, update_time) values(#{username}, #{email}, #{password}, #{createTime}, #{updateTime})")
     void save(User user);
 
-    @Update("update user set username=#{username}, email=#{email}, password=#{password}，update_time=#{updateTime} where id = #{id}")
+    @Update("update user set password=#{user.password}，update_time=#{user.updateTime} where id = #{id}")
     void update(User user, @Param("id") int id);
 }

@@ -21,7 +21,7 @@ public interface EnvMapper {
     @Insert("insert into enviroment(name, username, password, domain, create_time, update_time) values(#{name}, #{username}, #{password}, #{domain}, #{createTime}, #{updateTime})")
     void save(Enviroment enviroment);
 
-    @Update("update enviroment set name=#{name}, username=#{username}, password=#{password}, domain=#{domain}, update_time=#{updateTime} where id = #{id}")
+    @Update("update enviroment set name=#{enviroment.name}, username=#{enviroment.username}, password=#{enviroment.password}, domain=#{enviroment.domain}, update_time=#{enviroment.updateTime} where id = #{id}")
     void update(Enviroment enviroment, @Param("id") int id);
 
     @Delete("delete from enviroment where id = #{id}")

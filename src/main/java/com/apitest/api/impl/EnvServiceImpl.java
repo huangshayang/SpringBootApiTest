@@ -57,7 +57,7 @@ public class EnvServiceImpl implements EnvService {
 
     @Override
     public ServerResponse modifyEnvService(Enviroment env, int id) {
-        log.info("参数: " + env);
+        log.info("参数: " + env + ", " + id);
         try {
             //根据id获取到Environment对象
             Optional<Enviroment> envOptional = envMapper.findById(id);

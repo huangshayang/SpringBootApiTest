@@ -109,7 +109,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public ServerResponse modifyTaskService(Task task, int id) {
-        log.info("参数: " + task);
+        log.info("参数: " + task + ", " + id);
         try {
             Optional<Task> taskOptional = taskMapper.findById(id);
             if (taskOptional.isPresent()) {

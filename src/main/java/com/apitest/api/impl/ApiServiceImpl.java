@@ -99,7 +99,7 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public ServerResponse modifyApiService(int id, Apis api) {
-        log.info("参数: " + api);
+        log.info("参数: " + api + ", " + id);
         try {
             //根据传递的id查询是否存在api
             Optional<Apis> apisOptional = apiMapper.findById(id);
