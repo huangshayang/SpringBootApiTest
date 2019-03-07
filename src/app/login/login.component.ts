@@ -45,31 +45,14 @@ export class LoginComponent implements OnInit {
         res => {
           this.status = res['status'];
           if (this.status === 1) {
-            this.profile();
+            this.userInfo = res['data']['username'];
+            sessionStorage.setItem('userInfo', this.userInfo);
+            this.router.navigate(['/platform/index']);
             this.createSuccessMessage(res['message']);
           } else {
             this.createErrorMessage(res['message']);
           }
         });
-  }
-
-  private profile() {
-    this.http.get('/user/profile', {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    }).subscribe(
-      res => {
-        this.status = res['status'];
-        if (this.status === 1) {
-          this.userInfo = res['data']['username'];
-          sessionStorage.setItem('userInfo', this.userInfo);
-          this.router.navigate(['/platform/index']);
-        } else {
-          this.createErrorMessage(res['message']);
-        }
-      }
-    );
   }
 
   register_forward() {

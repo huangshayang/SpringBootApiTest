@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-case-add',
@@ -13,7 +13,6 @@ export class CaseAddComponent implements OnInit {
 
   caseForm: FormGroup;
   status: number;
-  apiId: string | null;
 
   constructor(
     private fb: FormBuilder,
@@ -24,12 +23,11 @@ export class CaseAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.apiId = this.activeRouter.snapshot.parent.parent.paramMap.get('id');
     this.caseForm = this.fb.group({
       jsonData: '',
       paramsData: '',
       name: '',
-      expectResult: '',
+      apiId: '',
       available: false
     });
   }
@@ -41,7 +39,7 @@ export class CaseAddComponent implements OnInit {
         'Content-Type':  'application/json'
       })
     };
-    this.http.post('/api/' + this.apiId + '/case/add', formModel, httpOptions)
+    this.http.post('/case/add', formModel, httpOptions)
       .subscribe(
         (res => {
           this.status = res['status'];

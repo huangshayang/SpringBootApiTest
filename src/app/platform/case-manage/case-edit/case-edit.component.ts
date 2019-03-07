@@ -14,10 +14,6 @@ export class CaseEditComponent implements OnInit {
 
   caseForm: FormGroup;
   status: number;
-  // jsonData: string;
-  // paramsData: string;
-  // expectResult: string;
-  apiId: string | null;
 
   constructor(
     private fb: FormBuilder,
@@ -28,14 +24,12 @@ export class CaseEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.caseId = this.activeRouter.snapshot.parent.paramMap.get('id');
-    // this.apiId = this.activeRouter.snapshot.parent.parent.parent.paramMap.get('id');
     this.get(this.id);
     this.caseForm = this.fb.group({
       jsonData: '',
       paramsData: '',
       name: '',
-      expectResult: '',
+      apiId: '',
       available: ''
     });
   }

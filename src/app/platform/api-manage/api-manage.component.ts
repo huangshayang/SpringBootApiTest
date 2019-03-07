@@ -40,8 +40,8 @@ export class ApiManageComponent implements OnInit {
           this.loading = false;
           this.status = res['status'];
           if (this.status === 1) {
-            this.total = res['data']['totalElements'];
-            this.content = res['data']['content'];
+            this.total = res['data']['total'];
+            this.content = res['data']['list'];
           } else if (this.status === 10008) {
             this.router.navigate(['login']);
             this.createErrorMessage(res['message']);
@@ -51,9 +51,9 @@ export class ApiManageComponent implements OnInit {
         });
   }
 
-  private get(pageIndex: number = 0, pageSize: number = 10) {
+  private get(pageIndex: number = 1, pageSize: number = 10) {
     const params = new HttpParams()
-      .append('page', `${pageIndex - 1}`)
+      .append('page', `${pageIndex}`)
       .append('size', `${pageSize}`);
     return this.http.get('/api/all', {
       headers: new HttpHeaders({

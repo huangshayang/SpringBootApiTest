@@ -26,7 +26,7 @@ export class TaskManageComponent implements OnInit {
     this.searchData();
   }
 
-  searchData(reset: boolean = false): void {
+  searchData(): void {
     this.loading = true;
     this.get()
       .subscribe(

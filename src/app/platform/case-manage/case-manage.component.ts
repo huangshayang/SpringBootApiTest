@@ -29,36 +29,13 @@ export class CaseManageComponent implements OnInit {
     this.searchData();
   }
 
-  deleteAllByApiId() {
+  delete(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
-    this.http.delete('/api/', httpOptions)
-      .subscribe(
-        (res => {
-          this.status = res['status'];
-          if (this.status === 1) {
-            this.get();
-            this.createSuccessMessage(res['message']);
-          } else if (this.status === 10008) {
-            this.router.navigate(['login']);
-            this.createErrorMessage(res['message']);
-          } else {
-            this.createErrorMessage(res['message']);
-          }
-        })
-      );
-  }
-
-  deleteOne(caseId: number) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-    this.http.delete('/case/' + caseId, httpOptions)
+    this.http.delete('/case/' + id, httpOptions)
       .subscribe(
         (res => {
           this.status = res['status'];
@@ -86,8 +63,8 @@ export class CaseManageComponent implements OnInit {
           this.loading = false;
           this.status = res['status'];
           if (this.status === 1) {
-            this.total = res['data']['totalElements'];
-            this.content = res['data']['content'];
+            this.total = res['data']['total'];
+            this.content = res['data']['list'];
           } else if (this.status === 10008) {
             this.router.navigate(['login']);
             this.createErrorMessage(res['message']);
@@ -97,9 +74,9 @@ export class CaseManageComponent implements OnInit {
         });
   }
 
-  private get(pageIndex: number = 0, pageSize: number = 10) {
+  private get(pageIndex: number = 1, pageSize: number = 10) {
     const params = new HttpParams()
-      .append('page', `${pageIndex - 1}`)
+      .append('page', `${pageIndex}`)
       .append('size', `${pageSize}`);
     return this.http.get('/case/all', {
       headers: new HttpHeaders({
