@@ -20,7 +20,6 @@ import java.util.Objects;
 @Component
 public class RestCompoent {
 
-    private static WebClient.RequestHeadersSpec<?> body;
     private static int envId;
     private static RestCompoent restCompoent;
 
@@ -37,23 +36,18 @@ public class RestCompoent {
         //向外部发送http请求
         Timestamp requestTime = new Timestamp(System.currentTimeMillis());
         ClientResponse response = restHttp(apis, cases).exchange().block();
-        //把请求的结果保存到响应日志里
-        responseWriteToLog(cases, response, requestTime);
+        responseWriteToLog(Objects.requireNonNull(response), requestTime, cases);
     }
 
     /**
      * 响应结果存入Log表里
-     *
-     * @param cases
-     * @param response
-     * @param requestTime
      */
-    private static void responseWriteToLog(Cases cases, ClientResponse response, Timestamp requestTime) {
+    private static void responseWriteToLog(ClientResponse response, Timestamp requestTime, Cases cases) {
         Logs logs = new Logs();
         logs.setRequestTime(requestTime);
-        logs.setCode(Objects.requireNonNull(response).statusCode().value());
-        logs.setResponseHeader(String.valueOf(Objects.requireNonNull(response).headers().asHttpHeaders()));
-        logs.setResponseData(response.bodyToMono(String.class).block());
+        logs.setCode(response.statusCode().value());
+        logs.setResponseHeader(String.valueOf(response.headers().asHttpHeaders()));
+        logs.setResponseBody(response.bodyToMono(String.class).block());
         logs.setApiId(cases.getApiId());
         logs.setCaseName(cases.getName());
         restCompoent.logMapper.save(logs);
@@ -67,25 +61,25 @@ public class RestCompoent {
      * @return
      */
     private static WebClient.RequestHeadersSpec<?> restHttp(Apis api, Cases cases) {
+        WebClient.RequestHeadersSpec<?> body = null;
         String method = api.getMethod();
         String url = api.getUrl();
         String jsonData = cases.getJsonData();
         String paramsData = cases.getParamsData();
         envId = api.getEnvId();
-        String baseUrl = EnvComponent.getEnviroment(envId).getDomain();
         boolean cookie = api.getCookie();
         switch (method) {
             case "get":
-                body = RestRequest.doGet(baseUrl, url, jsonData, paramsData, cookie);
+                body = RestRequest.doGet(url, jsonData, paramsData, cookie);
                 break;
             case "post":
-                body = RestRequest.doPost(baseUrl, url, jsonData, paramsData, cookie);
+                body = RestRequest.doPost(url, jsonData, paramsData, cookie);
                 break;
             case "put":
-                body = RestRequest.doPut(baseUrl, url, jsonData, paramsData);
+                body = RestRequest.doPut(url, jsonData, paramsData);
                 break;
             case "delete":
-                body = RestRequest.doDelete(baseUrl, url, paramsData);
+                body = RestRequest.doDelete(url, paramsData);
                 break;
             default:
         }

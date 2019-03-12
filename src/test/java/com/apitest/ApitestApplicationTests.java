@@ -1,5 +1,6 @@
 package com.apitest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.apitest.component.EnvComponent;
 import com.apitest.component.RestCompoent;
 import com.apitest.entity.Apis;
@@ -17,14 +18,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.connection.Message;
+import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -45,6 +55,9 @@ public class ApitestApplicationTests {
 
     @Resource
     private EnvMapper envMapper;
+
+    @Resource
+    private RedisTemplate<String, JSONObject> redisTemplate;
 
 //    @Test
 //    @Transactional
@@ -78,6 +91,32 @@ public class ApitestApplicationTests {
     @Test
     public void testEnv(){
         System.out.println(EnvComponent.getEnviroment(1));
+    }
+
+    @Test
+    public void redisTest(){
+        System.out.println(redisTemplate.opsForList().range("a", 0, -1).isEmpty());
+    }
+
+
+    @Test
+    public void redisPub() throws InterruptedException {
+        while (true) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("response", new Object());
+            jsonObject.put("time", new Timestamp(System.currentTimeMillis()));
+            jsonObject.put("user", new User());
+//        redisTemplate.opsForList().leftPush("res", jsonObject);
+            redisTemplate.convertAndSend("chat", new User());
+            Thread.sleep(5000);
+        }
+    }
+
+    @Test
+    public void redisSub() {
+        while (true) {
+
+        }
     }
 
 }

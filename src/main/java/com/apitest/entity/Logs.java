@@ -13,7 +13,7 @@ public class Logs implements Serializable {
 
     private Timestamp requestTime;
 
-    private String responseData;
+    private String responseBody;
 
     private String responseHeader;
 

@@ -30,13 +30,15 @@ public class RestRequest {
     private static Map<String, Object> map;
     private static WebClient.Builder webClient = WebClient.builder();
     private static String cookies;
+    private static String baseUrl;
 
     static {
         int envId = RestCompoent.getEnvId();
+        baseUrl = EnvComponent.getEnviroment(envId).getDomain();
         cookies = getCookie(envId);
     }
 
-    public static WebClient.RequestHeadersSpec<?> doGet(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
+    public static WebClient.RequestHeadersSpec<?> doGet(String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -52,7 +54,7 @@ public class RestRequest {
         return requestHeadersSpec;
     }
 
-    public static WebClient.RequestHeadersSpec<?> doPost(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
+    public static WebClient.RequestHeadersSpec<?> doPost(String url, @Nullable String jsonData, @Nullable String paramsData, boolean cookie) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -68,7 +70,7 @@ public class RestRequest {
         return requestHeadersSpec;
     }
 
-    public static WebClient.RequestHeadersSpec<?> doPut(String baseUrl, String url, @Nullable String jsonData, @Nullable String paramsData) {
+    public static WebClient.RequestHeadersSpec<?> doPut(String url, @Nullable String jsonData, @Nullable String paramsData) {
         try {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
@@ -80,7 +82,7 @@ public class RestRequest {
         }
     }
 
-    public static WebClient.RequestHeadersSpec<?> doDelete(String baseUrl, String url, @Nullable String paramsData) {
+    public static WebClient.RequestHeadersSpec<?> doDelete(String url, @Nullable String paramsData) {
         try {
             log.info("uri: " + url);
             log.info("paramsData: " + paramsData);
@@ -107,7 +109,7 @@ public class RestRequest {
             Enviroment enviroment = EnvComponent.getEnviroment(envId);
             map.putIfAbsent("username", enviroment.getUsername());
             map.putIfAbsent("password", enviroment.getPassword());
-            Mono<ClientResponse> clientResponseMono = webClient.baseUrl(enviroment.getDomain()).build()
+            Mono<ClientResponse> clientResponseMono = webClient.baseUrl(baseUrl).build()
                     .post()
                     .uri("/login")
                     .contentType(MediaType.APPLICATION_JSON_UTF8)

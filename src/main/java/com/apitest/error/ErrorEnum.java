@@ -8,7 +8,9 @@ import lombok.Getter;
  * @author huangshayang
  */
 public enum ErrorEnum {
-    //查询接口返回成功
+    /*
+     * 接口返回成功
+     */
     API_QUERY_SUCCESS(1, "查询接口成功"),
     API_ADD_SUCCESS(1, "添加接口成功"),
     API_DELETE_SUCCESS(1, "接口删除成功"),
@@ -33,9 +35,10 @@ public enum ErrorEnum {
     TASK_DELETE_SUCCESS(1, "删除任务成功"),
     QUARTZ_START_SUCCESS(1, "调度任务开始成功"),
     QUARTZ_STOPPED_SUCCESS(1, "调度任务停止成功"),
-    TASK_FUTURE_STOPPED_SUCCESS(1, "future停止成功"),
 
-    //接口id不存在
+    /*
+     * 接口返回失败
+     */
     API_IS_NULL(10001, "接口id不存在"),
     TOKEN_IS_ERROR(10002, "token错误"),
     PARAMETER_ERROR(10003, "参数传递错误"),
@@ -65,16 +68,12 @@ public enum ErrorEnum {
     TASK_IS_NULL(10027, "任务id不存在"),
     TASK_NAME_IS_EMPTY(10028, "任务名不能为空"),
     TASK_NAME_IS_EXIST(10029, "任务已经存在"),
-    TASK_IsMultiThread_IS_EMPTY(10030, "是否使用多线程不能为空"),
-    TASK_STATUS_IS_EMPTY(10031, "任务状态不能为空"),
     TASK_APIS_IS_EMPTY(10032, "任务关联的api不能为空"),
     TASK_TIME_IS_EMPTY(10033, "任务的时间不能为空"),
     TASK_TIME_IS_INVALID(10034, "任务的时间格式不正确"),
-    TASK_FUTURE_IS_PAUSED(10035, "future已经暂停"),
     QUARTZ_IS_NONE(10036, "调度任务不存在"),
     QUARTZ_IS_PAUSED(10037, "调度任务已经暂停"),
     QUATZ_IS_RUNNING(10038, "调度任务已经在运行中"),
-    TASK_FUTURE_IS_NULL(10039, "future为空"),
     QUARTZ_UNKNOWN_ERROR(10040, "quartz未知错误");
 
     @Getter

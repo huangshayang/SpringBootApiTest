@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 @Log4j2
@@ -94,7 +94,9 @@ public class TaskServiceImpl implements TaskService {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_INVALID.getStatus(), ErrorEnum.TASK_TIME_IS_INVALID.getMessage());
             } else if (taskMapper.findByName(task.getName()) != null) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EXIST.getStatus(), ErrorEnum.TASK_NAME_IS_EXIST.getMessage());
-            } else {
+            } else if (apiMapper.findApiByIds(task.getApiIdList()).isEmpty()) {
+                serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
+            }else {
                 taskMapper.save(task);
                 serverResponse = new ServerResponse(ErrorEnum.TASK_ADD_SUCCESS.getStatus(), ErrorEnum.TASK_ADD_SUCCESS.getMessage());
             }
@@ -126,11 +128,14 @@ public class TaskServiceImpl implements TaskService {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_INVALID.getStatus(), ErrorEnum.TASK_TIME_IS_INVALID.getMessage());
                 } else if (taskByName != null && taskByName.getId() != id) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EXIST.getStatus(), ErrorEnum.TASK_NAME_IS_EXIST.getMessage());
-                } else {
+                } else if (apiMapper.findApiByIds(taskOptional.get().getApiIdList()).isEmpty()) {
+                    serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
+                }else {
                     Task task1 = taskOptional.get();
                     task1.setName(task.getName());
                     task1.setTaskTime(task.getTaskTime());
                     task1.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    task1.setApiIdList(task.getApiIdList());
                     taskMapper.update(task1, id);
                     serverResponse = new ServerResponse(ErrorEnum.TASK_ADD_SUCCESS.getStatus(), ErrorEnum.TASK_ADD_SUCCESS.getMessage());
                 }

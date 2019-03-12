@@ -4,18 +4,24 @@ import com.apitest.component.RestCompoent;
 import com.apitest.entity.Apis;
 import com.apitest.entity.Cases;
 import com.apitest.mapper.CaseMapper;
+import lombok.extern.log4j.Log4j2;
 import org.quartz.JobExecutionContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
+@Log4j2
 public class QuartzTask extends QuartzJobBean {
 
     private static ReentrantLock lock = new ReentrantLock();
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) {
+        taskExec(jobExecutionContext);
+    }
+
+    private void taskExec(JobExecutionContext jobExecutionContext) {
         List<Apis> apisList = (List<Apis>) jobExecutionContext.getMergedJobDataMap().getWrappedMap().get("apisList");
         CaseMapper caseMapper = (CaseMapper) jobExecutionContext.getMergedJobDataMap().getWrappedMap().get("caseMapper");
         apisList.forEach(apis -> new Thread(() -> {
@@ -33,6 +39,5 @@ public class QuartzTask extends QuartzJobBean {
             }
             lock.unlock();
         }).start());
-
     }
 }

@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.*;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * @author huangshayang
