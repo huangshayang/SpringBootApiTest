@@ -10,8 +10,6 @@
     <th scope="col">Domain</th>
     <th scope="col">Username</th>
     <th scope="col">Password</th>
-    <th scope="col">CreateTime</th>
-    <th scope="col">UpdateTime</th>
     <th scope="col">Actions</th>
   </tr>
   </thead>
@@ -22,8 +20,6 @@
     <td>{{item.domain}}</td>
     <td>{{item.username}}</td>
     <td style="word-break: break-all">{{item.password}}</td>
-    <td>{{item.createTime}}</td>
-    <td>{{item.updateTime}}</td>
     <td scope="col">
       <button nz-button [nzType]="'primary'" (click)="editEnv(item.id)">编辑</button>
       <button nz-button [nzType]="'danger'" (click)="delete(item.id)">删除</button>

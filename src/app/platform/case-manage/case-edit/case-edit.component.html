@@ -29,6 +29,12 @@
       <nz-switch formControlName="available"></nz-switch>
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="expectResult" nzRequired>预期结果</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="expectResult" placeholder="expectResult">
+    </nz-form-control>
+  </nz-form-item>
   <nz-form-item class="mt-lg-5">
     <nz-form-control [nzOffset]="15" [nzSm]="8" [nzXs]="24">
       <button nz-button [nzType]="'primary'" style="margin-right: 10px">Save</button>

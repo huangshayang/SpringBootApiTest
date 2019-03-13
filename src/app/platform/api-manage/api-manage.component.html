@@ -10,13 +10,11 @@
           (nzPageSizeChange)="searchData(true)">
   <thead>
   <tr>
-    <th scope="col" [nzWidth]="'5%'">Id</th>
-    <th scope="col" [nzWidth]="'10%'">Name</th>
-    <th scope="col" [nzWidth]="'35%'">Url</th>
-    <th scope="col">Method</th>
-    <th scope="col" [nzWidth]="'15%'">CreateTime</th>
-    <th scope="col" [nzWidth]="'15%'">UpdateTime</th>
-    <th scope="col">Actions</th>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Url</th>
+    <th>Method</th>
+    <th>Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -25,8 +23,6 @@
     <td>{{item.name}}</td>
     <td>{{item.url}}</td>
     <td>{{item.method}}</td>
-    <td>{{item.createTime}}</td>
-    <td>{{item.updateTime}}</td>
     <td scope="col">
       <button nz-button [nzType]="'primary'" (click)="editApi(item.id)">编辑</button>
       <button nz-button [nzType]="'danger'" (click)="delete(item.id)">删除</button>

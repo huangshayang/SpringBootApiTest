@@ -30,7 +30,8 @@ export class CaseEditComponent implements OnInit {
       paramsData: '',
       name: '',
       apiId: '',
-      available: ''
+      available: '',
+      expectResult: ''
     });
   }
 

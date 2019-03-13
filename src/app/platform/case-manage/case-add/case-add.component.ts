@@ -28,7 +28,8 @@ export class CaseAddComponent implements OnInit {
       paramsData: '',
       name: '',
       apiId: '',
-      available: false
+      available: false,
+      expectResult: ''
     });
   }
 

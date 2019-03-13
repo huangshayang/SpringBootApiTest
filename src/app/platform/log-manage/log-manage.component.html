@@ -10,14 +10,15 @@
           (nzPageSizeChange)="searchData(true)">
   <thead>
   <tr>
-    <th scope="col" [nzWidth]="'5%'">Id</th>
-    <th scope="col" [nzWidth]="'9%'">CaseName</th>
-    <th scope="col" [nzWidth]="'5%'">ApiId</th>
-    <th scope="col" [nzWidth]="'6%'">Code</th>
-    <th scope="col" [nzWidth]="'11%'">RequestTime</th>
-    <th scope="col" [nzWidth]="'20%'">ResponseData</th>
-    <th scope="col" [nzWidth]="'16%'">ResponseHeader</th>
-    <th scope="col" [nzWidth]="'5%'">Action</th>
+    <th>Id</th>
+    <th>CaseName</th>
+    <th>ApiId</th>
+    <th>Code</th>
+    <th>ResponseBody</th>
+    <th>ResponseHeader</th>
+    <th>isSuccess</th>
+    <th>Message</th>
+    <th>Action</th>
   </tr>
   </thead>
   <tbody>
@@ -26,9 +27,10 @@
     <td>{{item.caseName}}</td>
     <td>{{item.apiId}}</td>
     <td>{{item.code}}</td>
-    <td>{{item.requestTime}}</td>
-    <td>{{item.responseData}}</td>
+    <td>{{item.responseBody}}</td>
     <td>{{item.responseHeader}}</td>
+    <td><i class="iconfont" [ngClass]="{'icon-zhengque1': item.checkBoolean, 'icon-cuowu1': !item.checkBoolean}"></i></td>
+    <td>{{item.errorMsg}}</td>
     <td>
       <button nz-button class="login-form-button" [nzType]="'danger'" (click)="delete(item.id)">删除</button>
     </td>
