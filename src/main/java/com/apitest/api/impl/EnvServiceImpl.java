@@ -10,7 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +81,7 @@ public class EnvServiceImpl implements EnvService {
                     enviroment.setDomain(env.getDomain());
                     enviroment.setUsername(env.getUsername());
                     enviroment.setPassword(env.getPassword());
-                    enviroment.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    enviroment.setUpdateTime(System.currentTimeMillis() / 1000);
                     envMapper.update(enviroment, id);
                     serverResponse = new ServerResponse(ErrorEnum.ENV_MODIFY_SUCCESS.getStatus(), ErrorEnum.ENV_MODIFY_SUCCESS.getMessage());
                 }

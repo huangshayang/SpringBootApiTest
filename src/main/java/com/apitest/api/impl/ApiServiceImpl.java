@@ -14,7 +14,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -122,7 +121,7 @@ public class ApiServiceImpl implements ApiService {
                 } else {
                     Apis apis = apisOptional.get();
                     apis.setUrl(api.getUrl());
-                    apis.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    apis.setUpdateTime(System.currentTimeMillis() / 1000);
                     apis.setMethod(api.getMethod());
                     apis.setName(api.getName());
                     apis.setCookie(api.getCookie());

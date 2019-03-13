@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -44,7 +43,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
                 String username = String.valueOf(redisTemplate.opsForValue().get(token));
                 User user = userMapper.findUserByUsernameOrEmail(username, username);
                 user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
-                user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                user.setUpdateTime(System.currentTimeMillis() / 1000);
                 userMapper.update(user, user.getId());
                 serverResponse = new ServerResponse(ErrorEnum.RESET_PASSWORD_SUCCESS.getStatus(), ErrorEnum.RESET_PASSWORD_SUCCESS.getMessage());
                 redisTemplate.delete(token);

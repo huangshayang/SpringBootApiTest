@@ -16,7 +16,6 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -134,7 +133,7 @@ public class TaskServiceImpl implements TaskService {
                     Task task1 = taskOptional.get();
                     task1.setName(task.getName());
                     task1.setTaskTime(task.getTaskTime());
-                    task1.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    task1.setUpdateTime(System.currentTimeMillis() / 1000);
                     task1.setApiIdList(task.getApiIdList());
                     taskMapper.update(task1, id);
                     serverResponse = new ServerResponse(ErrorEnum.TASK_ADD_SUCCESS.getStatus(), ErrorEnum.TASK_ADD_SUCCESS.getMessage());

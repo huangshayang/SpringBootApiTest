@@ -61,4 +61,18 @@ public class LogServiceImpl implements LogService {
         log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
         return serverResponse;
     }
+
+    @Override
+    public ServerResponse querySearchLogService(long startTime, long endTime) {
+        try {
+            List<Logs> logsList = logMapper.findSearchLog(startTime, endTime);
+            serverResponse = new ServerResponse<>(ErrorEnum.LOG_QUERY_SUCCESS.getStatus(), ErrorEnum.LOG_QUERY_SUCCESS.getMessage(), logsList);
+        }catch (Exception e) {
+            new ExceptionUtil(e);
+            return null;
+        }
+        log.info("返回结果: " + serverResponse);
+        log.info("线程名: " + Thread.currentThread().getName() + ",线程id: " + Thread.currentThread().getId() + ",线程状态: " + Thread.currentThread().getState());
+        return serverResponse;
+    }
 }

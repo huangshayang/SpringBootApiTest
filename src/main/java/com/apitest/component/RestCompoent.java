@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.Map;
 
 /**
@@ -36,7 +35,7 @@ public class RestCompoent {
 
     public static void taskApiCaseExecByLock(Apis apis, Cases cases) {
         //向外部发送http请求
-        Timestamp requestTime = new Timestamp(System.currentTimeMillis());
+        long requestTime = System.currentTimeMillis() / 1000;
         ClientResponse response = restHttp(apis, cases).exchange().block();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", response.statusCode().value());
@@ -69,7 +68,7 @@ public class RestCompoent {
     /**
      * 响应结果存入Log表里
      */
-    private static void responseWriteToLog(JSONObject jsonObject, Timestamp requestTime, Cases cases) {
+    private static void responseWriteToLog(JSONObject jsonObject, long requestTime, Cases cases) {
         JSONObject jsonObject1 = checkResponse(jsonObject.getString("body"), cases);
         Logs logs = new Logs();
         logs.setRequestTime(requestTime);

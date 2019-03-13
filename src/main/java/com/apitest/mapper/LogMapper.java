@@ -12,6 +12,9 @@ public interface LogMapper {
     @Select("select * from logs")
     List<Logs> findAllLog();
 
+    @Select("select * from logs where request_time between #{startTime} and #{endTime}")
+    List<Logs> findSearchLog(@Param("startTime") long startTime, @Param("endTime") long endTime);
+
     @Select("select * from logs where id = #{id}")
     Optional<Logs> findById(@Param("id") int id);
 

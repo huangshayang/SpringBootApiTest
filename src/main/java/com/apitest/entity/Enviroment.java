@@ -1,9 +1,9 @@
 package com.apitest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Data
 public class Enviroment implements Serializable {
@@ -18,16 +18,18 @@ public class Enviroment implements Serializable {
 
     private String domain;
 
-    private Timestamp createTime;
+    @JsonIgnore
+    private Long createTime;
 
-    private Timestamp updateTime;
+    @JsonIgnore
+    private Long updateTime;
 
     public Enviroment() {
         if (this.getCreateTime() == null) {
-            this.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            this.setCreateTime(System.currentTimeMillis() / 1000);
         }
         if (this.getUpdateTime() == null) {
-            this.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            this.setUpdateTime(System.currentTimeMillis() / 1000);
         }
     }
 }

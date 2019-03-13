@@ -14,7 +14,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,7 +84,7 @@ public class CaseServiceImpl implements CaseService {
                     Cases cs = optionalCases.get();
                     cs.setJsonData(cases.getJsonData());
                     cs.setParamsData(cases.getParamsData());
-                    cs.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    cs.setUpdateTime(System.currentTimeMillis() / 1000);
                     cs.setName(cases.getName());
                     cs.setExpectResult(cases.getExpectResult());
                     cs.setAvailable(cases.getAvailable());

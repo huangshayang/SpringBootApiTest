@@ -1,10 +1,10 @@
 package com.apitest.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Data
 public class Cases implements Serializable {
@@ -15,9 +15,11 @@ public class Cases implements Serializable {
 
     private String paramsData;
 
-    private Timestamp createTime;
+    @JsonIgnore
+    private Long createTime;
 
-    private Timestamp updateTime;
+    @JsonIgnore
+    private Long updateTime;
 
     private Integer apiId;
 
@@ -29,10 +31,10 @@ public class Cases implements Serializable {
 
     private Cases() {
         if (this.getCreateTime() == null) {
-            this.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            this.setCreateTime(System.currentTimeMillis() / 1000);
         }
         if (this.getUpdateTime() == null) {
-            this.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            this.setUpdateTime(System.currentTimeMillis() / 1000);
         }
         if (jsonData == null) {
             this.jsonData = "";

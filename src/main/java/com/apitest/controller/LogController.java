@@ -33,4 +33,9 @@ public class LogController {
     public ServerResponse deleteLogController(@PathVariable(name = "id") int id) {
         return logService.deleteLogService(id);
     }
+
+    @GetMapping(path = "/search")
+    public ServerResponse querySearchLogController(@RequestParam(name = "startTime") long startTime, @RequestParam(name = "endTime") long endTime) {
+        return logService.querySearchLogService(startTime, endTime);
+    }
 }

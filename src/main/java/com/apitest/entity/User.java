@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 /**
  * @author huangshayang
@@ -25,17 +24,17 @@ public class User implements Serializable {
     private String password;
 
     @JsonIgnore
-    private Timestamp createTime;
+    private Long createTime;
 
     @JsonIgnore
-    private Timestamp updateTime;
+    private Long updateTime;
 
     public User() {
         if (this.getCreateTime() == null) {
-            this.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            this.setCreateTime(System.currentTimeMillis() / 1000);
         }
         if (this.getUpdateTime() == null) {
-            this.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            this.setUpdateTime(System.currentTimeMillis() / 1000);
         }
     }
 }

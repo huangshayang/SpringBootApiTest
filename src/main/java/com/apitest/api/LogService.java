@@ -6,4 +6,6 @@ public interface LogService {
     ServerResponse queryAllLogService(int page, int size);
 
     ServerResponse deleteLogService(int id);
+
+    ServerResponse querySearchLogService(long startTime, long endTime);
 }
