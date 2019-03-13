@@ -89,8 +89,11 @@ public class ApitestApplicationTests {
     }
 
     @Test
-    public void testEnv(){
-        System.out.println(EnvComponent.getEnviroment(1));
+    public void testParse(){
+        Map<String, Object> mapResponse = JSONObject.parseObject("{\"status\": 200, \"message\": \"请求成功\", \"data\": {}, \"request_id\": \"14f55504-4753-4042-bd59-7ab4065a0fbe\"}");
+        System.out.println(mapResponse.get("status"));
+        System.out.println(mapResponse.get("message"));
+        assert 1==2;
     }
 
     @Test

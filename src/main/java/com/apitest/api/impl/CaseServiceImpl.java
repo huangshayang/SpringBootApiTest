@@ -87,6 +87,7 @@ public class CaseServiceImpl implements CaseService {
                     cs.setParamsData(cases.getParamsData());
                     cs.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                     cs.setName(cases.getName());
+                    cs.setExpectResult(cases.getExpectResult());
                     cs.setAvailable(cases.getAvailable());
                     cs.setApiId(cases.getApiId());
                     caseMapper.update(cs, id);

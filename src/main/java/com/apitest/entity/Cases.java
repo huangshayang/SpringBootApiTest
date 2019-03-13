@@ -25,6 +25,8 @@ public class Cases implements Serializable {
 
     private Boolean available;
 
+    private String expectResult;
+
     private Cases() {
         if (this.getCreateTime() == null) {
             this.setCreateTime(new Timestamp(System.currentTimeMillis()));

@@ -23,4 +23,8 @@ public class Logs implements Serializable {
 
     private String caseName;
 
+    private Boolean checkBoolean;
+
+    private String errorMsg;
+
 }
