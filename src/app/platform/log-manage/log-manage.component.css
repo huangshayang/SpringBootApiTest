@@ -1,8 +1,12 @@
-.icon-zhengque1 {
+.icon-checked {
   font-size: 25px;
-  color: #3DF152;
+  color: #3dff40;
 }
-.icon-cuowu1 {
+.icon-colse {
   font-size: 25px;
-  color: #f5222d;
+  color: #f43722;
+}
+.icon-error {
+  font-size: 25px;
+  color: #fcf71b;
 }

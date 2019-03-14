@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {ResponseValues} from '../../../model/model';

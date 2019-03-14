@@ -1,4 +1,7 @@
-RequestTime: <nz-range-picker [nzFormat]="dateFormat"></nz-range-picker>
-<button nz-button nzType="primary" (click)="get()"><i nz-icon type="search"></i>Search</button>
-<div id="main1" style="width: 550px;height:400px;"></div>
-<div id="main2" style="width: 550px;height:400px;"></div>
+<form nz-form [formGroup]="timeForm" (ngSubmit)="searchLog()">
+  <label>From: </label><nz-date-picker class="startTime" [nzFormat]="dateFormat" formControlName="startTime" [nzPlaceHolder]="startTime"></nz-date-picker>
+  <label>To: </label><nz-date-picker class="endTime" [nzFormat]="dateFormat" formControlName="endTime" [nzPlaceHolder]="endTime"></nz-date-picker>
+  <button nz-button nzType="primary"><i nz-icon type="search"></i>Search</button>
+</form>
+<div id="main1"></div>
+<div id="main2"></div>

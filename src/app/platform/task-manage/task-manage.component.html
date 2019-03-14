@@ -21,7 +21,7 @@
     <td>{{item.taskTime}}</td>
     <td scope="col">
       <button nz-button [nzType]="'primary'" (click)="start(item.id)">开始</button>
-      <button nz-button [nzType]="'dashed'" (click)="stop(item.id)">暂停</button>
+      <button nz-button [nzType]="'dashed'" (click)="pause(item.id)">暂停</button>
       <button nz-button [nzType]="'danger'" (click)="stop(item.id)">停止</button>
     </td>
     <td scope="col">

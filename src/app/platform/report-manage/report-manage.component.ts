@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import * as echarts from 'echarts';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {addDays, eachDay, endOfDay, endOfToday, format, startOfDay, subWeeks} from 'date-fns';
 import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-report-manage',
@@ -12,8 +14,10 @@ import {NzMessageService} from 'ng-zorro-antd';
 export class ReportManageComponent implements OnInit {
   status: number;
   data = [];
+  timeForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private message: NzMessageService
@@ -21,21 +25,67 @@ export class ReportManageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.timeForm = this.fb.group({
+      startTime: subWeeks(addDays(new Date(), 1), 1),
+      endTime: endOfToday()
+    });
+    this.searchLog();
+  }
+
+  searchLog() {
+    const formModel = this.timeForm.value;
+    const body = {
+      startTime: null,
+      endTime: null
+    };
+    body.startTime = format(startOfDay(formModel.startTime), 'X');
+    body.endTime = format(endOfDay(formModel.endTime), 'X');
+    this.http.get('/log/search', {
+      params: body, headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).subscribe(
+      res => {
+        this.status = res['status'];
+        if (this.status === 1) {
+          let t = 0;
+          let f = 0;
+          let e = 0;
+          this.data = res['data'];
+          this.data.map(item => item.checkBoolean).forEach(item => {
+            if (item === 1) {
+              t++;
+            } else if (item === 0) {
+              f++;
+            } else {
+              e++;
+            }
+          });
+          this.line();
+          this.pie(t, f, e);
+          this.createSuccessMessage(res['message']);
+        } else if (this.status === 10008) {
+          this.router.navigate(['login']);
+          this.createErrorMessage(res['message']);
+        } else {
+          this.createErrorMessage(res['message']);
+        }
+      }
+    );
+  }
+
+  private line() {
     const myChart1 = echarts.init(document.getElementById('main1'));
-    const myChart2 = echarts.init(document.getElementById('main2'));
 
     const option = {
       title: {
-        text: '用例统计',
-        subtext: '成功和失败',
-        x: 'center'
+        text: '用例总数统计'
       },
-      color: ['#3398DB'],
       tooltip: {
-        trigger: 'axis',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
+        trigger: 'axis'
+      },
+      legend: {
+        data: ['执行用例数']
       },
       grid: {
         left: '3%',
@@ -43,55 +93,55 @@ export class ReportManageComponent implements OnInit {
         bottom: '3%',
         containLabel: true
       },
-      xAxis: [
-        {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          axisTick: {
-            alignWithLabel: true
-          }
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: eachDay(this.timeForm.value.startTime, this.timeForm.value.endTime).map(dateArr => format(dateArr, 'M-D'))
+      },
+      yAxis: {
+        type: 'value'
+      },
       series: [
         {
-          type: 'bar',
-          barWidth: '60%',
-          data: [10, 52, 200, 334, 390, 330, 220]
+          name: '执行用例数',
+          type: 'line',
+          color: ['#31b3f9'],
+          stack: '总量',
+          data: [120, 132, 101, 134, 90, 230, 210]
         }
       ]
     };
 
+    myChart1.setOption(option);
+  }
+
+  private pie(t: number, f: number, e: number) {
+    const myChart2 = echarts.init(document.getElementById('main2'));
+
     const option1 = {
       title: {
-        text: '用例统计',
-        subtext: '成功和失败',
+        text: '用例成功和失败统计',
         x: 'center'
       },
       tooltip: {
         trigger: 'item',
-        formatter: '{a} <br/>{b} : {c} ({d}%)'
+        formatter: '{b} : {c} ({d}%)'
       },
       legend: {
         orient: 'vertical',
         left: 'left',
-        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        data: ['成功', '失败', '出错']
       },
       series: [
         {
           type: 'pie',
-          radius: '55%',
+          color: ['#3dff40', '#f43722', '#fcf71b'],
+          radius: ['50%', '70%'],
           center: ['50%', '60%'],
           data: [
-            {value: 335, name: '直接访问'},
-            {value: 310, name: '邮件营销'},
-            {value: 234, name: '联盟广告'},
-            {value: 135, name: '视频广告'},
-            {value: 1548, name: '搜索引擎'}
+            {value: t, name: '成功'},
+            {value: e, name: '出错'},
+            {value: f, name: '失败'}
           ],
           itemStyle: {
             emphasis: {
@@ -104,34 +154,9 @@ export class ReportManageComponent implements OnInit {
       ]
     };
 
-    myChart1.setOption(option);
     myChart2.setOption(option1);
   }
 
-  get(startTime: number, endTime: number) {
-    const params = new HttpParams()
-      .append('startTime', `${startTime}`)
-      .append('startTime', `${endTime}`);
-    this.http.get('/log/search', {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      params
-    }).subscribe(
-      res => {
-        this.status = res['status'];
-        if (this.status === 1) {
-          this.data = res['data'];
-          this.createSuccessMessage(res['message']);
-        } else if (this.status === 10008) {
-          this.router.navigate(['login']);
-          this.createErrorMessage(res['message']);
-        } else {
-          this.createErrorMessage(res['message']);
-        }
-      }
-    );
-  }
 
   private createSuccessMessage(success: string): void {
     this.message.success(success, {nzDuration: 3000});

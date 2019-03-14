@@ -1,3 +1,15 @@
 nz-range-picker{
   margin-right: 20px;
 }
+form{
+  text-align: center;
+}
+div{
+  width: 600px;
+  height:400px;
+  float: left;
+}
+.startTime, .endTime{
+  margin-right: 20px;
+  margin-bottom: 15px;
+}

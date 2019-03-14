@@ -79,7 +79,49 @@ export class TaskManageComponent implements OnInit {
         'Content-Type':  'application/json'
       })
     };
-    this.http.post('/task/start/' + id, httpOptions)
+    this.http.post('/task/quartz/start/' + id, httpOptions)
+      .subscribe(
+        res => {
+          this.status = res['status'];
+          if (this.status === 1) {
+            this.createSuccessMessage(res['message']);
+          } else if (this.status === 10008) {
+            this.router.navigate(['login']);
+            this.createErrorMessage(res['message']);
+          } else {
+            this.createErrorMessage(res['message']);
+          }
+        });
+  }
+
+  resume(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    this.http.post('/task/quartz/resume/' + id, httpOptions)
+      .subscribe(
+        res => {
+          this.status = res['status'];
+          if (this.status === 1) {
+            this.createSuccessMessage(res['message']);
+          } else if (this.status === 10008) {
+            this.router.navigate(['login']);
+            this.createErrorMessage(res['message']);
+          } else {
+            this.createErrorMessage(res['message']);
+          }
+        });
+  }
+
+  pause(id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    this.http.post('/task/quartz/pause/' + id, httpOptions)
       .subscribe(
         res => {
           this.status = res['status'];
@@ -100,7 +142,7 @@ export class TaskManageComponent implements OnInit {
         'Content-Type':  'application/json'
       })
     };
-    this.http.post('/task/stop/' + id, httpOptions)
+    this.http.post('/task/quartz/stop/' + id, httpOptions)
       .subscribe(
         res => {
           this.status = res['status'];
