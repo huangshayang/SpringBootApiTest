@@ -61,7 +61,7 @@ export class ReportManageComponent implements OnInit {
               e++;
             }
           });
-          this.line();
+          this.line(this.data);
           this.pie(t, f, e);
           this.createSuccessMessage(res['message']);
         } else if (this.status === 10008) {
@@ -74,7 +74,30 @@ export class ReportManageComponent implements OnInit {
     );
   }
 
-  private line() {
+  private line(requestTime: any) {
+    const arr1 = requestTime.map(item => item.requestTime);
+    const arr2 = eachDay(this.timeForm.value.startTime, this.timeForm.value.endTime).map(dateArr => format(dateArr, 'X'));
+    const temp = [];
+    let arr3 = [];
+    arr3.length = arr2.length;
+    for (let i = 0; i < arr1.length; i++) {
+      let count = 0;
+      for (const a of arr2) {
+        if (arr1[i] < (Number(a) + 86400)) {
+          break;
+        }
+        count++;
+      }
+      temp[i] = count;
+    }
+    const map = temp.reduce((m, x) => m.set(x, (m.get(x) || 0) + 1), new Map());
+    if (arr3.length > Array.from(map.values()).length) {
+      arr3 = Array.from(map.values());
+      arr3.push(0);
+    } else {
+      arr3 = Array.from(map.values());
+    }
+
     const myChart1 = echarts.init(document.getElementById('main1'));
 
     const option = {
@@ -105,9 +128,9 @@ export class ReportManageComponent implements OnInit {
         {
           name: '执行用例数',
           type: 'line',
-          color: ['#31b3f9'],
+          color: '#31b3f9',
           stack: '总量',
-          data: [120, 132, 101, 134, 90, 230, 210]
+          data: arr3
         }
       ]
     };
