@@ -5,6 +5,7 @@ import {addDays, eachDay, endOfDay, endOfToday, format, startOfDay, subWeeks} fr
 import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {differenceInCalendarDays} from 'date-fns';
 
 @Component({
   selector: 'app-report-manage',
@@ -15,6 +16,11 @@ export class ReportManageComponent implements OnInit {
   status: number;
   data = [];
   timeForm: FormGroup;
+  today = new Date();
+  disabledDate = (current: Date): boolean => {
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, this.today) > 0;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -91,12 +97,15 @@ export class ReportManageComponent implements OnInit {
       temp[i] = count;
     }
     const map = temp.reduce((m, x) => m.set(x, (m.get(x) || 0) + 1), new Map());
-    if (arr3.length > Array.from(map.values()).length) {
-      arr3 = Array.from(map.values());
-      arr3.push(0);
-    } else {
-      arr3 = Array.from(map.values());
+    arr3 = Array.from(map.values());
+    if (arr3.length < arr2.length) {
+      for (let i = 0; i < arr2.length; i++) {
+        if (arr3.length < arr2.length && this.timeForm.value.startTime <= subWeeks(addDays(new Date(), 1), 1)) {
+          arr3.unshift(0);
+        }
+      }
     }
+
 
     const myChart1 = echarts.init(document.getElementById('main1'));
 
