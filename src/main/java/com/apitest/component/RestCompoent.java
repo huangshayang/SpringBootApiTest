@@ -33,8 +33,10 @@ public class RestCompoent {
         restCompoent.logMapper = this.logMapper;
     }
 
+    /**
+     * 向外部发送http请求
+     */
     public static void taskApiCaseExecByLock(Apis apis, Cases cases) {
-        //向外部发送http请求
         long requestTime = System.currentTimeMillis() / 1000;
         ClientResponse response = restHttp(apis, cases).exchange().block();
         JSONObject jsonObject = new JSONObject();
@@ -44,24 +46,32 @@ public class RestCompoent {
         responseWriteToLog(jsonObject, requestTime, cases);
     }
 
+    /**
+     * 响应数据检查
+     */
     private static JSONObject checkResponse(String body, Cases cases) {
-        Map<String, Object> mapResponse = JSONObject.parseObject(body);
-        String actMes = String.valueOf(mapResponse.get("message"));
-        int actCode = (int) mapResponse.get("status");
-        Map<String, Object> expResult = JSON.parseObject(cases.getExpectResult(), Map.class);
         JSONObject jsonObject = new JSONObject();
-        if (!expResult.get("message").toString().equals(actMes)) {
-            jsonObject.put("checkBoolean", false);
-            jsonObject.put("erroMsg", "错误的message, actMes is: " + actMes + ", but expMes is: " + expResult.get("message") + ". Please check the Response or your Case");
-            return jsonObject;
+        try {
+            Map<String, Object> mapResponse = JSONObject.parseObject(body);
+            String actMes = String.valueOf(mapResponse.get("message"));
+            int actCode = (int) mapResponse.get("status");
+            Map expResult = JSON.parseObject(cases.getExpectResult(), Map.class);
+            if (!expResult.get("message").toString().equals(actMes)) {
+                jsonObject.put("checkBoolean", 0);
+                jsonObject.put("erroMsg", "错误的message, actMes is: " + actMes + ", but expMes is: " + expResult.get("message") + ". Please check the Response or your Case");
+                return jsonObject;
+            }
+            if ((int)expResult.get("status") != actCode) {
+                jsonObject.put("checkBoolean", 0);
+                jsonObject.put("errorMsg", "错误的status, actCode is: " + actCode + ", but expCode is: " + expResult.get("status") + ". Please check the Response or your Case");
+                return jsonObject;
+            }
+            jsonObject.put("checkBoolean", 1);
+            jsonObject.put("errorMsg", "用例通过");
+        }catch (Exception e) {
+            jsonObject.put("checkBoolean", -1);
+            jsonObject.put("errorMsg", e.toString());
         }
-        if ((int)expResult.get("status") != actCode) {
-            jsonObject.put("checkBoolean", false);
-            jsonObject.put("errorMsg", "错误的status, actCode is: " + actCode + ", but expCode is: " + expResult.get("status") + ". Please check the Response or your Case");
-            return jsonObject;
-        }
-        jsonObject.put("checkBoolean", true);
-        jsonObject.put("errorMsg", "用例通过");
         return jsonObject;
     }
 
@@ -72,7 +82,7 @@ public class RestCompoent {
         JSONObject jsonObject1 = checkResponse(jsonObject.getString("body"), cases);
         Logs logs = new Logs();
         logs.setRequestTime(requestTime);
-        logs.setCheckBoolean(jsonObject1.getBoolean("checkBoolean"));
+        logs.setCheckBoolean(jsonObject1.getIntValue("checkBoolean"));
         logs.setErrorMsg(jsonObject1.getString("errorMsg"));
         logs.setCode(jsonObject.getIntValue("code"));
         logs.setResponseHeader(jsonObject.getString("header"));
@@ -84,7 +94,6 @@ public class RestCompoent {
 
     /**
      * 根据api的请求方法调用RestRequest类的对应请求方法
-     *
      * @param api
      * @param cases
      * @return

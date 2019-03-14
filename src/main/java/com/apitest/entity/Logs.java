@@ -22,7 +22,7 @@ public class Logs implements Serializable {
 
     private String caseName;
 
-    private Boolean checkBoolean;
+    private Integer checkBoolean;
 
     private String errorMsg;
 

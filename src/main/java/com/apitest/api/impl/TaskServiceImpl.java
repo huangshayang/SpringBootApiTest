@@ -174,12 +174,13 @@ public class TaskServiceImpl implements TaskService {
             Optional<Task> taskOptional = taskMapper.findById(id);
             if (taskOptional.isPresent()) {
                 boolean key = jobMap.containsKey(id);
-//                Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
                 if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NORMAL) {
-                    serverResponse = new ServerResponse(ErrorEnum.QUATZ_IS_RUNNING.getStatus(), ErrorEnum.QUATZ_IS_RUNNING.getMessage());
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_RUNNING.getStatus(), ErrorEnum.QUARTZ_IS_RUNNING.getMessage());
                 } else if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.PAUSED) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_PAUSED.getStatus(), ErrorEnum.QUARTZ_IS_PAUSED.getMessage());
-                } else {
+                } else if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NONE) {
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
+                }else {
                     List<Apis> apisList = apiMapper.findApiByIds(taskOptional.get().getApiIdList());
                     jobDataMap.putIfAbsent("apisList", apisList);
                     jobDataMap.putIfAbsent("caseMapper", caseMapper);
@@ -204,36 +205,18 @@ public class TaskServiceImpl implements TaskService {
         return serverResponse;
     }
 
-    public void testResume(int id) throws SchedulerException {
-        TriggerKey triggerKey = TriggerKey.triggerKey(jobMap.get(id).getValue().getKey().getName());
-        CronTrigger oldTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-        if (oldTrigger != null) {
-            CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobMap.get(id).getValue().getCronExpression()).withMisfireHandlingInstructionDoNothing();
-            oldTrigger = oldTrigger.getTriggerBuilder().startAt(DateBuilder.evenSecondDate(new Date())).withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();
-            scheduler.rescheduleJob(triggerKey, oldTrigger);
-        } else {
-            CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobMap.get(id).getValue().getCronExpression()).withMisfireHandlingInstructionDoNothing();
-            CronTrigger cronTrigger = TriggerBuilder.newTrigger().startAt(DateBuilder.evenSecondDate(new Date())).withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();
-            JobDetail jobDetail = JobBuilder.newJob(QuartzTask.class).withIdentity(jobMap.get(id).getKey().getKey()).build();
-            HashSet<Trigger> triggerSet = new HashSet<>();
-            triggerSet.add(cronTrigger);
-            scheduler.scheduleJob(jobDetail, triggerSet, true);
-        }
-    }
-
     @Override
     public ServerResponse taskPauseService(int id) {
         try {
             Optional<Task> taskOptional = taskMapper.findById(id);
             if (taskOptional.isPresent()) {
                 boolean key = jobMap.containsKey(id);
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
-                if (key && triggerState == Trigger.TriggerState.NORMAL) {
+                if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NORMAL) {
                     scheduler.pauseTrigger(jobMap.get(id).getValue().getKey());
-                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_STOPPED_SUCCESS.getStatus(), ErrorEnum.QUARTZ_STOPPED_SUCCESS.getMessage());
-                } else if (key && triggerState == Trigger.TriggerState.PAUSED) {
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_PAUSE_SUCCESS.getStatus(), ErrorEnum.QUARTZ_PAUSE_SUCCESS.getMessage());
+                } else if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.PAUSED) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_PAUSED.getStatus(), ErrorEnum.QUARTZ_IS_PAUSED.getMessage());
-                } else if (key && triggerState == Trigger.TriggerState.NONE) {
+                } else if (!key || scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NONE) {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
                 } else {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_UNKNOWN_ERROR.getStatus(), ErrorEnum.QUARTZ_UNKNOWN_ERROR.getMessage());
@@ -256,14 +239,16 @@ public class TaskServiceImpl implements TaskService {
             Optional<Task> taskOptional = taskMapper.findById(id);
             if (taskOptional.isPresent()) {
                 boolean key = jobMap.containsKey(id);
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
-                if (key && triggerState == Trigger.TriggerState.NONE) {
-                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
-                } else if (key && (triggerState == Trigger.TriggerState.NORMAL || triggerState == Trigger.TriggerState.PAUSED)) {
+                if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.PAUSED) {
                     scheduler.unscheduleJob(jobMap.get(id).getValue().getKey());
                     scheduler.deleteJob(jobMap.get(id).getKey().getKey());
-                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_STOPPED_SUCCESS.getStatus(), ErrorEnum.QUARTZ_STOPPED_SUCCESS.getMessage());
-                } else {
+                    jobMap.remove(id);
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_STOP_SUCCESS.getStatus(), ErrorEnum.QUARTZ_STOP_SUCCESS.getMessage());
+                } else if (key && (scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NORMAL)) {
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_NEED_PAUSE.getStatus(), ErrorEnum.QUARTZ_NEED_PAUSE.getMessage());
+                } else if (!key || scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NONE) {
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
+                }  else {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_UNKNOWN_ERROR.getStatus(), ErrorEnum.QUARTZ_UNKNOWN_ERROR.getMessage());
                 }
             } else {
@@ -284,12 +269,9 @@ public class TaskServiceImpl implements TaskService {
             Optional<Task> taskOptional = taskMapper.findById(id);
             if (taskOptional.isPresent()) {
                 boolean key = jobMap.containsKey(id);
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(jobMap.get(id).getValue().getKey());
-                if (key && triggerState == Trigger.TriggerState.NORMAL) {
-                    serverResponse = new ServerResponse(ErrorEnum.QUATZ_IS_RUNNING.getStatus(), ErrorEnum.QUATZ_IS_RUNNING.getMessage());
-                } else if (key && triggerState == Trigger.TriggerState.NONE) {
-                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
-                } else if (key && triggerState == Trigger.TriggerState.PAUSED) {
+                if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NORMAL) {
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_RUNNING.getStatus(), ErrorEnum.QUARTZ_IS_RUNNING.getMessage());
+                } else if (key && scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.PAUSED) {
                     TriggerKey triggerKey = TriggerKey.triggerKey(jobMap.get(id).getKey().getKey().getName());
                     CronTrigger oldTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
                     String jobName = jobMap.get(id).getKey().getKey().getName();
@@ -307,6 +289,9 @@ public class TaskServiceImpl implements TaskService {
                         triggerSet.add(cronTrigger);
                         scheduler.scheduleJob(jobDetail, triggerSet, true);
                     }
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_RESUME_SUCCESS.getStatus(), ErrorEnum.QUARTZ_RESUME_SUCCESS.getMessage());
+                } else if (!key || scheduler.getTriggerState(jobMap.get(id).getValue().getKey()) == Trigger.TriggerState.NONE) {
+                    serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
                 } else {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_UNKNOWN_ERROR.getStatus(), ErrorEnum.QUARTZ_UNKNOWN_ERROR.getMessage());
                 }

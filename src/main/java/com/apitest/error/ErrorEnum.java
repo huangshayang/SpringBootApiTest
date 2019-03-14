@@ -34,7 +34,9 @@ public enum ErrorEnum {
     TASK_ADD_SUCCESS(1, "添加任务成功"),
     TASK_DELETE_SUCCESS(1, "删除任务成功"),
     QUARTZ_START_SUCCESS(1, "调度任务开始成功"),
-    QUARTZ_STOPPED_SUCCESS(1, "调度任务停止成功"),
+    QUARTZ_PAUSE_SUCCESS(1, "调度任务暂停成功"),
+    QUARTZ_STOP_SUCCESS(1, "调度任务停止成功"),
+    QUARTZ_RESUME_SUCCESS(1, "调度任务恢复成功"),
 
     /*
      * 接口返回失败
@@ -73,7 +75,8 @@ public enum ErrorEnum {
     TASK_TIME_IS_INVALID(10034, "任务的时间格式不正确"),
     QUARTZ_IS_NONE(10036, "调度任务不存在"),
     QUARTZ_IS_PAUSED(10037, "调度任务已经暂停"),
-    QUATZ_IS_RUNNING(10038, "调度任务已经在运行中"),
+    QUARTZ_IS_RUNNING(10038, "调度任务已经在运行中"),
+    QUARTZ_NEED_PAUSE(10039, "请先暂停调度任务"),
     QUARTZ_UNKNOWN_ERROR(10040, "quartz未知错误");
 
     @Getter
