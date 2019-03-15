@@ -20,7 +20,7 @@ export class ReportManageComponent implements OnInit {
   disabledDate = (current: Date): boolean => {
     // Can not select days before today and today
     return differenceInCalendarDays(current, this.today) > 0;
-  }
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -81,31 +81,19 @@ export class ReportManageComponent implements OnInit {
   }
 
   private line(requestTime: any) {
-    const arr1 = requestTime.map(item => item.requestTime);
-    const arr2 = eachDay(this.timeForm.value.startTime, this.timeForm.value.endTime).map(dateArr => format(dateArr, 'X'));
-    const temp = [];
-    let arr3 = [];
-    arr3.length = arr2.length;
-    for (let i = 0; i < arr1.length; i++) {
-      let count = 0;
-      for (const a of arr2) {
-        if (arr1[i] < (Number(a) + 86400)) {
-          break;
-        }
-        count++;
+    const dataTimes = requestTime.map(item => item.requestTime).map(item => format(item * 1000, 'YYYY-MM-DD'));
+    const reqTimes = eachDay(this.timeForm.value.startTime, this.timeForm.value.endTime).map(dateArr => format(dateArr, 'YYYY-MM-DD'));
+    const temp = {};
+    dataTimes.forEach(item => {
+      if (temp[item]) {
+        temp[item] = temp[item] + 1;
+      } else {
+        temp[item] = 1;
       }
-      temp[i] = count;
-    }
-    const map = temp.reduce((m, x) => m.set(x, (m.get(x) || 0) + 1), new Map());
-    arr3 = Array.from(map.values());
-    if (arr3.length < arr2.length) {
-      for (let i = 0; i < arr2.length; i++) {
-        if (arr3.length < arr2.length && this.timeForm.value.startTime <= subWeeks(addDays(new Date(), 1), 1)) {
-          arr3.unshift(0);
-        }
-      }
-    }
-
+    });
+    const resData = reqTimes.map(item => {
+      return temp[item] || 0;
+    });
 
     const myChart1 = echarts.init(document.getElementById('main1'));
 
@@ -139,7 +127,7 @@ export class ReportManageComponent implements OnInit {
           type: 'line',
           color: '#31b3f9',
           stack: '总量',
-          data: arr3
+          data: resData
         }
       ]
     };
