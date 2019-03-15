@@ -5,16 +5,13 @@ import com.apitest.error.ErrorEnum;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.RevertUtil;
 import com.apitest.util.ServerResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
 
 import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -42,10 +39,10 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
             if (type.isAnnotationPresent(Auth.class)) {
                 try {
                     if (isBlank(reqCookie)) {
-                        resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
+                        RevertUtil.resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
                     } else if (request.getSession().getAttribute(RevertUtil.cookieToMap(reqCookie)) == null) {
-                        resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
+                        RevertUtil.resToJson(response, new ServerResponse(ErrorEnum.AUTH_FAILED.getStatus(), ErrorEnum.AUTH_FAILED.getMessage()));
                         return false;
                     }
                 } catch (Exception e) {
@@ -60,19 +57,5 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         resCookie.setPath("/");
         response.addCookie(resCookie);
         return true;
-    }
-
-    private void resToJson(HttpServletResponse response, ServerResponse serverResponse) {
-        response.setContentType(String.valueOf(MediaType.APPLICATION_JSON_UTF8));
-        ObjectMapper jsonObject = new ObjectMapper();
-        try {
-            String json = jsonObject.writeValueAsString(serverResponse);
-            OutputStream os = response.getOutputStream();
-            os.write(json.getBytes());
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            new ExceptionUtil(e);
-        }
     }
 }
