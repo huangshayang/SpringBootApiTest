@@ -1,6 +1,7 @@
 package com.apitest.api.impl;
 
 import com.apitest.api.LoginService;
+import com.apitest.configconsts.ConstsEnum;
 import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.mapper.UserMapper;
@@ -15,7 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
@@ -44,7 +44,7 @@ public class LoginServiceImpl implements LoginService {
             } else {
                 String session = new BCryptPasswordEncoder().encode(String.valueOf(u));
                 httpSession.setAttribute(session, u);
-                Cookie resCookie = new Cookie(USERSESSION_KEY, session);
+                Cookie resCookie = new Cookie(ConstsEnum.USERSESSION_KEY.getConsts(), session);
                 resCookie.setHttpOnly(true);
                 resCookie.setMaxAge(httpSession.getMaxInactiveInterval());
                 resCookie.setPath("/");

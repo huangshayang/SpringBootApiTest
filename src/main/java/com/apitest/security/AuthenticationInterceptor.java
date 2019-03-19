@@ -1,6 +1,7 @@
 package com.apitest.security;
 
 import com.apitest.annotation.Auth;
+import com.apitest.configconsts.ConstsEnum;
 import com.apitest.error.ErrorEnum;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.RevertUtil;
@@ -13,7 +14,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.apitest.configconsts.ConfigConsts.USERSESSION_KEY;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
@@ -51,7 +51,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-        Cookie resCookie = new Cookie(USERSESSION_KEY, RevertUtil.cookieToMap(reqCookie));
+        Cookie resCookie = new Cookie(ConstsEnum.USERSESSION_KEY.getConsts(), RevertUtil.cookieToMap(reqCookie));
         resCookie.setMaxAge(request.getSession().getMaxInactiveInterval());
         resCookie.setHttpOnly(true);
         resCookie.setPath("/");

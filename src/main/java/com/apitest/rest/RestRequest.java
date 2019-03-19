@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.apitest.component.EnvComponent;
 import com.apitest.component.RestCompoent;
-import com.apitest.configconsts.ConfigConsts;
 import com.apitest.entity.Enviroment;
 import com.apitest.util.ExceptionUtil;
 import lombok.extern.log4j.Log4j2;
@@ -45,7 +44,7 @@ public class RestRequest {
             tt(paramsData);
             requestHeadersSpec = webClient.baseUrl(baseUrl).build().get().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
             if (cookie) {
-                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, cookies);
+                requestHeadersSpec.header(HttpHeaders.COOKIE, cookies);
             }
         } catch (Exception e) {
             new ExceptionUtil(e);
@@ -61,7 +60,7 @@ public class RestRequest {
             tt(paramsData);
             requestHeadersSpec = webClient.baseUrl(baseUrl).build().post().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).syncBody(jsonData);
             if (cookie) {
-                requestHeadersSpec.cookie(ConfigConsts.SESSION_KEY, cookies);
+                requestHeadersSpec.header(HttpHeaders.COOKIE, cookies);
             }
         } catch (Exception e) {
             new ExceptionUtil(e);
@@ -75,7 +74,7 @@ public class RestRequest {
             log.info("uri: " + url);
             log.info("jsonData: " + jsonData);
             tt(paramsData);
-            return webClient.baseUrl(baseUrl).build().put().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).cookie(ConfigConsts.SESSION_KEY, cookies).syncBody(jsonData);
+            return webClient.baseUrl(baseUrl).build().put().uri(url, map).contentType(MediaType.APPLICATION_JSON_UTF8).header(HttpHeaders.COOKIE, cookies).syncBody(jsonData);
         } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
@@ -87,7 +86,7 @@ public class RestRequest {
             log.info("uri: " + url);
             log.info("paramsData: " + paramsData);
             tt(paramsData);
-            return webClient.baseUrl(baseUrl).build().delete().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).cookie(ConfigConsts.SESSION_KEY, cookies);
+            return webClient.baseUrl(baseUrl).build().delete().uri(url, map).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).header(HttpHeaders.COOKIE, cookies);
         } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
@@ -115,10 +114,11 @@ public class RestRequest {
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .syncBody(map)
                     .exchange();
-            return Objects.requireNonNull(Objects.requireNonNull(clientResponseMono.block()).cookies().getFirst(ConfigConsts.SESSION_KEY)).getValue();
+            return Objects.requireNonNull(clientResponseMono.block()).cookies().toSingleValueMap().values().iterator().next().toString();
         } catch (Exception e) {
             new ExceptionUtil(e);
             return null;
         }
     }
+
 }

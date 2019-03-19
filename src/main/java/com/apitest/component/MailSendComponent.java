@@ -33,6 +33,7 @@ public class MailSendComponent {
     private final RedisTemplate<String, Object> redisTemplate;
     private static ServerResponse serverResponse;
 
+
     @Autowired
     public MailSendComponent(JavaMailSender javaMailSender, RedisTemplate<String, Object> redisTemplate) {
         this.javaMailSender = javaMailSender;

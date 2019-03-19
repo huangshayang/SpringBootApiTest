@@ -1,6 +1,6 @@
 package com.apitest.util;
 
-import com.apitest.configconsts.ConfigConsts;
+import com.apitest.configconsts.ConstsEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 
@@ -18,7 +18,7 @@ public class RevertUtil {
             String[] str2 = s.split("=");
             map.put(str2[0].trim(), str2[1]);
         }
-        return map.get(ConfigConsts.USERSESSION_KEY);
+        return map.get(ConstsEnum.USERSESSION_KEY.getConsts());
     }
 
     public static void resToJson(HttpServletResponse response, ServerResponse serverResponse) {

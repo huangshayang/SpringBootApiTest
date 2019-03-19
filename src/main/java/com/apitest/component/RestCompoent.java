@@ -7,6 +7,8 @@ import com.apitest.entity.Cases;
 import com.apitest.entity.Logs;
 import com.apitest.mapper.LogMapper;
 import com.apitest.rest.RestRequest;
+import com.apitest.util.ExceptionUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,11 +16,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author huangshayang
  */
 @Component
+@Log4j2
 public class RestCompoent {
 
     private static int envId;
@@ -37,13 +41,17 @@ public class RestCompoent {
      * 向外部发送http请求
      */
     public static void taskApiCaseExecByLock(Apis apis, Cases cases) {
-        long requestTime = System.currentTimeMillis() / 1000;
-        ClientResponse response = restHttp(apis, cases).exchange().block();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("code", response.statusCode().value());
-        jsonObject.put("header", String.valueOf(response.headers().asHttpHeaders()));
-        jsonObject.put("body", response.bodyToMono(String.class).block());
-        responseWriteToLog(jsonObject, requestTime, cases);
+        try {
+            long requestTime = System.currentTimeMillis() / 1000;
+            ClientResponse response = Objects.requireNonNull(restHttp(apis, cases).exchange().block());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code", response.statusCode().value());
+            jsonObject.put("header", String.valueOf(response.headers().asHttpHeaders()));
+            jsonObject.put("body", response.bodyToMono(String.class).block());
+            responseWriteToLog(jsonObject, requestTime, cases);
+        }catch (Exception e) {
+            new ExceptionUtil(e);
+        }
     }
 
     /**
@@ -56,14 +64,9 @@ public class RestCompoent {
             String actMes = String.valueOf(mapResponse.get("message"));
             int actCode = (int) mapResponse.get("status");
             Map expResult = JSON.parseObject(cases.getExpectResult(), Map.class);
-            if (!expResult.get("message").toString().equals(actMes)) {
+            if (!expResult.get("message").toString().equals(actMes) || (int)expResult.get("status") != actCode) {
                 jsonObject.put("checkBoolean", 0);
-                jsonObject.put("erroMsg", "错误的message, actMes is: " + actMes + ", but expMes is: " + expResult.get("message") + ". Please check the Response or your Case");
-                return jsonObject;
-            }
-            if ((int)expResult.get("status") != actCode) {
-                jsonObject.put("checkBoolean", 0);
-                jsonObject.put("errorMsg", "错误的status, actCode is: " + actCode + ", but expCode is: " + expResult.get("status") + ". Please check the Response or your Case");
+                jsonObject.put("errorMsg", "错误的message或status, actMes/actCode is: " + actMes + "/" + actCode + ", but expMes/expCode is: " + expResult.get("message") + "/" + expResult.get("status") + ". Please check the Response or your Case");
                 return jsonObject;
             }
             jsonObject.put("checkBoolean", 1);

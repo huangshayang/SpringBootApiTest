@@ -2,7 +2,7 @@ package com.apitest.api.impl;
 
 import com.apitest.api.MailSendService;
 import com.apitest.component.MailSendComponent;
-import com.apitest.configconsts.ConfigConsts;
+import com.apitest.configconsts.ConstsEnum;
 import com.apitest.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,11 @@ public class MailSendServiceImpl implements MailSendService {
 
     @Override
     public ServerResponse resetPasswordMailService(HttpServletRequest request, String email) {
-        return mailSendComponent.sendResetPasswordMailHandler(request, email, ConfigConsts.RESET_SUBJECT);
+        return mailSendComponent.sendResetPasswordMailHandler(request, email, ConstsEnum.RESET_SUBJECT.getConsts());
     }
 
     @Override
     public ServerResponse registerMailService(HttpServletRequest request, String email) {
-        return mailSendComponent.sendRegisterMailHandler(request, email, ConfigConsts.REGESTER_SUBJECT);
+        return mailSendComponent.sendRegisterMailHandler(request, email, ConstsEnum.REGESTER_SUBJECT.getConsts());
     }
 }
