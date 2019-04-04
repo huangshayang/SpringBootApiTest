@@ -18,10 +18,10 @@ public interface TaskMapper {
     @Select("select * from task where name = #{name}")
     Task findByName(@Param("name") String name);
 
-    @Insert("insert into task(name, taskTime, createTime, updateTime) values(#{name}, #{taskTime}, #{createTime}, #{updateTime})")
+    @Insert("insert into task(name, task_time, api_id_list, create_time, update_time) values(#{name}, #{taskTime}, #{apiIdList}, #{createTime}, #{updateTime})")
     void save(Task task);
 
-    @Update("update task set name=#{task.name}, taskTime=#{task.taskTime}, updateTime=#{task.updateTime} where id = #{id}")
+    @Update("update task set name=#{task.name}, api_id_list=#{task.apiIdList}, task_time=#{task.taskTime}, update_time=#{task.updateTime} where id = #{id}")
     void update(Task task, @Param("id") int id);
 
     @Delete("delete from task where id = #{id}")

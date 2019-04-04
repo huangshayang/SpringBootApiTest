@@ -5,6 +5,10 @@ angular前端代码在frontend分支下
 ---
 ### 更新历史：
 
+#### 2019-4-4:
+    1.升级springboot版本为2.1.4
+    2.修复task的service和mapper的bug
+
 #### 2019-3-14:
     1.修改task里quartz的bug
     2.修改Logs的字段

@@ -89,6 +89,8 @@ public class TaskServiceImpl implements TaskService {
             }
             if (isBlank(task.getName())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EMPTY.getStatus(), ErrorEnum.TASK_NAME_IS_EMPTY.getMessage());
+            }else if (isBlank(task.getApiIdList())) {
+                serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
             } else if (checkCron(task.getTaskTime())) {
                 serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_INVALID.getStatus(), ErrorEnum.TASK_TIME_IS_INVALID.getMessage());
             } else if (taskMapper.findByName(task.getName()) != null) {
@@ -121,6 +123,8 @@ public class TaskServiceImpl implements TaskService {
                 Task taskByName = taskMapper.findByName(task.getName());
                 if (isBlank(task.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_NAME_IS_EMPTY.getStatus(), ErrorEnum.TASK_NAME_IS_EMPTY.getMessage());
+                }else if (isBlank(task.getApiIdList())) {
+                    serverResponse = new ServerResponse(ErrorEnum.TASK_APIS_IS_EMPTY.getStatus(), ErrorEnum.TASK_APIS_IS_EMPTY.getMessage());
                 } else if (isBlank(task.getTaskTime())) {
                     serverResponse = new ServerResponse(ErrorEnum.TASK_TIME_IS_EMPTY.getStatus(), ErrorEnum.TASK_TIME_IS_EMPTY.getMessage());
                 } else if (checkCron(task.getTaskTime())) {

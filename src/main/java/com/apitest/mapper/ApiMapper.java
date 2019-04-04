@@ -15,7 +15,7 @@ public interface ApiMapper {
     @Select("select * from apis where id = #{id}")
     Optional<Apis> findById(@Param("id") int id);
 
-    @Insert("insert into apis(url, method,  env_id, cookie, name, create_time, update_time) values(#{url}, #{method}, #{envId}, #{cookie}, #{name}, #{createTime}, #{updateTime})")
+    @Insert("insert into apis(url, method, env_id, cookie, name, create_time, update_time) values(#{url}, #{method}, #{envId}, #{cookie}, #{name}, #{createTime}, #{updateTime})")
     void save(Apis apis);
 
     @Update("update apis set url=#{apis.url}, method=#{apis.method}, env_id=#{apis.envId}, cookie=#{apis.cookie}, name=#{apis.name}, update_time=#{apis.updateTime} where id = #{id}")
