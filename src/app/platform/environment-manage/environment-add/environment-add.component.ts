@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
@@ -24,10 +24,10 @@ export class EnvironmentAddComponent implements OnInit {
 
   ngOnInit() {
     this.envForm = this.fb.group({
-      name: '',
-      domain: '',
-      username: '',
-      password: ''
+      name: ['', Validators.required],
+      domain: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 

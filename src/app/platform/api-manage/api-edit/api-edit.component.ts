@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {ResponseValues} from '../../../model/model';
 
@@ -34,11 +34,11 @@ export class ApiEditComponent implements OnInit {
     this.getEnv();
     this.get(this.id);
     this.apiForm = this.fb.group({
-      url: '',
-      method: '',
+      url: ['', Validators.required],
+      method: ['', Validators.required],
       cookie: '',
-      name: '',
-      envId: ''
+      name: ['', Validators.required],
+      envId: ['', Validators.required]
     });
   }
 

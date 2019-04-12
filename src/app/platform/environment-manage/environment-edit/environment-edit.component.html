@@ -25,7 +25,7 @@
   </nz-form-item>
   <nz-form-item class="mt-lg-5">
     <nz-form-control [nzOffset]="15" [nzSm]="8" [nzXs]="24">
-      <button nz-button [nzType]="'primary'" style="margin-right: 10px">Save</button>
+      <button nz-button [disabled]="!(envForm.valid && envForm.dirty)" [nzType]="'primary'" style="margin-right: 10px">Save</button>
       <button type="button" nz-button [nzType]="'cancel'" (click)="closeModal()">Cancel</button>
     </nz-form-control>
   </nz-form-item>

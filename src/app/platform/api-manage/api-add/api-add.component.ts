@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
@@ -31,11 +31,11 @@ export class ApiAddComponent implements OnInit {
   ngOnInit() {
     this.getEnv();
     this.apiForm = this.fb.group({
-      url: '',
-      method: ['get'],
+      url: ['', Validators.required],
+      method: ['get', Validators.required],
       cookie: false,
-      name: '',
-      envId: 1
+      name: ['', Validators.required],
+      envId: [1, Validators.required]
     });
   }
 
