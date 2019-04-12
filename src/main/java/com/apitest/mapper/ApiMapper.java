@@ -24,12 +24,12 @@ public interface ApiMapper {
     @Delete("delete from apis where id = #{id}")
     void deleteById(@Param("id") int id);
 
-    @Select("select count(*) from apis where url = #{url} and method = #{method}")
+    @Select("select count(*) from apis where url = #{url} and env_id = #{envId} and method = #{method}")
     @ResultType(boolean.class)
-    boolean existsByUrlAndMethod(@Param("url") String url, @Param("method") String method);
+    boolean existsByEnvIdAndUrlAndMethod(@Param("url") String url, @Param("method") String method, @Param("envId") int envId);
 
-    @Select("select * from apis where url = #{url} and method = #{method}")
-    Apis findByUrlAndMethod(@Param("url") String url, @Param("method") String method);
+    @Select("select * from apis where url = #{url} and method = #{method} and env_id = #{envId}")
+    Apis findByUrlAndMethodAndEnvId(@Param("url") String url, @Param("method") String method, @Param("envId") int envId);
 
     @Select("select * from apis where id in (${ids})")
     List<Apis> findApiByIds(@Param("ids") String ids);

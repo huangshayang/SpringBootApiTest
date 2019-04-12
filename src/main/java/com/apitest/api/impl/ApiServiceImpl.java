@@ -47,7 +47,7 @@ public class ApiServiceImpl implements ApiService {
                 serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
             } else if (envMapper.findById(api.getEnvId()).isEmpty()) {
                 serverResponse = new ServerResponse(ErrorEnum.ENV_IS_NULL.getStatus(), ErrorEnum.ENV_IS_NULL.getMessage());
-            } else if (apiMapper.existsByUrlAndMethod(api.getUrl(), api.getMethod())) {
+            } else if (apiMapper.existsByEnvIdAndUrlAndMethod(api.getUrl(), api.getMethod(), api.getEnvId())) {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
             } else {
                 apiMapper.save(api);
@@ -104,7 +104,7 @@ public class ApiServiceImpl implements ApiService {
             Optional<Apis> apisOptional = apiMapper.findById(id);
             if (apisOptional.isPresent()) {
                 //根据传递的参数里的url和method，查找是否存在对应的api
-                Apis apisByUrlAndMethod = apiMapper.findByUrlAndMethod(api.getUrl(), api.getMethod());
+                Apis apisByUrlAndMethodAndEnvId = apiMapper.findByUrlAndMethodAndEnvId(api.getUrl(), api.getMethod(), api.getEnvId());
                 if (isBlank(api.getUrl())) {
                     serverResponse = new ServerResponse(ErrorEnum.API_URL_IS_EMPTY.getStatus(), ErrorEnum.API_URL_IS_EMPTY.getMessage());
                 } else if (isBlank(api.getMethod())) {
@@ -115,7 +115,7 @@ public class ApiServiceImpl implements ApiService {
                     serverResponse = new ServerResponse(ErrorEnum.API_NOTE_IS_EMPTY.getStatus(), ErrorEnum.API_NOTE_IS_EMPTY.getMessage());
                 } else if (envMapper.findById(api.getEnvId()).isEmpty()) {
                     serverResponse = new ServerResponse(ErrorEnum.ENV_IS_NULL.getStatus(), ErrorEnum.ENV_IS_NULL.getMessage());
-                } else if (apisByUrlAndMethod != null && apisByUrlAndMethod.getId() != id) {
+                } else if (apisByUrlAndMethodAndEnvId != null && apisByUrlAndMethodAndEnvId.getId() != id) {
                     //如果能根据传递的参数里的url和method找到对应的api，且该api的id不等于传递的id，那么判断为该api重复，无法修改
                     serverResponse = new ServerResponse(ErrorEnum.API_IS_REPEAT.getStatus(), ErrorEnum.API_IS_REPEAT.getMessage());
                 } else {

@@ -5,6 +5,9 @@ angular前端代码在frontend分支下
 ---
 ### 更新历史：
 
+#### 2019-4-12:
+    1.修复api的mapper里method、url、envId三者的查询bug
+
 #### 2019-4-4:
     1.升级springboot版本为2.1.4
     2.修复task的service和mapper的bug
