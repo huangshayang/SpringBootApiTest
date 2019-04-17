@@ -77,7 +77,9 @@ public enum ErrorEnum {
     QUARTZ_IS_PAUSED(10037, "调度任务已经暂停"),
     QUARTZ_IS_RUNNING(10038, "调度任务已经在运行中"),
     QUARTZ_NEED_PAUSE(10039, "请先暂停调度任务"),
-    QUARTZ_UNKNOWN_ERROR(10040, "quartz未知错误");
+    QUARTZ_UNKNOWN_ERROR(10040, "quartz未知错误"),
+    CASE_IS_REPEAT(10041, "用例重复"),
+    CASE_RESULT_IS_EMPTY(10042, "用例期望结果不能为空");
 
     @Getter
     private int status;

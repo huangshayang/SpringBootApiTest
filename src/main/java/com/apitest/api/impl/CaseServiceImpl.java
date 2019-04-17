@@ -74,13 +74,18 @@ public class CaseServiceImpl implements CaseService {
             log.info("参数: " + cases + ", " + id);
             Optional<Cases> optionalCases = caseMapper.findById(id);
             if (optionalCases.isPresent()) {
+                Cases casesByNameAndApiId = caseMapper.findByNameAndApiId(cases.getName(), cases.getApiId());
                 if (isBlank(cases.getName())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
                 } else if (isBlank(cases.getAvailable().toString())) {
                     serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
                 } else if (apiMapper.findById(cases.getApiId()).isEmpty()) {
                     serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
-                }else {
+                } else if (isBlank(cases.getExpectResult())) {
+                    serverResponse = new ServerResponse(ErrorEnum.CASE_RESULT_IS_EMPTY.getStatus(), ErrorEnum.CASE_RESULT_IS_EMPTY.getMessage());
+                } else if (casesByNameAndApiId != null && casesByNameAndApiId.getId() != id) {
+                    serverResponse = new ServerResponse(ErrorEnum.CASE_IS_REPEAT.getStatus(), ErrorEnum.CASE_IS_REPEAT.getMessage());
+                } else {
                     Cases cs = optionalCases.get();
                     cs.setJsonData(cases.getJsonData());
                     cs.setParamsData(cases.getParamsData());
@@ -130,8 +135,12 @@ public class CaseServiceImpl implements CaseService {
                 serverResponse = new ServerResponse(ErrorEnum.CASE_NOTE_IS_EMPTY.getStatus(), ErrorEnum.CASE_NOTE_IS_EMPTY.getMessage());
             } else if (isBlank(cases.getAvailable().toString())) {
                 serverResponse = new ServerResponse(ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getStatus(), ErrorEnum.CASE_AVAILABLE_IS_EMPTY.getMessage());
+            } else if (isBlank(cases.getExpectResult())) {
+                serverResponse = new ServerResponse(ErrorEnum.CASE_RESULT_IS_EMPTY.getStatus(), ErrorEnum.CASE_RESULT_IS_EMPTY.getMessage());
             } else if (apiMapper.findById(cases.getApiId()).isEmpty()) {
                 serverResponse = new ServerResponse(ErrorEnum.API_IS_NULL.getStatus(), ErrorEnum.API_IS_NULL.getMessage());
+            } else if (caseMapper.existsByNameAndApiId(cases.getName(), cases.getApiId())) {
+                serverResponse = new ServerResponse(ErrorEnum.CASE_IS_REPEAT.getStatus(), ErrorEnum.CASE_IS_REPEAT.getMessage());
             } else {
                 caseMapper.save(cases);
                 serverResponse = new ServerResponse(ErrorEnum.ADD_CASE_SUCCESS.getStatus(), ErrorEnum.ADD_CASE_SUCCESS.getMessage());

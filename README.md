@@ -5,6 +5,10 @@ angular前端代码在frontend分支下
 ---
 ### 更新历史：
 
+#### 2019-4-17:
+    1.修复caseServiceImpl里的bug
+    2.修改错误提示
+
 #### 2019-4-12:
     1.修复api的mapper里method、url、envId三者的查询bug
 
