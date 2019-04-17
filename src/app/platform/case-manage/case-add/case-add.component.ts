@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {Router} from '@angular/router';
 
@@ -26,10 +26,10 @@ export class CaseAddComponent implements OnInit {
     this.caseForm = this.fb.group({
       jsonData: '',
       paramsData: '',
-      name: '',
-      apiId: '',
+      name: ['', Validators.required],
+      apiId: ['', Validators.required],
       available: false,
-      expectResult: ''
+      expectResult: ['', Validators.required]
     });
   }
 

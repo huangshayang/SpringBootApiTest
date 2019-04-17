@@ -1,3 +1,26 @@
-<p>
-  task-add works!
-</p>
+<form [formGroup]="taskForm" (ngSubmit)="add()" autocomplete="off">
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="name">任务名</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="name" placeholder="name">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="apiIdList">ApiId列表</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" formControlName="apiIdList" nz-input placeholder="apiIdList">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="taskTime">任务时间</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <input type="text" nz-input formControlName="taskTime" placeholder="taskTime">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="mt-lg-5">
+    <nz-form-control [nzOffset]="15" [nzSm]="8" [nzXs]="24">
+      <button nz-button [disabled]="!(taskForm.valid && taskForm.dirty)" [nzType]="'primary'" style="margin-right: 10px">Save</button>
+      <button type="button" nz-button [nzType]="'cancel'" (click)="closeModal()">Cancel</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

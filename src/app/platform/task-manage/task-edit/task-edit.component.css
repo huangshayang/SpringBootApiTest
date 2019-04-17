@@ -1,0 +1,12 @@
+[nz-form] {
+  max-width: 600px;
+}
+.ant-form-item{
+  margin: 0;
+}
+.ant-form-item-label{
+  line-height: 37px;
+}
+.ant-radio-wrapper{
+  line-height: 40px !important;
+}

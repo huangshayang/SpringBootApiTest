@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -28,10 +28,10 @@ export class CaseEditComponent implements OnInit {
     this.caseForm = this.fb.group({
       jsonData: '',
       paramsData: '',
-      name: '',
-      apiId: '',
+      name: ['', Validators.required],
+      apiId: ['', Validators.required],
       available: '',
-      expectResult: ''
+      expectResult: ['', Validators.required]
     });
   }
 
