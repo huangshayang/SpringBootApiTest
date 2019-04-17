@@ -1,9 +1,0 @@
-[2019-04-17 16:02:12] - [http-nio-0.0.0.0-8080-exec-9] - com.apitest.api.impl.CaseServiceImpl.addCaseService(CaseServiceImpl.java:128) - 参数: Cases(id=null, jsonData={"username":"shayang.huang@dbjtech.com","password":"tracm315"}, paramsData=, createTime=1555488132, updateTime=1555488132, apiId=70, name=正确的账号密码, available=true, expectResult={"status":"200","message":"Operation is successful."})
-[2019-04-17 16:02:43] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-[2019-04-17 16:02:43] - [Thread-2] - org.springframework.scheduling.quartz.SchedulerFactoryBean.destroy(SchedulerFactoryBean.java:844) - Shutting down Quartz Scheduler
-[2019-04-17 16:02:43] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:666) - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
-[2019-04-17 16:02:43] - [Thread-2] - org.quartz.core.QuartzScheduler.standby(QuartzScheduler.java:585) - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-[2019-04-17 16:02:43] - [Thread-2] - org.quartz.core.QuartzScheduler.shutdown(QuartzScheduler.java:740) - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
-[2019-04-17 16:02:43] - [Thread-2] - org.springframework.scheduling.concurrent.ExecutorConfigurationSupport.shutdown(ExecutorConfigurationSupport.java:208) - Shutting down ExecutorService 'applicationTaskExecutor'
-[2019-04-17 16:02:43] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:350) - HikariPool-1 - Shutdown initiated...
-[2019-04-17 16:02:43] - [Thread-2] - com.zaxxer.hikari.HikariDataSource.close(HikariDataSource.java:352) - HikariPool-1 - Shutdown completed.
