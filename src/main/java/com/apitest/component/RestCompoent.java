@@ -15,7 +15,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -47,7 +46,7 @@ public class RestCompoent {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code", response.statusCode().value());
             jsonObject.put("header", String.valueOf(response.headers().asHttpHeaders()));
-            jsonObject.put("body", response.bodyToMono(String.class).block());
+            jsonObject.put("body", response.bodyToMono(JSONObject.class).block());
             responseWriteToLog(jsonObject, requestTime, cases);
         }catch (Exception e) {
             new ExceptionUtil(e);
@@ -57,14 +56,13 @@ public class RestCompoent {
     /**
      * 响应数据检查
      */
-    private static JSONObject checkResponse(String body, Cases cases) {
+    private static JSONObject checkResponse(JSONObject body, Cases cases) {
         JSONObject jsonObject = new JSONObject();
         try {
-            Map<String, Object> mapResponse = JSONObject.parseObject(body);
-            String actMes = String.valueOf(mapResponse.get("message"));
-            int actCode = (int) mapResponse.get("status");
-            Map expResult = JSON.parseObject(cases.getExpectResult(), Map.class);
-            if (!expResult.get("message").toString().equals(actMes) || (int)expResult.get("status") != actCode) {
+            String actMes = body.getString("message");
+            int actCode = body.getIntValue("status");
+            JSONObject expResult = JSON.parseObject(cases.getExpectResult(), JSONObject.class);
+            if (!expResult.getString("message").equals(actMes) || expResult.getIntValue("status") != actCode) {
                 jsonObject.put("checkBoolean", 0);
                 jsonObject.put("errorMsg", "错误的message或status, actMes/actCode is: " + actMes + "/" + actCode + ", but expMes/expCode is: " + expResult.get("message") + "/" + expResult.get("status") + ". Please check the Response or your Case");
                 return jsonObject;
@@ -82,7 +80,7 @@ public class RestCompoent {
      * 响应结果存入Log表里
      */
     private static void responseWriteToLog(JSONObject jsonObject, long requestTime, Cases cases) {
-        JSONObject jsonObject1 = checkResponse(jsonObject.getString("body"), cases);
+        JSONObject jsonObject1 = checkResponse(jsonObject.getJSONObject("body"), cases);
         Logs logs = new Logs();
         logs.setRequestTime(requestTime);
         logs.setCheckBoolean(jsonObject1.getIntValue("checkBoolean"));

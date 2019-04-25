@@ -28,13 +28,11 @@ public class TaskServiceImpl implements TaskService {
     private static ServerResponse serverResponse;
     private static SchedulerFactory schedulerFactory = new StdSchedulerFactory();
     private static Scheduler scheduler;
-    private static JobDataMap jobDataMap;
 
     static {
         try {
             scheduler = schedulerFactory.getScheduler();
             scheduler.start();
-            jobDataMap = new JobDataMap();
         } catch (SchedulerException e) {
             new ExceptionUtil(e);
         }
@@ -186,6 +184,7 @@ public class TaskServiceImpl implements TaskService {
                     serverResponse = new ServerResponse(ErrorEnum.QUARTZ_IS_NONE.getStatus(), ErrorEnum.QUARTZ_IS_NONE.getMessage());
                 }else {
                     List<Apis> apisList = apiMapper.findApiByIds(taskOptional.get().getApiIdList());
+                    JobDataMap jobDataMap = new JobDataMap();
                     jobDataMap.putIfAbsent("apisList", apisList);
                     jobDataMap.putIfAbsent("caseMapper", caseMapper);
                     JobDetail jobDetail = JobBuilder.newJob(QuartzTask.class).setJobData(jobDataMap).withIdentity(taskOptional.get().getName()).build();
