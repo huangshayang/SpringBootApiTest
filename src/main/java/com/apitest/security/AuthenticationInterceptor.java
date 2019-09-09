@@ -1,12 +1,12 @@
 package com.apitest.security;
 
 import com.apitest.annotation.Auth;
-import com.apitest.configconsts.ConstsEnum;
 import com.apitest.error.ErrorEnum;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.RevertUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -21,6 +21,9 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  */
 @Log4j2
 public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
+
+    @Value("${spring.USERSESSION_KEY}")
+    private String usersessionKey;
 
     /**
      * 表示是否要将当前的请求拦截下来，如果返货false请求被终止，如果为true请求会继续运行
@@ -51,7 +54,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-        Cookie resCookie = new Cookie(ConstsEnum.USERSESSION_KEY.getConsts(), RevertUtil.cookieToMap(reqCookie));
+        Cookie resCookie = new Cookie(usersessionKey, RevertUtil.cookieToMap(reqCookie));
         resCookie.setMaxAge(request.getSession().getMaxInactiveInterval());
         resCookie.setHttpOnly(true);
         resCookie.setPath("/");

@@ -1,13 +1,13 @@
 package com.apitest.api.impl;
 
 import com.apitest.api.LoginService;
-import com.apitest.configconsts.ConstsEnum;
 import com.apitest.entity.User;
 import com.apitest.error.ErrorEnum;
 import com.apitest.mapper.UserMapper;
 import com.apitest.util.ExceptionUtil;
 import com.apitest.util.ServerResponse;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,9 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private UserMapper userMapper;
 
+    @Value("${spring.USERSESSION_KEY}")
+    private String usersessionKey;
+
     @Override
     public ServerResponse loginService(HttpServletResponse response, HttpSession httpSession, String username, String password) {
         ServerResponse serverResponse;
@@ -44,7 +47,7 @@ public class LoginServiceImpl implements LoginService {
             } else {
                 String session = new BCryptPasswordEncoder().encode(String.valueOf(u));
                 httpSession.setAttribute(session, u);
-                Cookie resCookie = new Cookie(ConstsEnum.USERSESSION_KEY.getConsts(), session);
+                Cookie resCookie = new Cookie(usersessionKey, session);
                 resCookie.setHttpOnly(true);
                 resCookie.setMaxAge(httpSession.getMaxInactiveInterval());
                 resCookie.setPath("/");

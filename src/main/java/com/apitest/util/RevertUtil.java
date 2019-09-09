@@ -1,7 +1,7 @@
 package com.apitest.util;
 
-import com.apitest.configconsts.ConstsEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+@Log4j2
 public class RevertUtil {
 
     public static String cookieToMap(String reqCookie) {
@@ -18,7 +19,7 @@ public class RevertUtil {
             String[] str2 = s.split("=");
             map.put(str2[0].trim(), str2[1]);
         }
-        return map.get(ConstsEnum.USERSESSION_KEY.getConsts());
+        return map.get("user_session");
     }
 
     public static void resToJson(HttpServletResponse response, ServerResponse serverResponse) {
