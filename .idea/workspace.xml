@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="908c700a-0a5e-45e9-9b07-e75c26252f38" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/api/impl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/api/impl/LoginServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/api/impl/MailSendServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/api/impl/MailSendServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/security/AuthenticationInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/util/RevertUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/apitest/util/RevertUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/apitest/configconsts/ConstsEnum.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -620,7 +611,7 @@
       <workItem from="1567590237563" duration="439000" />
       <workItem from="1567648565210" duration="20000" />
       <workItem from="1567997919635" duration="2920000" />
-      <workItem from="1568008094512" duration="2650000" />
+      <workItem from="1568008094512" duration="3023000" />
     </task>
     <servers />
   </component>
