@@ -109,7 +109,7 @@ public class RestCompoent {
         boolean cookie = api.getCookie();
         switch (method) {
             case "get":
-                body = RestRequest.doGet(url, jsonData, paramsData, cookie);
+                body = RestRequest.doGet(url, paramsData, cookie);
                 break;
             case "post":
                 body = RestRequest.doPost(url, jsonData, paramsData, cookie);
