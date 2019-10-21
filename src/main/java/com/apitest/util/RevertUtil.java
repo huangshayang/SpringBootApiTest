@@ -6,24 +6,23 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 @Log4j2
 public class RevertUtil {
 
     public static String cookieToMap(String reqCookie) {
-        Map<String, String> map = new HashMap<>(8);
-        String[] str = reqCookie.split(";");
+        String[] str = reqCookie.split("; ");
+        String str2 = null;
         for (String s : str) {
-            String[] str2 = s.split("=");
-            map.put(str2[0].trim(), str2[1]);
+            if (s.contains("user_session")) {
+                str2 = s.substring(s.indexOf("=")+1);
+            }
         }
-        return map.get("user_session");
+        return str2;
     }
 
     public static void resToJson(HttpServletResponse response, ServerResponse serverResponse) {
-        response.setContentType(String.valueOf(MediaType.APPLICATION_JSON_UTF8));
+        response.setContentType(String.valueOf(MediaType.APPLICATION_JSON));
         ObjectMapper jsonObject = new ObjectMapper();
         try {
             String json = jsonObject.writeValueAsString(serverResponse);

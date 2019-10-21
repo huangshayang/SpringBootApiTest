@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @author HSY
  */
 @RestController
-@RequestMapping(value = "/case", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/case", consumes = MediaType.APPLICATION_JSON_VALUE)
 @Auth
 public class CaseController {
 

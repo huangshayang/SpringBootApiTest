@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class MailSendController {
 
     private final MailSendService mailSendService;

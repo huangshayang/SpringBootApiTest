@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -54,11 +53,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-        Cookie resCookie = new Cookie(usersessionKey, RevertUtil.cookieToMap(reqCookie));
-        resCookie.setMaxAge(request.getSession().getMaxInactiveInterval());
-        resCookie.setHttpOnly(true);
-        resCookie.setPath("/");
-        response.addCookie(resCookie);
         return true;
     }
 }

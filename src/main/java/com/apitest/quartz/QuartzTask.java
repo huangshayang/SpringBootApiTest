@@ -4,14 +4,12 @@ import com.apitest.component.RestCompoent;
 import com.apitest.entity.Apis;
 import com.apitest.entity.Cases;
 import com.apitest.mapper.CaseMapper;
-import lombok.extern.log4j.Log4j2;
 import org.quartz.JobExecutionContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-@Log4j2
 public class QuartzTask extends QuartzJobBean {
 
     private static ReentrantLock lock = new ReentrantLock();

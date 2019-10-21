@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author HSY
  */
 @RestController
-@RequestMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class LogoutController {
 
     private final LogoutService logoutService;
@@ -26,8 +27,8 @@ public class LogoutController {
     }
 
     @DeleteMapping(value = "/logout")
-    public ServerResponse logoutController(HttpSession httpSession) {
-        return logoutService.logoutService(httpSession);
+    public ServerResponse logoutController(HttpServletRequest request) throws ServletException {
+        return logoutService.logoutService(request);
     }
 
 }
